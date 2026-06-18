@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="timeline(component)" th:id="${component.id}" class="cv-timeline">
+    <div th:each="item : ${component.items}" class="cv-timeline-item">
+        <div th:class="'cv-timeline-dot' + (${item.status} != null ? ' cv-timeline-' + ${item.status} : '')"></div>
+        <div class="cv-timeline-content">
+            <div class="cv-timeline-title" th:text="${item.title}">Title</div>
+            <div class="cv-timeline-description" th:text="${item.description}">Description</div>
+            <div class="cv-timestamp" th:text="${item.time}">Time</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

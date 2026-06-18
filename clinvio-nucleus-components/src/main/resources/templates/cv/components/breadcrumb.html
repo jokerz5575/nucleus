@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav th:fragment="breadcrumb(component)" class="cv-breadcrumb mb-4">
+    <span th:each="item : ${component.items}" class="cv-breadcrumb-item" th:classappend="${item.active} ? 'active'">
+        <a th:if="${!item.active}" th:href="${item.url}" th:text="${item.label}">Link</a>
+        <span th:if="${item.active}" th:text="${item.label}">Current</span>
+    </span>
+</nav>
+</body>
+</html>

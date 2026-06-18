@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="alert(component)" 
+     th:id="${component.id}"
+     th:class="'cv-alert ' + ${component.type.cssClass}"
+     role="alert">
+    <i th:class="'bi ' + ${component.icon} + ' cv-alert-icon'"></i>
+    <div class="cv-alert-content">
+        <span th:text="${component.message}">Message</span>
+    </div>
+    <button th:if="${component.dismissible}" type="button" class="cv-alert-close" onclick="this.parentElement.remove()">
+        <i class="bi bi-x"></i>
+    </button>
+</div>
+</body>
+</html>

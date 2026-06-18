@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!--/* Select Component Template */-->
+<th:block th:fragment="select(component)">
+    <div th:id="${component.id + '-wrapper'}" th:class="${'mb-3 ' + (component.state != null ? component.state.cssClass : '')}">
+        <label
+                th:if="${component.label != null}"
+                th:for="${component.id}"
+                class="form-label"
+                th:text="${component.label}"
+        >Label</label>
+        <select
+                th:id="${component.id}"
+                th:name="${component.id}"
+                th:required="${component.required}"
+                th:disabled="${component.disabled}"
+                class="form-select"
+                th:hx-post="${component.hxPost}"
+                th:hx-get="${component.hxGet}"
+                th:hx-target="${component.hxTarget}"
+        >
+            <option th:if="${component.placeholder != null}" value="" th:text="${component.placeholder}" disabled selected></option>
+            <option
+                    th:each="opt : ${component.options}"
+                    th:value="${opt.value}"
+                    th:text="${opt.label}"
+                    th:selected="${opt.value == component.value}"
+            ></option>
+        </select>
+        <div th:if="${component.helpText != null}" class="form-text" th:text="${component.helpText}"></div>
+        <div th:if="${component.state == T(hu.clinvio.ui.components.form.CvTextField$FieldState).ERROR and component.errorMessage != null}"
+             class="cv-field-feedback" th:text="${component.errorMessage}">
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

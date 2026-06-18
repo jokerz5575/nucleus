@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!--/* Button Component Template */-->
+<th:block th:fragment="button(component)">
+    <button
+            th:id="${component.id}"
+            th:class="${'btn ' + component.type.cssClass + ' ' + component.size.cssClass + (component.cssClass != null ? ' ' + component.cssClass : '')}"
+            th:disabled="${component.disabled}"
+            th:hx-get="${component.hxGet}"
+            th:hx-post="${component.hxPost}"
+            th:hx-target="${component.hxTarget}"
+            th:hx-swap="${component.hxSwap}"
+            th:attrappend="data-loading=${component.loading}"
+    >
+        <i th:if="${component.icon != null}" th:class="'bi bi-' + ${component.icon}"></i>
+        <span th:text="${component.label}">Button</span>
+    </button>
+</th:block>
+</body>
+</html>

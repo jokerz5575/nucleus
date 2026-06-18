@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!--/* Text Field Component Template */-->
+<th:block th:fragment="textField(component)">
+    <div th:id="${component.id + '-wrapper'}" th:class="${'mb-3 ' + (component.state != null ? component.state.cssClass : '')}">
+        <label
+                th:if="${component.label != null}"
+                th:for="${component.id}"
+                class="form-label"
+                th:text="${component.label}"
+        >Label</label>
+        <input
+                th:id="${component.id}"
+                th:type="${component.type}"
+                th:name="${component.id}"
+                th:value="${component.value}"
+                th:placeholder="${component.placeholder}"
+                th:required="${component.required}"
+                th:disabled="${component.disabled}"
+                th:readonly="${component.readonly}"
+                class="form-control"
+                th:hx-post="${component.hxPost}"
+                th:hx-get="${component.hxGet}"
+                th:hx-target="${component.hxTarget}"
+                th:hx-trigger="${component.hxTrigger}"
+        />
+        <div th:if="${component.helpText != null}" class="form-text" th:text="${component.helpText}"></div>
+        <div th:if="${component.state == T(hu.clinvio.ui.components.form.CvTextField$FieldState).ERROR and component.errorMessage != null}"
+             class="cv-field-feedback" th:text="${component.errorMessage}">
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

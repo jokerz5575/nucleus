@@ -1,0 +1,18 @@
+[
+  {
+    "name": "hu.clinvio.ui.persistence.entity.BaseEntity",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "hu.clinvio.ui.persistence.annotation.SensitiveData",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "hu.clinvio.ui.persistence.crypto.EncryptedStringConverter",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  }
+]

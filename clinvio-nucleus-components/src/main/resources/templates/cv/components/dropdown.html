@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="dropdown(component)" th:id="${component.id}" class="cv-dropdown" style="display:inline-block;position:relative;">
+    <button class="btn btn-outline-secondary" onclick="this.nextElementSibling.classList.toggle('show')">
+        <i th:if="${component.triggerIcon}" th:class="'bi ' + ${component.triggerIcon}"></i>
+        <span th:text="${component.triggerText}">Menu</span>
+        <i class="bi bi-chevron-down"></i>
+    </button>
+    <div class="cv-dropdown-menu" th:class="'cv-dropdown-menu cv-dropdown-' + ${component.placement}">
+        <template th:each="item : ${component.items}">
+            <div th:if="${item.header}" class="cv-dropdown-header" th:text="${item.label}">Header</div>
+            <hr th:if="${item.divider}" class="cv-dropdown-divider">
+            <a th:if="${!item.divider and !item.header}" th:href="${item.url}" class="cv-dropdown-item">
+                <i th:if="${item.icon}" th:class="'bi ' + ${item.icon}"></i>
+                <span th:text="${item.label}">Item</span>
+            </a>
+        </template>
+    </div>
+</div>
+</body>
+</html>

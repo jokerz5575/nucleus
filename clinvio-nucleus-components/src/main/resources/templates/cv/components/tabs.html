@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="tabs(component)" th:id="${component.id}" class="cv-tabs">
+    <div class="cv-tabs-nav">
+        <button th:each="tab, iter : ${component.tabs}"
+                th:id="'tab-' + ${tab.id}"
+                class="cv-tabs-trigger"
+                th:classappend="${iter.index == component.activeIndex ? 'active' : ''}"
+                th:attr="data-tab=${tab.id}"
+                th:text="${tab.label}">Tab</button>
+    </div>
+    <div th:each="tab, iter : ${component.tabs}"
+         th:id="'panel-' + ${tab.id}"
+         class="cv-tabs-panel"
+         th:classappend="${iter.index == component.activeIndex ? 'active' : ''}"
+         th:utext="${tab.content}">Content</div>
+</div>
+</body>
+</html>

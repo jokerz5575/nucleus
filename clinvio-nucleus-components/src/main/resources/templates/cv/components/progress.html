@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="progress(component)" th:id="${component.id}" class="cv-progress">
+    <div class="cv-progress-bar"
+         th:classappend="${component.variant != null ? 'cv-progress-' + component.variant : ''} + ${component.striped ? ' cv-progress-striped' : ''} + ${component.animated ? ' cv-progress-animated' : ''}"
+         role="progressbar"
+         th:attr="aria-valuenow=${component.value}, aria-valuemin=0, aria-valuemax=${component.max}"
+         th:style="'width: ' + ${component.percent} + '%'">
+        <span th:if="${component.showLabel}" th:text="${component.percent} + '%'">50%</span>
+    </div>
+</div>
+</body>
+</html>

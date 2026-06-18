@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinvio Nucleus Framework — LLM Reference</title>
+    <style>
+        body { font-family: monospace; max-width: 900px; margin: 0 auto; padding: 2rem; background: #1e1e2e; color: #cdd6f4; line-height: 1.6; }
+        h1 { color: #89b4fa; border-bottom: 2px solid #45475a; padding-bottom: 0.5rem; }
+        h2 { color: #cba6f7; margin-top: 2rem; border-bottom: 1px solid #45475a; padding-bottom: 0.25rem; }
+        h3 { color: #a6e3a1; }
+        h4 { color: #f9e2af; }
+        code { background: #313244; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+        pre { background: #313244; padding: 1rem; border-radius: 8px; overflow-x: auto; border-left: 3px solid #89b4fa; }
+        pre code { background: none; padding: 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td { border: 1px solid #45475a; padding: 0.5rem; text-align: left; }
+        th { background: #313244; color: #89b4fa; }
+        .important { background: #f38ba8; color: #1e1e2e; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: bold; }
+        .note { background: #313244; border-left: 3px solid #89b4fa; padding: 0.75rem; margin: 1rem 0; }
+        .warning { background: #313244; border-left: 3px solid #f9e2af; padding: 0.75rem; margin: 1rem 0; }
+        a { color: #89dceb; }
+    </style>
+</head>
+<body>
+
+<h1>Clinvio Nucleus Framework — LLM Reference Document</h1>
+<p><strong>Version:</strong> 1.5.0-SNAPSHOT | <strong>Language:</strong> Java 21 | <strong>Framework:</strong> Spring Boot 3.3.5</p>
+<p><strong>Purpose:</strong> This document is optimized for LLM agents to understand and use the Clinvio Nucleus framework to build enterprise Java applications.</p>
+
+<hr>
+
+<h2>1. What Is Clinvio Nucleus</h2>
+<p>Clinvio Nucleus is a 23-module enterprise Java framework for building web applications with:</p>
+<ul>
+    <li>Server-side rendering via Thymeleaf + HTMX (no JavaScript frameworks)</li>
+    <li>AES-256-GCM field-level encryption for sensitive data</li>
+    <li>SQLite database (default) with optional PostgreSQL migration</li>
+    <li>JWT authentication, GDPR compliance, workflow engine</li>
+    <li>Observability, caching, scheduling, email, notifications</li>
+</ul>
+
+<h3>Maven Coordinates</h3>
+<pre><code>&lt;groupId&gt;hu.clinvio&lt;/groupId&gt;
+&lt;version&gt;1.5.0-SNAPSHOT&lt;/version&gt;</code></pre>
+
+<h3>Repository</h3>
+<pre><code>&lt;repositories&gt;
+    &lt;repository&gt;
+        &lt;id&gt;gitea&lt;/id&gt;
+        &lt;url&gt;https://dev.clinvio.hu/api/packages/jokerz/maven&lt;/url&gt;
+    &lt;/repository&gt;
+&lt;/repositories&gt;</code></pre>
+
+<hr>
+
+<h2>2. Module List</h2>
+
+<table>
+<tr><th>ArtifactId</th><th>Purpose</th><th>Required</th></tr>
+<tr><td>clinvio-nucleus-core</td><td>Component model, Thymeleaf dialect, renderer</td><td>Transitive</td></tr>
+<tr><td>clinvio-nucleus-components</td><td>UI components (Button, Card, DataTable, etc.)</td><td>Transitive</td></tr>
+<tr><td>clinvio-nucleus-themes</td><td>CSS design system (clinvio-theme.css)</td><td>Transitive</td></tr>
+<tr><td>clinvio-nucleus-htmx</td><td>HTMX integration (HxResponse, HxSwap)</td><td>Transitive</td></tr>
+<tr><td>clinvio-nucleus-persistence</td><td>BaseEntity, @SensitiveData, AesCryptoService, SQLite</td><td><span class="important">Required</span></td></tr>
+<tr><td>clinvio-nucleus-business</td><td>BaseService, BaseController, Workflow, Validation, Exceptions</td><td><span class="important">Required</span></td></tr>
+<tr><td>clinvio-nucleus-security</td><td>JWT authentication, @Secured annotation</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-observability</td><td>Metrics, health checks, request logging</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-migration</td><td>Flyway database migrations</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-cache</td><td>Caffeine in-memory caching</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-openapi</td><td>Swagger UI documentation</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-websocket</td><td>WebSocket support</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-scheduler</td><td>Cron task scheduling</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-mail</td><td>Email sending via SMTP</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-compliance</td><td>GDPR consent management</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-appointment</td><td>Appointment scheduling</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-documents</td><td>File storage and management</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-tasks</td><td>Task/project management</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-ai</td><td>AI integration (OpenAI)</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-multitenancy</td><td>Multi-tenant isolation</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-notifications</td><td>Multi-channel notifications</td><td>Optional</td></tr>
+<tr><td>clinvio-nucleus-spring-boot-starter</td><td>Auto-configuration for all modules</td><td><span class="important">Required</span></td></tr>
+</table>
+
+<hr>
+
+<h2>3. Minimal Application Setup</h2>
+
+<h3>3.1 pom.xml</h3>
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;hu.clinvio&lt;/groupId&gt;
+        &lt;artifactId&gt;clinvio-nucleus-spring-boot-starter&lt;/artifactId&gt;
+        &lt;version&gt;1.5.0-SNAPSHOT&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;hu.clinvio&lt;/groupId&gt;
+        &lt;artifactId&gt;clinvio-nucleus-persistence&lt;/artifactId&gt;
+        &lt;version&gt;1.5.0-SNAPSHOT&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;hu.clinvio&lt;/groupId&gt;
+        &lt;artifactId&gt;clinvio-nucleus-business&lt;/artifactId&gt;
+        &lt;version&gt;1.5.0-SNAPSHOT&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre>
+
+<h3>3.2 application.properties</h3>
+<pre><code>spring.datasource.url=jdbc:sqlite:./data/app.db
+spring.datasource.driver-class-name=org.sqlite.JDBC
+spring.jpa.hibernate.ddl-auto=update
+clinvio.persistence.encryption-key=your-secret-key-here</code></pre>
+
+<hr>
+
+<h2>4. Core Concepts</h2>
+
+<h3>4.1 Entity Inheritance</h3>
+<p>All entities must extend <code>BaseEntity</code> which provides:</p>
+<ul>
+    <li><code>id</code> (Long) — auto-generated primary key</li>
+    <li><code>createdAt</code> (LocalDateTime) — set on persist</li>
+    <li><code>updatedAt</code> (LocalDateTime) — set on update</li>
+    <li><code>deletedAt</code> (LocalDateTime) — soft delete (null = active)</li>
+</ul>
+
+<pre><code>import hu.clinvio.ui.persistence.entity.BaseEntity;
+
+@Entity
+@Table(name = "orders")
+public class Order extends BaseEntity {
+    private String orderNumber;
+    // id, createdAt, updatedAt, deletedAt are inherited
+}</code></pre>
+
+<h3>4.2 Field Encryption</h3>
+<p>Mark String fields with <code>@SensitiveData</code> + <code>@Convert</code> for AES-256-GCM encryption.</p>
+<div class="warning"><strong>IMPORTANT:</strong> JPA does not process @Convert on meta-annotations. You MUST add both annotations.</div>
+
+<pre><code>import hu.clinvio.ui.persistence.annotation.SensitiveData;
+import hu.clinvio.ui.persistence.crypto.EncryptedStringConverter;
+
+@SensitiveData
+@Convert(converter = EncryptedStringConverter.class)
+@Column(nullable = false)
+private String customerName;  // Encrypted in database
+
+private String orderNumber;   // NOT encrypted</code></pre>
+
+<div class="warning"><strong>WARNING:</strong> Encrypted fields CANNOT be searched with SQL LIKE queries. Search only on non-encrypted fields.</div>
+
+<h3>4.3 Repository Pattern</h3>
+<pre><code>import hu.clinvio.ui.business.repository.CvBaseRepository;
+
+@Repository
+public interface OrderRepository extends CvBaseRepository&lt;Order, Long&gt; {
+    // CvBaseRepository provides: findAllActive(), findActiveById(), softDelete(), countActive()
+    
+    @Query("SELECT o FROM Order o WHERE o.deletedAt IS NULL AND o.orderNumber LIKE %:q%")
+    Page&lt;Order&gt; search(@Param("q") String query, Pageable pageable);
+}</code></pre>
+
+<h3>4.4 Service Pattern</h3>
+<pre><code>import hu.clinvio.ui.business.service.CvSearchableService;
+
+@Service
+@Transactional(readOnly = true)
+public class OrderService extends CvSearchableService&lt;Order, Long&gt; {
+
+    public OrderService(OrderRepository repo) {
+        super(repo, repo);  // First arg: CvBaseRepository, Second: JpaSpecificationExecutor
+    }
+
+    @Override
+    public Page&lt;Order&gt; search(String query, Pageable pageable) {
+        if (query == null || query.isBlank()) return findAll(pageable);
+        return ((OrderRepository) repository).search(query, pageable);
+    }
+
+    @Override
+    protected String getEntityName() { return "Order"; }
+}
+
+// CvBaseService provides: findAll(), findById(), getById(), create(), update(), delete(), count()
+// CvSearchableService adds: search(), findBySpec(), countBySpec()</code></pre>
+
+<h3>4.5 Controller Pattern</h3>
+<pre><code>import hu.clinvio.ui.business.controller.CvBaseCrudController;
+
+@Controller
+@RequestMapping("/orders")
+public class OrderController extends CvBaseCrudController&lt;Order&gt; {
+
+    public OrderController(OrderService service) {
+        super(service);
+    }
+
+    @Override protected String getListTemplate() { return "orders/list"; }
+    @Override protected String getDetailTemplate() { return "orders/detail"; }
+    @Override protected String getEntityName() { return "Order"; }
+    @Override protected String getEntityPath() { return "/orders"; }
+
+    @Override
+    protected CvDataTable&lt;Order&gt; buildDataTable(Page&lt;Order&gt; page) {
+        return new CvDataTable&lt;Order&gt;()
+            .addColumn("orderNumber", "Order #", true)
+            .addColumn("customerName", "Customer", true)
+            .data(page.getContent())
+            .searchable(true).pageable(true).pageSize(page.getSize());
+    }
+
+    // YOU must add @GetMapping to listView and detailView:
+    @GetMapping
+    public String listView(Model model, Pageable pageable) {
+        return super.listView(model, pageable);  // or custom dashboard
+    }
+
+    @GetMapping("/{id}")
+    public String detailView(@PathVariable Long id, Model model) {
+        return super.detailView(id, model);
+    }
+}</code></pre>
+
+<div class="note"><strong>NOTE:</strong> <code>CvBaseCrudController</code> does NOT have @GetMapping on view methods. Subclasses must add their own mappings. This prevents conflicts when overriding with a custom dashboard.</div>
+
+<h3>4.6 HTMX Responses</h3>
+<pre><code>import hu.clinvio.ui.htmx.response.HxResponse;
+import hu.clinvio.ui.htmx.response.HxSwap;
+
+// Toast notification + redirect
+return HxResponse.builder()
+    .trigger("cv:toast", Map.of("message", "Order created", "type", "success"))
+    .redirect("/orders/" + order.getId())
+    .build();
+
+// Fragment swap (partial page update)
+return HxResponse.builder()
+    .swap(HxSwap.OUTER_HTML)
+    .fragment("orders/fragments :: status-badge")
+    .model(Map.of("status", newStatus))
+    .build();
+
+// Redirect only
+return HxResponse.builder().redirect("/orders").build();</code></pre>
+
+<hr>
+
+<h2>5. Business Features</h2>
+
+<h3>5.1 Workflow Engine</h3>
+<pre><code>import hu.clinvio.ui.business.workflow.WorkflowEngine;
+
+WorkflowEngine&lt;OrderStatus&gt; workflow = WorkflowEngine.of(OrderStatus.class)
+    .transition(PENDING, PROCESSING, CANCELLED)
+    .transition(PROCESSING, SHIPPED, CANCELLED)
+    .transition(SHIPPED, DELIVERED)
+    .onTransition(PROCESSING, SHIPPED, (from, to) -> {
+        // callback on this transition
+    })
+    .build();
+
+workflow.validate(currentStatus, newStatus);  // throws CvBusinessException if invalid
+workflow.transition(order, newStatus, order::setStatus);  // with callbacks</code></pre>
+
+<h3>5.2 Validation</h3>
+<pre><code>import hu.clinvio.ui.business.util.CvValidation;
+import hu.clinvio.ui.business.validation.CvValidationResult;
+
+CvValidationResult result = CvValidation.builder()
+    .require(name, "name", "Name is required")
+    .requireEmail(email, "email")
+    .requireMinLength(password, 8, "password")
+    .build();
+
+if (result.hasErrors()) {
+    throw new CvValidationException("Invalid input", result);
+}</code></pre>
+
+<h3>5.3 Exceptions</h3>
+<table>
+<tr><th>Exception</th><th>HTTP Status</th><th>Usage</th></tr>
+<tr><td>CvNotFoundException</td><td>404</td><td>Entity not found</td></tr>
+<tr><td>CvDuplicateException</td><td>409</td><td>Duplicate entity</td></tr>
+<tr><td>CvBusinessException</td><td>422</td><td>Business rule violation</td></tr>
+<tr><td>CvValidationException</td><td>400</td><td>Validation errors</td></tr>
+</table>
+
+<h3>5.4 Notifications</h3>
+<pre><code>@Autowired CvNotificationService notificationService;
+
+notificationService.send(userId, "Order Shipped", "Your order is on the way");
+notificationService.sendToChannel("email", userId, "Welcome", "Hello!");
+notificationService.sendSuccess(userId, "Success", "Operation completed");</code></pre>
+
+<h3>5.5 Appointments</h3>
+<pre><code>@Autowired CvAppointmentService appointmentService;
+
+CvAppointment apt = new CvAppointment();
+apt.setTitle("Meeting");
+apt.setStartTime(LocalDateTime.now().plusDays(1));
+apt.setEndTime(LocalDateTime.now().plusDays(1).plusHours(1));
+appointmentService.create(apt);
+
+appointmentService.reschedule(id, newStart, newEnd);
+appointmentService.cancel(id);
+appointmentService.confirm(id);</code></pre>
+
+<h3>5.6 Documents</h3>
+<pre><code>@Autowired CvDocumentService documentService;
+
+String path = documentService.store(multipartFile, "orders/" + orderId);
+InputStream stream = documentService.retrieve(path);
+documentService.delete(path);</code></pre>
+
+<h3>5.7 Tasks</h3>
+<pre><code>@Autowired CvTaskService taskService;
+
+CvTask task = new CvTask();
+task.setTitle("Implement feature");
+task.setPriority(CvTask.TaskPriority.HIGH);
+task.setAssigneeId(userId);
+taskService.create(task);
+
+taskService.updateStatus(id, CvTask.TaskStatus.IN_PROGRESS);
+List&lt;CvTask&gt; overdue = taskService.findOverdue();</code></pre>
+
+<h3>5.8 AI Integration</h3>
+<pre><code>@Autowired CvAiService aiService;
+
+String response = aiService.generateText("Explain quantum computing");
+String summary = aiService.summarize(longText, 100);
+String translated = aiService.translate(text, "Hungarian");</code></pre>
+
+<h3>5.9 Compliance (GDPR)</h3>
+<pre><code>@Autowired CvConsentService consentService;
+
+consentService.grant(userId, CvConsent.ConsentType.DATA_PROCESSING, ipAddress);
+boolean hasConsent = consentService.verify(userId, CvConsent.ConsentType.DATA_PROCESSING);
+consentService.revoke(userId, CvConsent.ConsentType.MARKETING);</code></pre>
+
+<hr>
+
+<h2>6. Configuration Properties</h2>
+
+<pre><code># Database
+spring.datasource.url=jdbc:sqlite:./data/app.db
+spring.datasource.driver-class-name=org.sqlite.JDBC
+spring.jpa.hibernate.ddl-auto=update
+
+# Encryption (REQUIRED for @SensitiveData)
+clinvio.persistence.encryption-key=${CLINVIO_ENCRYPTION_KEY}
+
+# Observability
+clinvio.nucleus.observability.enabled=true
+management.endpoints.web.exposure.include=health,metrics,prometheus
+
+# Cache
+clinvio.nucleus.cache.enabled=true
+clinvio.nucleus.cache.caffeine.maximum-size=1000
+clinvio.nucleus.cache.caffeine.expire-after-write=10m
+
+# Security
+clinvio.nucleus.security.jwt.secret=${JWT_SECRET}
+clinvio.nucleus.security.jwt.expiration=86400000
+
+# Scheduler
+clinvio.nucleus.scheduler.enabled=true
+
+# Email
+clinvio.nucleus.mail.enabled=true
+clinvio.nucleus.mail.host=smtp.example.com
+
+# Multi-tenancy
+clinvio.nucleus.multitenancy.enabled=true
+clinvio.nucleus.multitenancy.tenant-header=X-Tenant-ID</code></pre>
+
+<hr>
+
+<h2>7. Template Structure</h2>
+
+<h3>7.1 Layout Template</h3>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"&gt;
+&lt;head&gt;
+    &lt;link th:href="@{/vendor/css/bootstrap.min.css}" rel="stylesheet"&gt;
+    &lt;link th:href="@{/cv/css/clinvio-theme.css}" rel="stylesheet"&gt;
+    &lt;script th:src="@{/vendor/js/htmx.min.js}"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;nav class="cv-navbar"&gt;...&lt;/nav&gt;
+    &lt;div class="cv-layout"&gt;
+        &lt;aside class="cv-sidebar"&gt;...&lt;/aside&gt;
+        &lt;main class="cv-main-content"&gt;
+            &lt;div layout:fragment="content"&gt;Default&lt;/div&gt;
+        &lt;/main&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<h3>7.2 Page Template</h3>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}"&gt;
+&lt;body&gt;
+&lt;div layout:fragment="content"&gt;
+    &lt;div th:replace="~{cv/components/stat-card :: statCard(${card})}"&gt;&lt;/div&gt;
+    &lt;div th:replace="~{cv/components/data-table :: dataTable(${table})}"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<hr>
+
+<h2>8. Package Structure</h2>
+
+<p>The framework uses two package prefixes:</p>
+<ul>
+    <li><code>hu.clinvio.ui.*</code> — Core framework classes (persistence, htmx, components, business)</li>
+    <li><code>hu.clinvio.nucleus.*</code> — Domain module classes (appointment, tasks, ai, etc.)</li>
+</ul>
+
+<pre><code>// Correct imports for framework classes:
+import hu.clinvio.ui.persistence.entity.BaseEntity;
+import hu.clinvio.ui.persistence.annotation.SensitiveData;
+import hu.clinvio.ui.persistence.crypto.EncryptedStringConverter;
+import hu.clinvio.ui.business.service.CvBaseService;
+import hu.clinvio.ui.business.controller.CvBaseCrudController;
+import hu.clinvio.ui.business.exception.CvNotFoundException;
+import hu.clinvio.ui.business.util.CvValidation;
+import hu.clinvio.ui.business.validation.CvValidationResult;
+import hu.clinvio.ui.htmx.response.HxResponse;
+import hu.clinvio.ui.htmx.response.HxSwap;
+import hu.clinvio.ui.components.data.CvDataTable;
+import hu.clinvio.ui.components.basic.CvStatCard;
+
+// Correct imports for domain modules:
+import hu.clinvio.nucleus.appointment.entity.CvAppointment;
+import hu.clinvio.nucleus.appointment.service.CvAppointmentService;
+import hu.clinvio.nucleus.tasks.entity.CvTask;
+import hu.clinvio.nucleus.tasks.service.CvTaskService;
+import hu.clinvio.nucleus.ai.service.CvAiService;
+import hu.clinvio.nucleus.compliance.service.CvConsentService;
+import hu.clinvio.nucleus.documents.service.CvDocumentService;
+import hu.clinvio.nucleus.notifications.service.CvNotificationService;</code></pre>
+
+<hr>
+
+<h2>9. REST API</h2>
+
+<pre><code>import hu.clinvio.ui.business.controller.CvBaseApiController;
+
+@RestController
+@RequestMapping("/api/orders")
+public class OrderApiController extends CvBaseApiController&lt;Order&gt; {
+    public OrderApiController(OrderService service) { super(service); }
+    @Override protected String getEntityName() { return "Order"; }
+    @Override protected String getEntityPath() { return "/api/orders"; }
+}
+
+// Auto-generates:
+// GET    /api/orders         — List with pagination
+// GET    /api/orders/{id}    — Get by ID
+// POST   /api/orders         — Create
+// PUT    /api/orders/{id}    — Update
+// DELETE /api/orders/{id}    — Soft delete
+// GET    /api/orders/all     — Get all
+// GET    /api/orders/count   — Count</code></pre>
+
+<hr>
+
+<h2>10. Common Mistakes</h2>
+
+<table>
+<tr><th>Mistake</th><th>Correct</th></tr>
+<tr><td>Only @SensitiveData on field</td><td>@SensitiveData + @Convert(converter = EncryptedStringConverter.class)</td></tr>
+<tr><td>Searching encrypted fields with LIKE</td><td>Search only on non-encrypted fields</td></tr>
+<tr><td>Missing super.onCreate() in @PrePersist</td><td>Always call super.onCreate() for audit fields</td></tr>
+<tr><td>Missing @Transactional on writes</td><td>All create/update/delete need @Transactional</td></tr>
+<tr><td>Forgetting @GetMapping on listView</td><td>Subclasses must add @GetMapping to view methods</td></tr>
+<tr><td>pageSize = 0</td><td>pageSize must be > 0</td></tr>
+</table>
+
+<hr>
+
+<footer style="margin-top:3rem;padding-top:1rem;border-top:1px solid #45475a;color:#6c7086;">
+    Clinvio Nucleus v1.5.0 — 23 Modules — https://dev.clinvio.hu
+</footer>
+
+</body>
+</html>
