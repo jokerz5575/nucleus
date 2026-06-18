@@ -23,6 +23,15 @@ class CvComponentTypeTest {
     }
 
     @Test
+    void allTypesHaveClasspathTemplate() {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        for (CvComponentType type : CvComponentType.values()) {
+            String resource = "templates/" + type.getDefaultTemplate() + ".html";
+            assertNotNull(classLoader.getResource(resource), resource);
+        }
+    }
+
+    @Test
     void fromTypeReturnsCorrectEnum() {
         assertEquals(CvComponentType.BUTTON, CvComponentType.fromType("button").orElseThrow());
         assertEquals(CvComponentType.CARD, CvComponentType.fromType("card").orElseThrow());
@@ -63,7 +72,7 @@ class CvComponentTypeTest {
     }
 
     @Test
-    void allTypesAre23() {
-        assertEquals(23, CvComponentType.values().length);
+    void allTypesAre22() {
+        assertEquals(22, CvComponentType.values().length);
     }
 }

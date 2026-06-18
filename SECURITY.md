@@ -39,6 +39,7 @@ the deploying organization. See `docs/key-management.md` for guidance.
 ## Known Security Considerations
 
 - Encryption keys are configured via environment variable or config — protect access
-- JWT secrets should be rotated regularly
+- JWT secrets should be rotated regularly; production startup rejects the framework default secret
 - Session tokens are transmitted via cookies or auth headers — use HTTPS in production
+- CORS defaults allow all origins without credentials for development; restrict `clinvio.security.cors.allowed-origins` in production
 - SQLite is not recommended for multi-process deployments

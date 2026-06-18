@@ -61,6 +61,7 @@ public class ClinvioProperties {
         private String idPrefix = "cv";
         private boolean stateful = true;
         private String templatePrefix = "";
+        private boolean renderErrorDetails = false;
         private Pagination pagination = new Pagination();
         private Processors processors = new Processors();
 
@@ -72,6 +73,9 @@ public class ClinvioProperties {
 
         public String getTemplatePrefix() { return templatePrefix; }
         public void setTemplatePrefix(String templatePrefix) { this.templatePrefix = templatePrefix; }
+
+        public boolean isRenderErrorDetails() { return renderErrorDetails; }
+        public void setRenderErrorDetails(boolean renderErrorDetails) { this.renderErrorDetails = renderErrorDetails; }
 
         public Pagination getPagination() { return pagination; }
         public void setPagination(Pagination pagination) { this.pagination = pagination; }

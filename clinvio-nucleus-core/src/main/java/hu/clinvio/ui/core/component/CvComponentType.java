@@ -26,8 +26,7 @@ public enum CvComponentType {
     DROPDOWN("dropdown", "components/dropdown"),
     PROGRESS_BAR("progressBar", "components/progress-bar"),
     NAVBAR("navbar", "components/navbar"),
-    SIDEBAR("sidebar", "components/sidebar"),
-    WEEKLY_SCHEDULE("weeklySchedule", "components/weekly-schedule");
+    SIDEBAR("sidebar", "components/sidebar");
 
     private final String componentType;
     private final String templatePath;

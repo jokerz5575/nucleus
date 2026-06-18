@@ -13,6 +13,12 @@
       "defaultValue": ""
     },
     {
+      "name": "clinvio.ui.components.render-error-details",
+      "type": "java.lang.Boolean",
+      "description": "Include sanitized render exception details in rendered error HTML. Keep disabled in production.",
+      "defaultValue": false
+    },
+    {
       "name": "clinvio.ui.components.pagination.default-page-size",
       "type": "java.lang.Integer",
       "description": "Default page size for paginated results.",

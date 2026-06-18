@@ -79,7 +79,7 @@
     <a href="#workflow" class="doc-link">Workflow Engine</a>
 
     <div class="doc-section-title">UI</div>
-    <a href="#components" class="doc-link">Components (23)</a>
+    <a href="#components" class="doc-link">Components (22)</a>
     <a href="#templates" class="doc-link">Templates</a>
     <a href="#htmx" class="doc-link">HTMX Integration</a>
 
@@ -99,14 +99,14 @@
 
 <header class="doc-header">
     <h1>Clinvio Nucleus</h1>
-    <p>Community edition — Java framework for secure, server-rendered web applications with AES-256-GCM encryption, HTMX, and 23 UI components</p>
+    <p>Community edition — Java framework for secure, server-rendered web applications with AES-256-GCM encryption, HTMX, and 22 UI components</p>
     <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
         <span class="doc-badge doc-badge-primary">v2.3.0</span>
         <span class="doc-badge doc-badge-success">MIT License</span>
         <span class="doc-badge doc-badge-warning">Java 21+</span>
         <span class="doc-badge doc-badge-primary">Spring Boot 3.3</span>
         <span class="doc-badge doc-badge-primary">8 Modules</span>
-        <span class="doc-badge doc-badge-success">160+ Tests</span>
+        <span class="doc-badge doc-badge-success">270+ Tests</span>
     </div>
 </header>
 
@@ -116,8 +116,8 @@
     <p>Clinvio Nucleus Community is a free, open-source Java framework for building secure, server-rendered web applications. It combines Thymeleaf templates with HTMX for partial page updates, AES-256-GCM field-level encryption for sensitive data, and a modular architecture across 8 MIT-licensed modules.</p>
 
     <div class="doc-grid">
-        <div class="doc-feature"><h4>AES-256-GCM</h4><p>Field-level encryption with <code>@SensitiveData</code></p></div>
-        <div class="doc-feature"><h4>23 UI Components</h4><p>Buttons, forms, tables, cards, toasts, and more</p></div>
+        <div class="doc-feature"><h4>AES-256-GCM</h4><p>Field-level encryption with <code>@SensitiveData</code> + <code>@Convert</code></p></div>
+        <div class="doc-feature"><h4>22 UI Components</h4><p>Buttons, forms, tables, cards, toasts, and more</p></div>
         <div class="doc-feature"><h4>HTMX</h4><p>Server-rendered HTML with partial page updates</p></div>
         <div class="doc-feature"><h4>JWT Security</h4><p>Authentication, RBAC, CORS, CSRF, token refresh</p></div>
         <div class="doc-feature"><h4>Workflow Engine</h4><p>State machine for entity lifecycle management</p></div>
@@ -183,7 +183,7 @@ public class App {
     <p>Clinvio Nucleus consists of 8 modules with a clean dependency hierarchy:</p>
     <div class="doc-code"><code>clinvio-nucleus (parent)
 ├── clinvio-nucleus-core          Component model, dialect, renderer
-├── clinvio-nucleus-components    23 UI components (button, card, form, table)
+├── clinvio-nucleus-components    22 UI components (button, card, form, table)
 ├── clinvio-nucleus-themes        CSS design system (clinvio-theme.css)
 ├── clinvio-nucleus-htmx          HTMX request/response handling
 ├── clinvio-nucleus-persistence   Entities, AES encryption, SQLite dialect
@@ -401,8 +401,8 @@ public class Order extends BaseEntity implements WorkflowEngine.StatusAware&lt;O
 
 <!-- UI COMPONENTS -->
 <section id="components" class="doc-section">
-    <h2>UI Components (23)</h2>
-    <p>Clinvio provides 23 server-side UI components that render HTML with Bootstrap 5 and Clinvio theme styling. All extend <code>AbstractCvComponent</code> and use fluent builder APIs.</p>
+    <h2>UI Components (22)</h2>
+    <p>Clinvio provides 22 server-side UI components that render HTML with Bootstrap 5 and Clinvio theme styling. All extend <code>AbstractCvComponent</code> and use fluent builder APIs.</p>
 
     <h3>Basic Components</h3>
     <table class="doc-table">
@@ -725,6 +725,7 @@ documentService.delete(path);</code></div>
             <tr><td><code>clinvio.ui.htmx.version</code></td><td>String</td><td>2.0.4</td><td>HTMX version</td></tr>
             <tr><td><code>clinvio.ui.components.id-prefix</code></td><td>String</td><td>cv</td><td>Component ID prefix</td></tr>
             <tr><td><code>clinvio.ui.components.template-prefix</code></td><td>String</td><td></td><td>Template path prefix</td></tr>
+            <tr><td><code>clinvio.ui.components.render-error-details</code></td><td>Boolean</td><td>false</td><td>Include sanitized render exception details in error HTML</td></tr>
             <tr><td><code>clinvio.ui.components.pagination.default-page-size</code></td><td>Integer</td><td>10</td><td>Default page size</td></tr>
             <tr><td><code>clinvio.ui.components.pagination.max-page-size</code></td><td>Integer</td><td>100</td><td>Maximum page size</td></tr>
         </tbody>
@@ -778,7 +779,7 @@ documentService.delete(path);</code></div>
 <!-- TESTING -->
 <section id="testing" class="doc-section">
     <h2>Testing</h2>
-    <p>Clinvio Nucleus ships with 160+ tests across all 8 modules. All modules include <code>spring-boot-starter-test</code> as a test dependency.</p>
+    <p>Clinvio Nucleus ships with 270+ tests across all 8 modules. All modules include <code>spring-boot-starter-test</code> as a test dependency.</p>
 
     <h3>Run Tests</h3>
     <div class="doc-code"><code># All modules
@@ -793,10 +794,10 @@ documentService.delete(path);</code></div>
         <thead><tr><th>Module</th><th>Test Classes</th><th>Covers</th></tr></thead>
         <tbody>
             <tr><td>core</td><td>5</td><td>Dialect, components, event bus, registry, renderer</td></tr>
-            <tr><td>components</td><td>16</td><td>All 16 original components (builder, model, type)</td></tr>
-            <tr><td>persistence</td><td>4</td><td>AES crypto, encrypted converter, BaseEntity, SQLite dialect</td></tr>
+            <tr><td>components</td><td>22</td><td>All shipped components (builder, model, type)</td></tr>
+            <tr><td>persistence</td><td>5</td><td>AES crypto, encrypted converter, JPA encryption, BaseEntity, SQLite dialect</td></tr>
             <tr><td>business</td><td>8</td><td>DTOs, CSV export, pagination, services, notifications, documents</td></tr>
-            <tr><td>security</td><td>3</td><td>JWT service, password encoder, secured interceptor</td></tr>
+            <tr><td>security</td><td>4</td><td>JWT service, auto-configuration, password encoder, secured interceptor</td></tr>
             <tr><td>htmx</td><td>3</td><td>HxResponse, interceptor, filter</td></tr>
             <tr><td>starter</td><td>2</td><td>Properties, auto-configuration</td></tr>
         </tbody>
@@ -810,7 +811,7 @@ documentService.delete(path);</code></div>
         <thead><tr><th>Module</th><th>Key Classes</th><th>Purpose</th></tr></thead>
         <tbody>
             <tr><td><code>clinvio-nucleus-core</code></td><td>CvComponent, CvRenderer, ClinvioDialect, CvComponentType</td><td>Component model, Thymeleaf dialect, renderer</td></tr>
-            <tr><td><code>clinvio-nucleus-components</code></td><td>CvButton, CvCard, CvDataTable, CvModal, CvTextField, CvSelect</td><td>23 UI components with fluent builder API</td></tr>
+            <tr><td><code>clinvio-nucleus-components</code></td><td>CvButton, CvCard, CvDataTable, CvModal, CvTextField, CvSelect</td><td>22 UI components with fluent builder API</td></tr>
             <tr><td><code>clinvio-nucleus-themes</code></td><td>clinvio-theme.css</td><td>CSS design system (Bootstrap 5 + Clinvio)</td></tr>
             <tr><td><code>clinvio-nucleus-htmx</code></td><td>HxResponse, HxSwap, HxRequestFilter, CvHxRequestInterceptor</td><td>HTMX request/response handling</td></tr>
             <tr><td><code>clinvio-nucleus-persistence</code></td><td>BaseEntity, AesCryptoService, EncryptedStringConverter, SQLiteDialect</td><td>Entities, AES-256-GCM encryption, SQLite</td></tr>
@@ -836,8 +837,7 @@ documentService.delete(path);</code></div>
     <div class="doc-code"><code>git clone https://github.com/jokerz5575/nucleus.git
 cd nucleus
 ./mvnw install -N -DskipTests
-./mvnw install -DskipTests
-./mvnw test</code></div>
+./mvnw verify</code></div>
 
     <h3>Code Style</h3>
     <ul>

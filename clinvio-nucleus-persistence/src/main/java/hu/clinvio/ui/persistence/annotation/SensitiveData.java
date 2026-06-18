@@ -18,18 +18,20 @@ import java.lang.annotation.Target;
  * public class Customer extends BaseEntity {
  *
  *     @SensitiveData
+ *     @Convert(converter = EncryptedStringConverter.class)
  *     private String creditCardNumber;   // encrypted
  *
  *     @SensitiveData
+ *     @Convert(converter = EncryptedStringConverter.class)
  *     private String email;              // encrypted
  *
  *     private String name;               // NOT encrypted
  * }
  * }</pre>
  *
- * <p>This is a composed annotation that includes
- * {@code @Convert(converter = EncryptedStringConverter.class)},
- * so you only need to write {@code @SensitiveData} on each field.</p>
+ * <p>JPA providers do not reliably process converters declared only through
+ * composed annotations. Always use this annotation together with
+ * {@code @Convert(converter = EncryptedStringConverter.class)}.</p>
  *
  * <p>Requires an encryption key configured via:</p>
  * <ul>
@@ -39,6 +41,5 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Convert(converter = EncryptedStringConverter.class)
 public @interface SensitiveData {
 }

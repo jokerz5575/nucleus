@@ -20,6 +20,7 @@ class ClinvioPropertiesTest {
         assertEquals("cv", props.getComponents().getIdPrefix());
         assertTrue(props.getComponents().isStateful());
         assertEquals("", props.getComponents().getTemplatePrefix());
+        assertFalse(props.getComponents().isRenderErrorDetails());
     }
 
     @Test
@@ -54,6 +55,9 @@ class ClinvioPropertiesTest {
 
         props.getComponents().setTemplatePrefix("/templates/");
         assertEquals("/templates/", props.getComponents().getTemplatePrefix());
+
+        props.getComponents().setRenderErrorDetails(true);
+        assertTrue(props.getComponents().isRenderErrorDetails());
     }
 
     @Test

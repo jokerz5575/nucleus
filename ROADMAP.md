@@ -25,10 +25,10 @@
 - [ ] Full CLI template files (Freemarker)
 
 ### Depth & Quality
-- [ ] 15 additional UI components (modal, tabs, breadcrumb, alert, etc.)
+- [x] Additional Community UI components (modal, tabs, breadcrumb, alert, navbar, sidebar, toast, toggle, checkbox, searchable select)
 - [ ] Comprehensive integration tests (concurrency, key rotation, large datasets)
 - [ ] Migration guides (to/from Spring Boot)
-- [ ] Key management and rotation guide
+- [x] Key management and rotation guide
 - [ ] Encryption health endpoint
 
 ## v2.2.0 (Mid-term — Q4 2026)

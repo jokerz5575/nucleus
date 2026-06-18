@@ -68,4 +68,24 @@ class CvJwtServiceTest {
         assertTrue(customService.validateToken(token));
         assertEquals("u1", customService.getUserId(token));
     }
+
+    @Test
+    void constructor_shouldRejectBlankSecret() {
+        SecurityProperties props = new SecurityProperties();
+        props.getJwt().setSecret(" ");
+
+        IllegalStateException ex = assertThrows(IllegalStateException.class, () -> new CvJwtService(props));
+
+        assertTrue(ex.getMessage().contains("clinvio.security.jwt.secret"));
+    }
+
+    @Test
+    void constructor_shouldRejectShortSecret() {
+        SecurityProperties props = new SecurityProperties();
+        props.getJwt().setSecret("too-short");
+
+        IllegalStateException ex = assertThrows(IllegalStateException.class, () -> new CvJwtService(props));
+
+        assertTrue(ex.getMessage().contains("at least 32 characters"));
+    }
 }

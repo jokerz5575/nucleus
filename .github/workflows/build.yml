@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [21, 23]
+        java: [21, 23, 25]
 
     steps:
       - uses: actions/checkout@v4
@@ -24,7 +24,7 @@ jobs:
           cache: maven
 
       - name: Build and test
-        run: mvn -B install
+        run: ./mvnw -B install
 
       - name: Upload test results
         if: always()

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.Locale;
 import java.util.Map;
@@ -17,15 +18,22 @@ public class CvRenderer {
     private final TemplateEngine templateEngine;
     private final CvComponentRegistry componentRegistry;
     private final String templatePrefix;
+    private final boolean renderErrorDetails;
 
     public CvRenderer(TemplateEngine templateEngine, CvComponentRegistry componentRegistry) {
         this(templateEngine, componentRegistry, "");
     }
 
     public CvRenderer(TemplateEngine templateEngine, CvComponentRegistry componentRegistry, String templatePrefix) {
+        this(templateEngine, componentRegistry, templatePrefix, false);
+    }
+
+    public CvRenderer(TemplateEngine templateEngine, CvComponentRegistry componentRegistry, String templatePrefix,
+                      boolean renderErrorDetails) {
         this.templateEngine = templateEngine;
         this.componentRegistry = componentRegistry;
         this.templatePrefix = templatePrefix != null ? templatePrefix : "";
+        this.renderErrorDetails = renderErrorDetails;
     }
 
     public String render(CvComponent component) {
@@ -44,7 +52,7 @@ public class CvRenderer {
             return templateEngine.process(resolvedTemplate, context);
         } catch (Exception e) {
             log.error("Failed to render component {} with template {}", component.getId(), resolvedTemplate, e);
-            return "<div class=\"cv-render-error\">Component render error: " + e.getMessage() + "</div>";
+            return renderError("Component render error", e);
         }
     }
 
@@ -74,7 +82,15 @@ public class CvRenderer {
             return templateEngine.process(resolvedTemplate, context);
         } catch (Exception e) {
             log.error("Failed to render fragment {}", resolvedTemplate, e);
-            return "<div class=\"cv-render-error\">Fragment render error: " + e.getMessage() + "</div>";
+            return renderError("Fragment render error", e);
         }
+    }
+
+    private String renderError(String message, Exception exception) {
+        if (!renderErrorDetails) {
+            return "<div class=\"cv-render-error\">" + message + "</div>";
+        }
+        String detail = exception.getMessage() != null ? exception.getMessage() : exception.getClass().getSimpleName();
+        return "<div class=\"cv-render-error\">" + message + ": " + HtmlUtils.htmlEscape(detail) + "</div>";
     }
 }

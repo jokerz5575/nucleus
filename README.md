@@ -5,7 +5,7 @@
 [![Java](https://img.shields.io/badge/Java-21%2B-blue)](https://adoptium.net)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.5-brightgreen)](https://spring.io/projects/spring-boot)
 [![HTMX](https://img.shields.io/badge/HTMX-2.0.4-blueviolet)](https://htmx.org)
-[![Tests](https://img.shields.io/badge/tests-160%2B-passing-green)](https://github.com/jokerz5575/nucleus/actions)
+[![Tests](https://img.shields.io/badge/tests-270%2B-passing-green)](https://github.com/jokerz5575/nucleus/actions)
 
 Enterprise Java framework for building secure, server-rendered web applications with field-level AES-256-GCM encryption, HTMX partial updates, and modular architecture.
 
@@ -42,7 +42,7 @@ clinvio.persistence.encryption-key=${CLINVIO_ENCRYPTION_KEY}
 - **8 modular jars** (Community) — core, components, themes, HTMX, persistence, business, security, starter
 - **SQLite production-ready** — zero-config, switch to PostgreSQL with Professional tier
 - **JWT auth** — Spring Security integration with refresh, logout, and CORS
-- **23 UI components** — buttons, forms, data tables, cards, toasts, and more
+- **22 UI components** — buttons, forms, data tables, cards, toasts, and more
 - **MIT licensed** — free to use, modify, and distribute
 
 ## Community Modules (Free, MIT)
@@ -88,7 +88,7 @@ public class Patient {
 
 ```bash
 ./mvnw install -N -DskipTests      # Install parent POM
-./mvnw install -DskipTests          # Build all Community modules
+./mvnw verify                       # Build and test all Community modules
 ./mvnw test                         # Run tests
 ```
 

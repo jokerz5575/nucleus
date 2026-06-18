@@ -24,7 +24,7 @@ Open a [Feature Request](https://github.com/jokerz5575/nucleus/issues/new?templa
 ### 3. Submit Code Changes
 
 #### Prerequisites
-- Java 21+
+- Java 21+ (CI currently tests 21, 23, and 25)
 - Maven 3.9+ (use `./mvnw`)
 
 #### Setup
@@ -44,6 +44,11 @@ cd nucleus
 ```bash
 ./mvnw test -pl <your-module>
 ```
+
+If Mockito-based tests fail on newer JDKs, verify that the module includes
+`src/test/resources/mockito-extensions/org.mockito.plugins.MockMaker` with
+`mock-maker-subclass`. This avoids requiring runtime agent attachment for the
+current test suite.
 
 #### Submit a Pull Request
 1. Fork the repository

@@ -29,11 +29,10 @@ jobs:
           gpg-passphrase: GPG_PASSPHRASE
 
       - name: Build and verify
-        run: ./mvnw -B verify -DskipTests
+        run: ./mvnw -B verify
 
       - name: Publish to Maven Central
-        continue-on-error: true
-        run: ./mvnw -B deploy -DskipTests -Pcentral
+        run: ./mvnw -B deploy -Pcentral
         env:
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}

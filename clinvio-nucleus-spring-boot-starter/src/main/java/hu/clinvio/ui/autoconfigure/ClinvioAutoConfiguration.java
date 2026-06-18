@@ -65,7 +65,11 @@ public class ClinvioAutoConfiguration implements WebMvcConfigurer {
     @Bean
     @ConditionalOnMissingBean
     public CvRenderer cvRenderer(TemplateEngine templateEngine, CvComponentRegistry componentRegistry, ClinvioProperties props) {
-        return new CvRenderer(templateEngine, componentRegistry, props.getComponents().getTemplatePrefix());
+        return new CvRenderer(
+                templateEngine,
+                componentRegistry,
+                props.getComponents().getTemplatePrefix(),
+                props.getComponents().isRenderErrorDetails());
     }
 
     @PostConstruct

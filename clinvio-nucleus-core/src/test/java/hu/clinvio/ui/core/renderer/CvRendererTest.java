@@ -5,7 +5,7 @@ import hu.clinvio.ui.core.registry.CvComponentRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.StringTemplateResolver;
 
 import java.util.Map;
@@ -62,6 +62,35 @@ class CvRendererTest {
         CvRenderer renderer = new CvRenderer(templateEngine, registry, "prefix/");
         String result = renderer.renderFragment("test", Map.of());
         assertNotNull(result);
+    }
+
+    @Test
+    void renderFragmentUsesGenericErrorByDefault() {
+        CvRenderer renderer = new CvRenderer(missingTemplateEngine(), registry);
+
+        String result = renderer.renderFragment("broken", Map.of());
+
+        assertEquals("<div class=\"cv-render-error\">Fragment render error</div>", result);
+    }
+
+    @Test
+    void renderFragmentIncludesEscapedDetailsWhenEnabled() {
+        CvRenderer renderer = new CvRenderer(missingTemplateEngine(), registry, "", true);
+
+        String result = renderer.renderFragment("broken", Map.of());
+
+        assertTrue(result.startsWith("<div class=\"cv-render-error\">Fragment render error: "));
+        assertFalse(result.contains("<script>"));
+    }
+
+    private TemplateEngine missingTemplateEngine() {
+        TemplateEngine engine = new TemplateEngine();
+        ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
+        resolver.setPrefix("missing/");
+        resolver.setSuffix(".html");
+        resolver.setCheckExistence(true);
+        engine.setTemplateResolver(resolver);
+        return engine;
     }
 
     private static class TestComponent implements CvComponent {

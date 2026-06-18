@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,12 +25,15 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Arrays;
 import java.util.List;
 
 @AutoConfiguration
 @EnableConfigurationProperties(SecurityProperties.class)
 @ConditionalOnProperty(prefix = "clinvio.security", name = "enabled", matchIfMissing = true)
 public class CvSecurityAutoConfiguration {
+
+    private static final String[] PRODUCTION_PROFILES = {"prod", "production"};
 
     @Bean
     @ConditionalOnMissingBean
@@ -39,7 +43,14 @@ public class CvSecurityAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public CvJwtService cvJwtService(SecurityProperties properties) {
+    public CvJwtService cvJwtService(SecurityProperties properties, Environment environment) {
+        boolean isProduction = Arrays.stream(environment.getActiveProfiles())
+                .anyMatch(profile -> Arrays.asList(PRODUCTION_PROFILES).contains(profile));
+        if (isProduction && properties.usesDefaultJwtSecret()) {
+            throw new IllegalStateException(
+                    "FATAL: Default JWT secret cannot be used in production. " +
+                    "Set clinvio.security.jwt.secret or CLINVIO_SECURITY_JWT_SECRET.");
+        }
         return new CvJwtService(properties);
     }
 

@@ -37,9 +37,9 @@
     <li>AES-256-GCM field-level encryption for sensitive data</li>
     <li>SQLite database (default) with HikariCP connection pooling</li>
     <li>JWT authentication with refresh tokens, CORS, CSRF, RBAC</li>
-    <li>23 UI components with fluent builder API</li>
+    <li>22 UI components with fluent builder API</li>
     <li>Workflow engine for entity lifecycle management</li>
-    <li>160+ unit tests across all modules</li>
+    <li>270+ unit tests across all modules</li>
 </ul>
 
 <h3>Maven Coordinates</h3>
@@ -53,8 +53,8 @@
 
 <table>
 <tr><th>ArtifactId</th><th>Purpose</th><th>Required</th></tr>
-<tr><td>clinvio-nucleus-core</td><td>Component model, Thymeleaf dialect, renderer, 16 templates</td><td>Transitive</td></tr>
-<tr><td>clinvio-nucleus-components</td><td>23 UI components (button, card, form, table, overlay, navbar, sidebar)</td><td>Transitive</td></tr>
+<tr><td>clinvio-nucleus-core</td><td>Component model, Thymeleaf dialect, renderer, 22 templates</td><td>Transitive</td></tr>
+<tr><td>clinvio-nucleus-components</td><td>22 UI components (button, card, form, table, overlay, navbar, sidebar)</td><td>Transitive</td></tr>
 <tr><td>clinvio-nucleus-themes</td><td>CSS design system (clinvio-theme.css)</td><td>Transitive</td></tr>
 <tr><td>clinvio-nucleus-htmx</td><td>HTMX integration (HxResponse, HxSwap, HxRequestFilter)</td><td>Transitive</td></tr>
 <tr><td>clinvio-nucleus-persistence</td><td>BaseEntity, @SensitiveData, AesCryptoService, SQLite dialect</td><td><span class="important">Required</span></td></tr>
@@ -239,10 +239,10 @@ return HxResponse.builder().redirect("/orders").build();</code></pre>
 
 <hr>
 
-<h2>5. UI Components (23)</h2>
+<h2>5. UI Components (22)</h2>
 
 <h3>5.1 Component Type Enum</h3>
-<p><code>CvComponentType</code> has 23 values. Each maps a type string to a Thymeleaf template path.</p>
+<p><code>CvComponentType</code> has 22 values. Each maps a type string to a Thymeleaf template path.</p>
 
 <table>
 <tr><th>Type</th><th>Class</th><th>Template</th></tr>
@@ -268,7 +268,6 @@ return HxResponse.builder().redirect("/orders").build();</code></pre>
 <tr><td>progressBar</td><td>CvProgress</td><td>components/progress-bar</td></tr>
 <tr><td>navbar</td><td>CvNavbar</td><td>components/navbar</td></tr>
 <tr><td>sidebar</td><td>CvSidebar</td><td>components/sidebar</td></tr>
-<tr><td>weeklySchedule</td><td>—</td><td>components/weekly-schedule</td></tr>
 </table>
 
 <h3>5.2 Component Pattern</h3>
@@ -449,6 +448,7 @@ documentService.delete(path);</code></pre>
 <tr><td>clinvio.ui.htmx.version</td><td>String</td><td>2.0.4</td></tr>
 <tr><td>clinvio.ui.components.id-prefix</td><td>String</td><td>cv</td></tr>
 <tr><td>clinvio.ui.components.template-prefix</td><td>String</td><td></td></tr>
+<tr><td>clinvio.ui.components.render-error-details</td><td>Boolean</td><td>false</td></tr>
 <tr><td>clinvio.ui.components.pagination.default-page-size</td><td>Integer</td><td>10</td></tr>
 <tr><td>clinvio.ui.components.pagination.max-page-size</td><td>Integer</td><td>100</td></tr>
 </table>
@@ -536,10 +536,10 @@ documentService.delete(path);</code></pre>
 <hr>
 
 <h2>11. Build & Test</h2>
-<pre><code># Build all modules
-./mvnw install -DskipTests
+<pre><code># Build and test all modules
+./mvnw verify
 
-# Run all tests (160+)
+# Run all tests (270+)
 ./mvnw test
 
 # Run specific module tests
@@ -547,7 +547,7 @@ documentService.delete(path);</code></pre>
 ./mvnw test -pl clinvio-nucleus-security
 
 # Package JARs
-./mvnw package -DskipTests</code></pre>
+./mvnw package</code></pre>
 
 <hr>
 

@@ -25,8 +25,15 @@ public class CvJwtService {
 
     public CvJwtService(SecurityProperties properties) {
         this.properties = properties;
+        String secret = properties.getJwt().getSecret();
+        if (secret == null || secret.isBlank()) {
+            throw new IllegalStateException("JWT secret must be configured with clinvio.security.jwt.secret.");
+        }
+        if (secret.length() < SecurityProperties.MIN_JWT_SECRET_LENGTH) {
+            throw new IllegalStateException("JWT secret must be at least 32 characters.");
+        }
         this.key = Keys.hmacShaKeyFor(
-                properties.getJwt().getSecret().getBytes(StandardCharsets.UTF_8));
+                secret.getBytes(StandardCharsets.UTF_8));
     }
 
     /**

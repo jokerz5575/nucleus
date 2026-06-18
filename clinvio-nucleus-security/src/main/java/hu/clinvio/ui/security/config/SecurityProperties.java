@@ -16,6 +16,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "clinvio.security")
 public class SecurityProperties {
 
+    public static final String DEFAULT_JWT_SECRET = "clinvio-default-secret-change-in-production-min-32-chars";
+    public static final int MIN_JWT_SECRET_LENGTH = 32;
+
     private boolean enabled = true;
     private Jwt jwt = new Jwt();
     private Cors cors = new Cors();
@@ -41,8 +44,12 @@ public class SecurityProperties {
     public String[] getPermitPaths() { return permitPaths; }
     public void setPermitPaths(String[] permitPaths) { this.permitPaths = permitPaths; }
 
+    public boolean usesDefaultJwtSecret() {
+        return DEFAULT_JWT_SECRET.equals(jwt.getSecret());
+    }
+
     public static class Jwt {
-        private String secret = "clinvio-default-secret-change-in-production-min-32-chars";
+        private String secret = DEFAULT_JWT_SECRET;
         private long expiration = 86400000; // 24 hours
         private long refreshExpiration = 604800000; // 7 days
         private String header = "Authorization";
