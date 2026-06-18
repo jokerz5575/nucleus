@@ -29,7 +29,7 @@ public class CvTimeline extends AbstractCvComponent {
     public String getComponentType() { return CvComponentType.TIMELINE.getType(); }
 
     @Override
-    public String getTemplate() { return "cv/components/timeline"; }
+    public String getTemplate() {         return CvComponentType.TIMELINE.getDefaultTemplate(); }
 
     @Override
     public Map<String, Object> getTemplateModel() {

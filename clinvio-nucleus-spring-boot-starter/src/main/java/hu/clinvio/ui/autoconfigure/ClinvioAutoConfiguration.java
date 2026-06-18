@@ -20,6 +20,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import jakarta.annotation.PostConstruct;
+
 /**
  * Auto-configuration for Clinvio UI Framework.
  * Automatically sets up the dialect, component registry, renderer, and HTMX filter.
@@ -66,9 +68,9 @@ public class ClinvioAutoConfiguration implements WebMvcConfigurer {
         return new CvRenderer(templateEngine, componentRegistry, props.getComponents().getTemplatePrefix());
     }
 
-    @Bean
-    public void configurePagination(ClinvioProperties props) {
-        var paginationProps = props.getComponents().getPagination();
+    @PostConstruct
+    public void configurePagination() {
+        var paginationProps = properties.getComponents().getPagination();
         hu.clinvio.ui.business.util.Pagination.configure(
                 paginationProps.getDefaultPageSize(),
                 paginationProps.getMaxPageSize());

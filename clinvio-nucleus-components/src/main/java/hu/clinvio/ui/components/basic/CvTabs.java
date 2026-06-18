@@ -27,7 +27,7 @@ public class CvTabs extends AbstractCvComponent {
     public String getComponentType() { return CvComponentType.TABS.getType(); }
 
     @Override
-    public String getTemplate() { return "cv/components/tabs"; }
+    public String getTemplate() {         return CvComponentType.TABS.getDefaultTemplate(); }
 
     @Override
     public Map<String, Object> getTemplateModel() {

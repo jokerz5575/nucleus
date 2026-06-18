@@ -2,6 +2,7 @@ package hu.clinvio.ui.security.filter;
 
 import hu.clinvio.ui.security.config.SecurityProperties;
 import hu.clinvio.ui.security.service.CvJwtService;
+import hu.clinvio.ui.security.service.TokenBlacklistService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,10 +21,13 @@ public class CvJwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final CvJwtService jwtService;
     private final SecurityProperties properties;
+    private final TokenBlacklistService blacklistService;
 
-    public CvJwtAuthenticationFilter(CvJwtService jwtService, SecurityProperties properties) {
+    public CvJwtAuthenticationFilter(CvJwtService jwtService, SecurityProperties properties,
+                                     TokenBlacklistService blacklistService) {
         this.jwtService = jwtService;
         this.properties = properties;
+        this.blacklistService = blacklistService;
     }
 
     @Override
@@ -40,7 +44,7 @@ public class CvJwtAuthenticationFilter extends OncePerRequestFilter {
         String header = request.getHeader(properties.getJwt().getHeader());
         String token = jwtService.extractToken(header);
 
-        if (token != null && jwtService.validateToken(token)) {
+        if (token != null && !blacklistService.isBlacklisted(token) && jwtService.validateToken(token)) {
             String userId = jwtService.getUserId(token);
             String username = jwtService.getUsername(token);
             String[] roles = jwtService.getRoles(token);

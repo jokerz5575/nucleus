@@ -1,0 +1,17 @@
+<div th:id="${id}"
+     th:class="'cv-stepper ' + ${cssClass}"
+     th:attr="data-cv-component='stepper', ${attributes}"
+     th:if="${visible}">
+  <th:block th:each="step, stat : ${steps}">
+    <div th:class="'cv-stepper-step ' + ${step.status}" th:attr="data-index=${stat.index}">
+      <div class="cv-stepper-circle" th:text="${stat.index + 1}"></div>
+      <div>
+        <div class="cv-stepper-label" th:text="${step.title}"></div>
+        <small th:if="${step.description}" class="text-muted" th:text="${step.description}"></small>
+      </div>
+    </div>
+    <div th:if="${!stat.last}"
+         th:class="'cv-stepper-connector' + (${step.status} == 'completed' ? ' completed' : '')">
+    </div>
+  </th:block>
+</div>

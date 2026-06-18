@@ -1,0 +1,16 @@
+<button th:id="${id}"
+        th:class="'btn ' + ${type.cssClass} + ' ' + ${size.cssClass} + ' ' + ${cssClass}"
+        th:disabled="${disabled}"
+        th:attr="
+          data-cv-component='button',
+          ${loading} ? 'data-cv-loading=true' : '',
+          ${hxGet} ? 'hx-get=' + ${hxGet} : '',
+          ${hxPost} ? 'hx-post=' + ${hxPost} : '',
+          ${hxTarget} ? 'hx-target=' + ${hxTarget} : '',
+          ${hxSwap} ? 'hx-swap=' + ${hxSwap} : '',
+          ${attributes}"
+        th:if="${visible}">
+  <span th:if="${icon}" class="cv-btn-icon" th:text="${icon}"></span>
+  <span th:if="${loading}" class="cv-btn-spinner"></span>
+  <span th:text="${label}">Button</span>
+</button>

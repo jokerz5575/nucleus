@@ -1,0 +1,23 @@
+<div th:id="${id}"
+     th:class="${variant.cssClass} + ' ' + ${cssClass}"
+     th:attr="data-cv-component='card',
+       ${hxGet} ? 'hx-get=' + ${hxGet} : '',
+       ${hxTarget} ? 'hx-target=' + ${hxTarget} : '',
+       ${attributes}"
+     th:if="${visible}">
+  <div th:if="${title}" class="d-flex justify-content-between align-items-start mb-2">
+    <div>
+      <h5 class="mb-0" th:text="${title}"></h5>
+      <small th:if="${subtitle}" class="text-muted" th:text="${subtitle}"></small>
+    </div>
+    <div th:if="${!#lists.isEmpty(actions)}" class="d-flex gap-1">
+      <a th:each="action : ${actions}"
+         th:href="${action.url}"
+         th:text="${action.label}"
+         th:attr="${action.hxTarget} ? 'hx-target=' + ${action.hxTarget} : ''"
+         class="btn btn-sm btn-outline-primary"></a>
+    </div>
+  </div>
+  <div th:if="${body}" class="cv-card-body" th:text="${body}"></div>
+  <div th:if="${footer}" class="cv-card-footer mt-2 pt-2 border-top text-muted small" th:text="${footer}"></div>
+</div>

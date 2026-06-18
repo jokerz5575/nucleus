@@ -26,7 +26,7 @@ public class CvAlert extends AbstractCvComponent {
     public String getComponentType() { return CvComponentType.ALERT.getType(); }
 
     @Override
-    public String getTemplate() { return "cv/components/alert"; }
+    public String getTemplate() {         return CvComponentType.ALERT.getDefaultTemplate(); }
 
     @Override
     public Map<String, Object> getTemplateModel() {

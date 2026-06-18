@@ -26,7 +26,7 @@ public class CvAvatar extends AbstractCvComponent {
     public String getComponentType() { return CvComponentType.AVATAR.getType(); }
 
     @Override
-    public String getTemplate() { return "cv/components/avatar"; }
+    public String getTemplate() {         return CvComponentType.AVATAR.getDefaultTemplate(); }
 
     @Override
     public Map<String, Object> getTemplateModel() {

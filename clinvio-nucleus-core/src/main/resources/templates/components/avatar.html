@@ -1,0 +1,8 @@
+<div th:id="${id}"
+     th:class="'cv-avatar cv-avatar-' + ${size} + (${variant} ? ' cv-avatar-' + ${variant} : '') + ' ' + ${cssClass}"
+     th:attr="data-cv-component='avatar',
+       ${attributes}"
+     th:if="${visible}">
+  <img th:if="${imageUrl}" th:src="${imageUrl}" th:alt="${name}" />
+  <span th:if="${!imageUrl}" th:text="${initials}"></span>
+</div>

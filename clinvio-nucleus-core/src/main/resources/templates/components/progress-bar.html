@@ -1,0 +1,15 @@
+<div th:id="${id}"
+     th:class="'cv-progress-bar' + (${variant} ? ' cv-progress-' + ${variant} : '') + ' ' + ${cssClass}"
+     th:attr="data-cv-component='progressBar', ${attributes}"
+     th:if="${visible}">
+  <div class="progress-bar"
+       role="progressbar"
+       th:style="'width: ' + ${percent} + '%'"
+       th:attr="
+         aria-valuenow=${value},
+         aria-valuemin=0,
+         aria-valuemax=${max},
+         ${striped} ? 'aria-valuetext=' + ${value} + '/' + ${max} : ''">
+    <span th:if="${showLabel}" th:text="${percent} + '%'"></span>
+  </div>
+</div>

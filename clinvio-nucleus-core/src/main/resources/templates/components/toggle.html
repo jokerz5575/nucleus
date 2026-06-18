@@ -1,0 +1,19 @@
+<div th:id="${id}"
+     th:class="'cv-toggle ' + ${variant.cssClass} + ' ' + ${cssClass}"
+     th:attr="data-cv-component='toggle', ${attributes}"
+     th:if="${visible}">
+  <div class="form-check form-switch">
+    <input th:id="${id + '-input'}"
+           type="checkbox"
+           class="form-check-input"
+           role="switch"
+           th:checked="${on}"
+           th:disabled="${disabled}"
+           th:attr="
+             ${hxGet} ? 'hx-get=' + ${hxGet} : '',
+             ${hxPost} ? 'hx-post=' + ${hxPost} : '',
+             ${hxTarget} ? 'hx-target=' + ${hxTarget} : '',
+             ${hxTrigger} ? 'hx-trigger=' + ${hxTrigger} : ''" />
+    <label th:if="${label}" th:for="${id + '-input'}" th:class="'form-check-label' + (${labelPosition == 'LEFT'} ? ' order-first me-2' : ' ms-2')" th:text="${label}"></label>
+  </div>
+</div>

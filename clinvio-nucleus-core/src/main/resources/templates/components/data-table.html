@@ -1,0 +1,48 @@
+<div th:id="${id}"
+     th:class="'cv-data-table ' + ${cssClass}"
+     th:attr="data-cv-component='dataTable',
+       ${hxGet} ? 'hx-get=' + ${hxGet} : '',
+       ${hxTarget} ? 'hx-target=' + ${hxTarget} : '',
+       ${attributes}"
+     th:if="${visible}">
+  <div th:if="${searchable}" class="cv-table-search">
+    <input type="text" class="form-control form-control-sm"
+           th:value="${searchQuery}"
+           placeholder="Search..."
+           th:attr="hx-get=${hxGet}, hx-target=${hxTarget}, hx-trigger='keyup changed delay:300ms'" />
+  </div>
+  <div class="cv-table-wrapper">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th th:each="col : ${columns}"
+              th:text="${col.header}"
+              th:class="${col.sortable} ? 'sortable' : ''"
+              th:style="${col.width} ? 'width:' + ${col.width} : ''"
+              th:attr="data-sort=${col.sortable} ? ${col.key} : null">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="row : ${data}">
+          <td th:each="col : ${columns}"
+              th:text="${row[col.key]}"
+              th:class="${col.align} ? 'text-' + ${col.align} : ''">
+          </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(data)}">
+          <td th:attr="colspan=${#lists.size(columns)}" class="text-center text-muted py-4" th:text="${emptyMessage}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div th:if="${pageable and totalPages > 1}" class="d-flex justify-content-between align-items-center p-2 border-top">
+    <small class="text-muted">Page <span th:text="${currentPage + 1}"></span> of <span th:text="${totalPages}"></span></small>
+    <div class="btn-group btn-group-sm">
+      <button th:if="${hasPrevious}" type="button" class="btn btn-outline-secondary"
+              th:attr="hx-get=${hxGet}, hx-target=${hxTarget}, name='page', th:value=${currentPage - 1}">Previous</button>
+      <button th:if="${hasNext}" type="button" class="btn btn-outline-secondary"
+              th:attr="hx-get=${hxGet}, hx-target=${hxTarget}, name='page', th:value=${currentPage + 1}">Next</button>
+    </div>
+  </div>
+</div>

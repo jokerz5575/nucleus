@@ -1,0 +1,21 @@
+<div th:id="${id}"
+     th:class="'cv-field ' + ${state.cssClass} + ' ' + ${cssClass}"
+     th:attr="data-cv-component='textField', ${attributes}"
+     th:if="${visible}">
+  <label th:if="${label}" th:for="${id + '-input'}" th:text="${label}" class="form-label"></label>
+  <input th:id="${id + '-input'}"
+         th:type="${type}"
+         th:value="${value}"
+         th:placeholder="${placeholder}"
+         th:required="${required}"
+         th:disabled="${disabled}"
+         th:readonly="${readonly}"
+         th:class="'form-control' + (${state.name()} == 'ERROR' ? ' is-invalid' : '')"
+         th:attr="
+           ${hxGet} ? 'hx-get=' + ${hxGet} : '',
+           ${hxPost} ? 'hx-post=' + ${hxPost} : '',
+           ${hxTarget} ? 'hx-target=' + ${hxTarget} : '',
+           ${hxTrigger} ? 'hx-trigger=' + ${hxTrigger} : ''" />
+  <div th:if="${errorMessage}" class="invalid-feedback" th:text="${errorMessage}"></div>
+  <small th:if="${helpText}" class="form-text text-muted" th:text="${helpText}"></small>
+</div>

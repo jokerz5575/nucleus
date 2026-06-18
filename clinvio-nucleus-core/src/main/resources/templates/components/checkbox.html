@@ -1,0 +1,21 @@
+<div th:id="${id}"
+     th:class="'cv-field-checkbox ' + ${cssClass}"
+     th:attr="data-cv-component='checkbox', ${attributes}"
+     th:if="${visible}">
+  <div class="form-check" th:classappend="${state != null ? state.cssClass : ''}">
+    <input th:id="${id + '-input'}"
+           type="checkbox"
+           class="form-check-input"
+           th:checked="${checked}"
+           th:disabled="${disabled}"
+           th:attr="
+             ${indeterminate} ? 'data-indeterminate=true' : '',
+             ${hxGet} ? 'hx-get=' + ${hxGet} : '',
+             ${hxPost} ? 'hx-post=' + ${hxPost} : '',
+             ${hxTarget} ? 'hx-target=' + ${hxTarget} : '',
+             ${hxTrigger} ? 'hx-trigger=' + ${hxTrigger} : ''" />
+    <label th:if="${label}" th:for="${id + '-input'}" class="form-check-label" th:text="${label}"></label>
+  </div>
+  <div th:if="${errorMessage}" class="invalid-feedback" th:text="${errorMessage}"></div>
+  <small th:if="${helpText}" class="form-text text-muted" th:text="${helpText}"></small>
+</div>

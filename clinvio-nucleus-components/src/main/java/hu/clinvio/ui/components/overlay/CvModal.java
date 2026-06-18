@@ -38,7 +38,7 @@ public class CvModal extends AbstractCvComponent {
     public String getComponentType() { return CvComponentType.MODAL.getType(); }
 
     @Override
-    public String getTemplate() { return "cv/components/modal"; }
+    public String getTemplate() {         return CvComponentType.MODAL.getDefaultTemplate(); }
 
     @Override
     public Map<String, Object> getTemplateModel() {

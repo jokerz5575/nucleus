@@ -1,0 +1,184 @@
+{
+  "properties": [
+    {
+      "name": "clinvio.ui.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable Clinvio UI auto-configuration.",
+      "defaultValue": true
+    },
+    {
+      "name": "clinvio.ui.components.template-prefix",
+      "type": "java.lang.String",
+      "description": "Prefix for component templates.",
+      "defaultValue": ""
+    },
+    {
+      "name": "clinvio.ui.components.pagination.default-page-size",
+      "type": "java.lang.Integer",
+      "description": "Default page size for paginated results.",
+      "defaultValue": 10
+    },
+    {
+      "name": "clinvio.ui.components.pagination.max-page-size",
+      "type": "java.lang.Integer",
+      "description": "Maximum page size for paginated results.",
+      "defaultValue": 100
+    },
+    {
+      "name": "clinvio.ui.css.path",
+      "type": "java.lang.String",
+      "description": "Path to Clinvio CSS resources.",
+      "defaultValue": "classpath:/static/cv/css/"
+    },
+    {
+      "name": "clinvio.ui.js.path",
+      "type": "java.lang.String",
+      "description": "Path to Clinvio JS resources.",
+      "defaultValue": "classpath:/static/cv/js/"
+    },
+    {
+      "name": "clinvio.ui.htmx.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable HTMX filter registration.",
+      "defaultValue": true
+    },
+    {
+      "name": "clinvio.persistence.encryption-key",
+      "type": "java.lang.String",
+      "description": "AES-256-GCM encryption key. In production, use environment variable CLINVIO_ENCRYPTION_KEY."
+    },
+    {
+      "name": "clinvio.persistence.encryption-salt",
+      "type": "java.lang.String",
+      "description": "Salt for PBKDF2 key derivation."
+    },
+    {
+      "name": "clinvio.persistence.database-path",
+      "type": "java.lang.String",
+      "description": "SQLite database file path.",
+      "defaultValue": "./data/app.db"
+    },
+    {
+      "name": "clinvio.persistence.ddl-auto",
+      "type": "java.lang.Boolean",
+      "description": "Enable Hibernate DDL auto-update.",
+      "defaultValue": true
+    },
+    {
+      "name": "clinvio.security.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable Clinvio Security auto-configuration.",
+      "defaultValue": true
+    },
+    {
+      "name": "clinvio.security.jwt.secret",
+      "type": "java.lang.String",
+      "description": "HMAC-SHA signing key for JWT tokens (minimum 32 characters)."
+    },
+    {
+      "name": "clinvio.security.jwt.expiration",
+      "type": "java.lang.Long",
+      "description": "Access token expiration in milliseconds.",
+      "defaultValue": 86400000
+    },
+    {
+      "name": "clinvio.security.jwt.refresh-expiration",
+      "type": "java.lang.Long",
+      "description": "Refresh token expiration in milliseconds.",
+      "defaultValue": 604800000
+    },
+    {
+      "name": "clinvio.security.jwt.header",
+      "type": "java.lang.String",
+      "description": "HTTP header name for JWT token.",
+      "defaultValue": "Authorization"
+    },
+    {
+      "name": "clinvio.security.jwt.prefix",
+      "type": "java.lang.String",
+      "description": "Prefix in the Authorization header value.",
+      "defaultValue": "Bearer "
+    },
+    {
+      "name": "clinvio.security.login-page",
+      "type": "java.lang.String",
+      "description": "Login page path.",
+      "defaultValue": "/login"
+    },
+    {
+      "name": "clinvio.security.permit-paths",
+      "type": "java.lang.String[]",
+      "description": "Paths that bypass JWT authentication."
+    },
+    {
+      "name": "clinvio.security.cors.allowed-origins",
+      "type": "java.lang.String[]",
+      "description": "Allowed CORS origins.",
+      "defaultValue": ["*"]
+    },
+    {
+      "name": "clinvio.security.cors.allowed-methods",
+      "type": "java.lang.String[]",
+      "description": "Allowed CORS HTTP methods."
+    },
+    {
+      "name": "clinvio.security.cors.allowed-headers",
+      "type": "java.lang.String[]",
+      "description": "Allowed CORS headers."
+    },
+    {
+      "name": "clinvio.security.cors.allow-credentials",
+      "type": "java.lang.Boolean",
+      "description": "Allow credentials in CORS requests.",
+      "defaultValue": false
+    },
+    {
+      "name": "clinvio.security.csrf.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable CSRF protection.",
+      "defaultValue": true
+    },
+    {
+      "name": "clinvio.security.csrf.header-name",
+      "type": "java.lang.String",
+      "description": "CSRF token header name.",
+      "defaultValue": "X-CSRF-Token"
+    },
+    {
+      "name": "clinvio.connection-pool.maximum-pool-size",
+      "type": "java.lang.Integer",
+      "description": "HikariCP maximum pool size.",
+      "defaultValue": 10
+    },
+    {
+      "name": "clinvio.connection-pool.minimum-idle",
+      "type": "java.lang.Integer",
+      "description": "HikariCP minimum idle connections.",
+      "defaultValue": 5
+    },
+    {
+      "name": "clinvio.connection-pool.idle-timeout",
+      "type": "java.lang.Long",
+      "description": "HikariCP idle timeout in milliseconds.",
+      "defaultValue": 300000
+    },
+    {
+      "name": "clinvio.connection-pool.max-lifetime",
+      "type": "java.lang.Long",
+      "description": "HikariCP max lifetime in milliseconds.",
+      "defaultValue": 1800000
+    },
+    {
+      "name": "clinvio.connection-pool.connection-timeout",
+      "type": "java.lang.Long",
+      "description": "HikariCP connection timeout in milliseconds.",
+      "defaultValue": 30000
+    },
+    {
+      "name": "clinvio.connection-pool.pool-name",
+      "type": "java.lang.String",
+      "description": "HikariCP pool name.",
+      "defaultValue": "ClinvioPool"
+    }
+  ]
+}

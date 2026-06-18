@@ -1,0 +1,16 @@
+<div th:id="${id}"
+     th:class="'cv-stat-card ' + ${variant.cssClass} + ' ' + ${cssClass}"
+     th:attr="data-cv-component='statCard',
+       ${hxGet} ? 'hx-get=' + ${hxGet} : '',
+       ${hxTarget} ? 'hx-target=' + ${hxTarget} : '',
+       ${attributes}"
+     th:if="${visible}">
+  <div class="d-flex justify-content-between align-items-start">
+    <div>
+      <div class="cv-stat-value" th:text="${value}"></div>
+      <div class="cv-stat-label" th:text="${label}"></div>
+      <div th:if="${delta}" th:class="'cv-stat-delta ' + ${deltaType.cssClass}" th:text="${delta}"></div>
+    </div>
+    <div th:if="${icon}" class="cv-stat-icon" th:text="${icon}"></div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div th:id="${id}"
+     th:class="'cv-modal modal fade' + (${size} ? ' cv-modal-' + ${size} : '') + ' ' + ${cssClass}"
+     th:attr="data-cv-component='modal',
+       tabindex='-1',
+       aria-labelledby=${id + '-title'},
+       aria-hidden='true',
+       ${backdrop} ? 'data-bs-backdrop=static' : 'data-bs-backdrop=false',
+       ${attributes}"
+     th:if="${visible}">
+  <div th:class="'modal-dialog' + (${size} == 'lg' ? ' modal-lg' : ${size} == 'sm' ? ' modal-sm' : '')">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 th:id="${id + '-title'}" class="modal-title" th:text="${title}"></h5>
+        <button th:if="${closable}" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" th:text="${content}"></div>
+      <div th:if="${confirmText or cancelText}" class="modal-footer">
+        <button th:if="${cancelText}" type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="${cancelText}">Cancel</button>
+        <button th:if="${confirmText}" type="button" class="btn btn-primary"
+                th:attr="${confirmAction} ? 'hx-post=' + ${confirmAction} : ''"
+                th:text="${confirmText}">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -41,7 +41,7 @@ public class CvStepper extends AbstractCvComponent {
     public String getComponentType() { return CvComponentType.STEPPER.getType(); }
 
     @Override
-    public String getTemplate() { return "cv/components/stepper"; }
+    public String getTemplate() {         return CvComponentType.STEPPER.getDefaultTemplate(); }
 
     @Override
     public Map<String, Object> getTemplateModel() {

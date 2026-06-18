@@ -1,0 +1,16 @@
+<div th:id="${id}"
+     th:class="'cv-timeline ' + ${cssClass}"
+     th:attr="data-cv-component='timeline', ${attributes}"
+     th:if="${visible}">
+  <div th:each="item : ${items}" class="cv-timeline-item">
+    <div th:class="'cv-timeline-dot' + (${item.status} ? ' cv-timeline-' + ${item.status} : '')"></div>
+    <div class="cv-timeline-content">
+      <div class="cv-timeline-title" th:text="${item.title}"></div>
+      <div th:if="${item.description}" class="cv-timeline-description" th:text="${item.description}"></div>
+      <div th:if="${item.time}" class="cv-timestamp">
+        <span th:if="${item.icon}" th:class="'bi ' + ${item.icon}" class="me-1"></span>
+        <span th:text="${item.time}"></span>
+      </div>
+    </div>
+  </div>
+</div>

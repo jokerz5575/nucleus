@@ -1,0 +1,22 @@
+<div th:id="${id}"
+     th:class="'cv-field ' + ${state.cssClass} + ' ' + ${cssClass}"
+     th:attr="data-cv-component='select', ${attributes}"
+     th:if="${visible}">
+  <label th:if="${label}" th:for="${id + '-select'}" th:text="${label}" class="form-label"></label>
+  <select th:id="${id + '-select'}"
+          th:class="'form-select' + (${state.name()} == 'ERROR' ? ' is-invalid' : '')"
+          th:required="${required}"
+          th:disabled="${disabled}"
+          th:attr="
+            ${hxGet} ? 'hx-get=' + ${hxGet} : '',
+            ${hxPost} ? 'hx-post=' + ${hxPost} : '',
+            ${hxTarget} ? 'hx-target=' + ${hxTarget} : ''">
+    <option th:if="${placeholder}" th:value="" th:text="${placeholder}"></option>
+    <option th:each="opt : ${options}"
+            th:value="${opt.value}"
+            th:selected="${opt.selected}"
+            th:text="${opt.label}"></option>
+  </select>
+  <div th:if="${errorMessage}" class="invalid-feedback" th:text="${errorMessage}"></div>
+  <small th:if="${helpText}" class="form-text text-muted" th:text="${helpText}"></small>
+</div>

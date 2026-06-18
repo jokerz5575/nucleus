@@ -29,7 +29,7 @@ public class CvBreadcrumb extends AbstractCvComponent {
     public String getComponentType() { return CvComponentType.BREADCRUMB.getType(); }
 
     @Override
-    public String getTemplate() { return "cv/components/breadcrumb"; }
+    public String getTemplate() {         return CvComponentType.BREADCRUMB.getDefaultTemplate(); }
 
     @Override
     public Map<String, Object> getTemplateModel() {

@@ -1,0 +1,5 @@
+<span th:id="${id}"
+      th:class="'cv-badge cv-badge-' + ${variant} + ' ' + ${cssClass}"
+      th:attr="data-cv-component='badge', ${attributes}"
+      th:if="${visible}"
+      th:text="${text}">Badge</span>

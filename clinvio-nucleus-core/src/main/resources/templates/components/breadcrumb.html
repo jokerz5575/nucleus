@@ -1,0 +1,13 @@
+<nav th:id="${id}"
+     th:class="'cv-breadcrumb ' + ${cssClass}"
+     th:attr="data-cv-component='breadcrumb', aria-label='breadcrumb', ${attributes}"
+     th:if="${visible}">
+  <ol class="cv-breadcrumb">
+    <li th:each="item : ${items}"
+        th:class="'cv-breadcrumb-item' + (${item.active} ? ' active' : '')"
+        th:attr="aria-current=${item.active} ? 'page' : null">
+      <a th:if="${!item.active and item.url}" th:href="${item.url}" th:text="${item.label}"></a>
+      <span th:if="${item.active}" th:text="${item.label}"></span>
+    </li>
+  </ol>
+</nav>

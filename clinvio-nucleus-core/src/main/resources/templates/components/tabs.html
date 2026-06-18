@@ -1,0 +1,29 @@
+<div th:id="${id}"
+     th:class="'cv-tabs ' + ${cssClass}"
+     th:attr="data-cv-component='tabs', ${attributes}"
+     th:if="${visible}">
+  <ul class="nav" role="tablist">
+    <li th:each="tab, stat : ${tabs}" class="nav-item" role="presentation">
+      <button th:class="'nav-link' + (${stat.index} == ${activeIndex} ? ' active' : '')"
+              th:attr="
+                id=${tab.id + '-tab'},
+                data-bs-toggle='tab',
+                data-bs-target='#' + ${tab.id},
+                type='button',
+                role='tab',
+                aria-controls=${tab.id},
+                aria-selected=${stat.index == activeIndex}"
+              th:text="${tab.label}">
+      </button>
+    </li>
+  </ul>
+  <div class="tab-content mt-3">
+    <div th:each="tab, stat : ${tabs}"
+         th:id="${tab.id}"
+         th:class="'tab-pane fade' + (${stat.index} == ${activeIndex} ? ' show active' : '')"
+         role="tabpanel"
+         th:attr="aria-labelledby=${tab.id + '-tab'}">
+      <div th:text="${tab.content}"></div>
+    </div>
+  </div>
+</div>

@@ -33,26 +33,34 @@ public class CvJwtService {
      * Generate a JWT token.
      */
     public String generateToken(String userId, String username, String... roles) {
-        Date now = new Date();
-        Date expiry = new Date(now.getTime() + properties.getJwt().getExpiration());
-
-        JwtBuilder builder = Jwts.builder()
-                .subject(userId)
-                .claim("username", username)
-                .claim("roles", roles)
-                .issuedAt(now)
-                .expiration(expiry)
-                .signWith(key);
-
-        return builder.compact();
+        return buildToken(userId, username, null, properties.getJwt().getExpiration(), roles);
     }
 
     /**
      * Generate a JWT token with custom claims.
      */
     public String generateToken(String userId, String username, Map<String, Object> claims) {
+        return buildToken(userId, username, claims, properties.getJwt().getExpiration());
+    }
+
+    /**
+     * Generate a refresh token with extended expiry.
+     */
+    public String generateRefreshToken(String userId, String username) {
+        return buildToken(userId, username, null, properties.getJwt().getRefreshExpiration());
+    }
+
+    /**
+     * Validate a refresh token (does not check blacklist).
+     */
+    public boolean validateRefreshToken(String token) {
+        return validateToken(token);
+    }
+
+    private String buildToken(String userId, String username, Map<String, Object> claims,
+                               long expirationMs, String... roles) {
         Date now = new Date();
-        Date expiry = new Date(now.getTime() + properties.getJwt().getExpiration());
+        Date expiry = new Date(now.getTime() + expirationMs);
 
         JwtBuilder builder = Jwts.builder()
                 .subject(userId)
@@ -61,7 +69,13 @@ public class CvJwtService {
                 .expiration(expiry)
                 .signWith(key);
 
-        claims.forEach(builder::claim);
+        if (roles != null && roles.length > 0) {
+            builder.claim("roles", roles);
+        }
+
+        if (claims != null) {
+            claims.forEach(builder::claim);
+        }
 
         return builder.compact();
     }

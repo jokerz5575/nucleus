@@ -1,0 +1,22 @@
+<nav th:id="${id}"
+     th:class="'cv-navbar navbar navbar-expand-lg navbar-light bg-light ' + ${cssClass}"
+     th:attr="data-cv-component='navbar', ${attributes}"
+     th:if="${visible}">
+  <div class="container-fluid">
+    <a class="navbar-brand" th:href="${brandUrl}" th:text="${brand}">Brand</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            th:attr="data-bs-target='#' + ${id} + '-collapse'"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div th:id="${id} + '-collapse'" class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto">
+        <li th:each="link : ${links}" th:class="'nav-item' + (${link.active} ? ' active' : '')">
+          <a class="nav-link" th:href="${link.url}" th:text="${link.label}"
+             th:attr="aria-current=${link.active} ? 'page' : null"></a>
+        </li>
+      </ul>
+      <div th:if="${userMenu}" class="d-flex" th:insert="${userMenu}"></div>
+    </div>
+  </div>
+</nav>

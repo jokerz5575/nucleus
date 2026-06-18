@@ -30,7 +30,7 @@ public class CvProgress extends AbstractCvComponent {
     public String getComponentType() { return CvComponentType.PROGRESS_BAR.getType(); }
 
     @Override
-    public String getTemplate() { return "cv/components/progress"; }
+    public String getTemplate() {         return CvComponentType.PROGRESS_BAR.getDefaultTemplate(); }
 
     @Override
     public Map<String, Object> getTemplateModel() {

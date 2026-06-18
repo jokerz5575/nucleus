@@ -1,0 +1,13 @@
+<div th:id="${id}"
+     th:class="'cv-toast toast ' + ${severity.cssClass} + ' ' + ${position} + ' ' + ${cssClass}"
+     th:attr="data-cv-component='toast', role='alert', aria-live='assertive', aria-atomic='true',
+       data-bs-autohide=${autoDismiss}, data-bs-delay=${duration},
+       ${attributes}"
+     th:if="${visible}">
+  <div class="toast-header">
+    <span th:if="${icon}" th:class="'cv-toast-icon bi ' + ${icon} + ' me-2'"></span>
+    <strong class="me-auto" th:text="${title}">Toast</strong>
+    <button th:if="${dismissible}" type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+  <div class="toast-body" th:text="${message}"></div>
+</div>

@@ -45,12 +45,12 @@ public enum CvComponentType {
         return templatePath;
     }
 
-    public static CvComponentType fromType(String type) {
+    public static java.util.Optional<CvComponentType> fromType(String type) {
         for (CvComponentType ct : values()) {
             if (ct.componentType.equals(type)) {
-                return ct;
+                return java.util.Optional.of(ct);
             }
         }
-        throw new IllegalArgumentException("Unknown component type: " + type);
+        return java.util.Optional.empty();
     }
 }

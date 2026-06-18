@@ -1,0 +1,25 @@
+<div th:id="${id}"
+     th:class="'cv-searchable-select ' + ${cssClass}"
+     th:attr="data-cv-component='searchableSelect', ${attributes}"
+     th:if="${visible}">
+  <label th:if="${label}" th:for="${id + '-input'}" class="form-label" th:text="${label}"></label>
+  <div class="cv-searchable-select-wrapper">
+    <input th:id="${id + '-input'}"
+           type="text"
+           class="form-control cv-search-input"
+           th:placeholder="${placeholder}"
+           th:disabled="${disabled}"
+           autocomplete="off"
+           th:attr="
+             ${hxGet} ? 'hx-get=' + ${hxGet} : '',
+             ${hxPost} ? 'hx-post=' + ${hxPost} : '',
+             ${hxTarget} ? 'hx-target=' + ${hxTarget} : '',
+             ${hxTrigger} ? 'hx-trigger=' + ${hxTrigger} : ''" />
+    <ul class="cv-searchable-select-options dropdown-menu" th:if="${!options.empty}">
+      <li th:each="opt : ${options}" th:class="'cv-option' + (${opt.selected} ? ' active' : '')"
+          th:attr="data-value=${opt.value}"
+          th:text="${opt.label}"></li>
+    </ul>
+  </div>
+  <small th:if="${helpText}" class="form-text text-muted" th:text="${helpText}"></small>
+</div>
