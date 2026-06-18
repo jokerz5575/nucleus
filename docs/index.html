@@ -3,67 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinvio Nucleus v2.0.0 — Documentation</title>
-
+    <title>Clinvio Nucleus v2.3.0 — Community Documentation</title>
     <link rel="stylesheet" href="css/clinvio-theme.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
     <style>
-        * { box-sizing: border-box; }
-        .doc-layout { display: flex; min-height: 100vh; }
-        .doc-sidebar {
-            width: 280px; background: var(--cv-color-surface);
-            border-right: 1px solid var(--cv-color-border-light);
-            position: fixed; top: 0; left: 0; height: 100vh;
-            overflow-y: auto; padding: 1.5rem 0; z-index: 100;
-            scrollbar-width: thin;
-        }
-        .doc-sidebar::-webkit-scrollbar { width: 4px; }
-        .doc-sidebar::-webkit-scrollbar-thumb { background: var(--cv-color-neutral-300); border-radius: 2px; }
-        .doc-brand { display: flex; align-items: center; gap: 0.75rem; padding: 0 1.5rem 1.5rem; border-bottom: 1px solid var(--cv-color-border-light); margin-bottom: 1rem; }
-        .doc-brand h2 { font-family: var(--cv-font-display); font-size: 1.25rem; font-weight: 800; color: var(--cv-color-primary-700); margin: 0; }
-        .doc-brand span { color: var(--cv-color-primary-400); }
-        .doc-section-title { padding: 0.5rem 1.5rem; font-family: var(--cv-font-display); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cv-color-text-muted); margin-top: 1rem; }
-        .doc-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.5rem; font-size: 0.9375rem; font-weight: 500; color: var(--cv-color-text-muted); text-decoration: none; transition: all 100ms ease; }
-        .doc-link:hover { color: var(--cv-color-text-strong); background: var(--cv-color-neutral-100); }
-        .doc-link.active { color: var(--cv-color-primary-700); background: var(--cv-color-primary-50); font-weight: 600; }
-        .doc-main { flex: 1; margin-left: 280px; padding: 2rem 3rem; max-width: 960px; overflow-x: hidden; min-width: 0; }
-        .doc-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--cv-color-border-light); }
-        .doc-header h1 { font-family: var(--cv-font-display); font-size: 2.5rem; font-weight: 800; color: var(--cv-color-text-strong); margin: 0 0 0.5rem; }
-        .doc-header p { font-size: 1.125rem; color: var(--cv-color-text-muted); margin: 0; }
-        .doc-section { margin-bottom: 3rem; overflow: hidden; }
-        .doc-section h2 { font-family: var(--cv-font-display); font-size: 1.75rem; font-weight: 700; color: var(--cv-color-text-strong); margin: 0 0 1rem; padding-top: 2rem; border-top: 1px solid var(--cv-color-border-light); }
-        .doc-section h3 { font-family: var(--cv-font-display); font-size: 1.25rem; font-weight: 600; color: var(--cv-color-text-strong); margin: 1.5rem 0 0.75rem; }
-        .doc-section p { margin: 0 0 1rem; line-height: 1.7; }
-        .doc-code { background: #1e293b; border: 1px solid #334155; border-radius: var(--cv-radius-lg); overflow: hidden; margin: 1rem 0; }
-        .doc-code::before { content: ''; display: block; height: 3px; background: linear-gradient(90deg, var(--cv-color-primary-400), var(--cv-color-accent-400)); }
-        .doc-code code { display: block; padding: 1.25rem 1.5rem; overflow-x: auto; font-family: 'DM Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.8125rem; line-height: 1.7; color: #e2e8f0; white-space: pre; }
-        [data-theme="light"] .doc-code { background: #f8fafc; border-color: #e2e8f0; }
-        [data-theme="light"] .doc-code code { color: #1e293b; }
-        .doc-inline-code { background: var(--cv-color-primary-50); border: 1px solid var(--cv-color-primary-200); border-radius: var(--cv-radius-sm); padding: 0.15rem 0.4rem; font-family: 'DM Mono', monospace; font-size: 0.8125em; color: var(--cv-color-primary-700); white-space: nowrap; }
-        [data-theme="dark"] .doc-inline-code { background: rgba(0,188,212,0.15); border-color: rgba(0,188,212,0.3); color: var(--cv-color-primary-400); }
-        .doc-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-        .doc-table th { background: var(--cv-color-neutral-50); font-weight: 600; text-align: left; padding: 0.75rem 1rem; border-bottom: 2px solid var(--cv-color-border); }
-        .doc-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--cv-color-border-light); }
-        .doc-table tr:hover { background: var(--cv-color-primary-50); }
-        [data-theme="dark"] .doc-table th { background: var(--cv-color-raised); }
-        .doc-alert { display: flex; align-items: flex-start; gap: 0.75rem; padding: 1rem 1.25rem; border-radius: var(--cv-radius-lg); border-left: 4px solid; margin: 1rem 0; }
-        .doc-alert-info { background: var(--cv-color-info-light); border-color: var(--cv-color-info); color: var(--cv-color-info-dark); }
-        .doc-alert-success { background: var(--cv-color-success-light); border-color: var(--cv-color-success); color: var(--cv-color-success-dark); }
-        .doc-alert-warning { background: var(--cv-color-warning-light); border-color: var(--cv-color-warning); color: var(--cv-color-warning-dark); }
-        .doc-badge { display: inline-flex; align-items: center; padding: 0.2em 0.625em; font-size: var(--cv-text-caption); font-weight: 600; border-radius: var(--cv-radius-full); white-space: nowrap; }
-        .doc-badge-primary { background: var(--cv-color-primary-100); color: var(--cv-color-primary-700); }
-        .doc-badge-success { background: var(--cv-color-success-light); color: var(--cv-color-success-dark); }
-        .doc-badge-warning { background: var(--cv-color-warning-light); color: var(--cv-color-warning-dark); }
-        .doc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1rem 0; }
-        .doc-feature { background: var(--cv-color-surface); border: 1px solid var(--cv-color-border-light); border-radius: var(--cv-radius-lg); padding: 1rem; }
-        .doc-feature h4 { font-family: var(--cv-font-display); font-size: 1rem; font-weight: 600; margin: 0 0 0.25rem; }
-        .doc-feature p { font-size: 0.875rem; color: var(--cv-color-text-muted); margin: 0; }
-        .doc-theme-toggle { position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; border-radius: var(--cv-radius-full); background: var(--cv-color-surface); border: 1px solid var(--cv-color-border); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--cv-shadow-lg); z-index: 1000; transition: all 100ms ease; }
-        .doc-theme-toggle:hover { background: var(--cv-color-neutral-100); }
-        @media (max-width: 768px) { .doc-sidebar { display: none; } .doc-main { margin-left: 0; padding: 1.5rem; } }
+        *{box-sizing:border-box}
+        .doc-layout{display:flex;min-height:100vh}
+        .doc-sidebar{width:280px;background:var(--cv-color-surface);border-right:1px solid var(--cv-color-border-light);position:fixed;top:0;left:0;height:100vh;overflow-y:auto;padding:1.5rem 0;z-index:100;scrollbar-width:thin}
+        .doc-sidebar::-webkit-scrollbar{width:4px}
+        .doc-sidebar::-webkit-scrollbar-thumb{background:var(--cv-color-neutral-300);border-radius:2px}
+        .doc-brand{display:flex;align-items:center;gap:0.75rem;padding:0 1.5rem 1.5rem;border-bottom:1px solid var(--cv-color-border-light);margin-bottom:1rem}
+        .doc-brand h2{font-family:var(--cv-font-display);font-size:1.25rem;font-weight:800;color:var(--cv-color-primary-700);margin:0}
+        .doc-brand span{color:var(--cv-color-primary-400)}
+        .doc-section-title{padding:0.5rem 1.5rem;font-family:var(--cv-font-display);font-size:0.6875rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--cv-color-text-muted);margin-top:1rem}
+        .doc-link{display:flex;align-items:center;gap:0.5rem;padding:0.5rem 1.5rem;font-size:0.9375rem;font-weight:500;color:var(--cv-color-text-muted);text-decoration:none;transition:all 100ms ease}
+        .doc-link:hover{color:var(--cv-color-text-strong);background:var(--cv-color-neutral-100)}
+        .doc-link.active{color:var(--cv-color-primary-700);background:var(--cv-color-primary-50);font-weight:600}
+        .doc-main{flex:1;margin-left:280px;padding:2rem 3rem;max-width:960px;overflow-x:hidden;min-width:0}
+        .doc-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--cv-color-border-light)}
+        .doc-header h1{font-family:var(--cv-font-display);font-size:2.5rem;font-weight:800;color:var(--cv-color-text-strong);margin:0 0 0.5rem}
+        .doc-header p{font-size:1.125rem;color:var(--cv-color-text-muted);margin:0}
+        .doc-section{margin-bottom:3rem;overflow:hidden}
+        .doc-section h2{font-family:var(--cv-font-display);font-size:1.75rem;font-weight:700;color:var(--cv-color-text-strong);margin:0 0 1rem;padding-top:2rem;border-top:1px solid var(--cv-color-border-light)}
+        .doc-section h3{font-family:var(--cv-font-display);font-size:1.25rem;font-weight:600;color:var(--cv-color-text-strong);margin:1.5rem 0 0.75rem}
+        .doc-section p{margin:0 0 1rem;line-height:1.7}
+        .doc-section ul{margin:0 0 1rem;padding-left:1.5rem;line-height:1.7}
+        .doc-code{background:#1e293b;border:1px solid #334155;border-radius:var(--cv-radius-lg);overflow:hidden;margin:1rem 0}
+        .doc-code::before{content:'';display:block;height:3px;background:linear-gradient(90deg,var(--cv-color-primary-400),var(--cv-color-accent-400))}
+        .doc-code code{display:block;padding:1.25rem 1.5rem;overflow-x:auto;font-family:'DM Mono','Fira Code','Consolas',monospace;font-size:0.8125rem;line-height:1.7;color:#e2e8f0;white-space:pre}
+        [data-theme="light"] .doc-code{background:#f8fafc;border-color:#e2e8f0}
+        [data-theme="light"] .doc-code code{color:#1e293b}
+        .doc-inline-code{background:var(--cv-color-primary-50);border:1px solid var(--cv-color-primary-200);border-radius:var(--cv-radius-sm);padding:0.15rem 0.4rem;font-family:'DM Mono',monospace;font-size:0.8125em;color:var(--cv-color-primary-700);white-space:nowrap}
+        [data-theme="dark"] .doc-inline-code{background:rgba(0,188,212,0.15);border-color:rgba(0,188,212,0.3);color:var(--cv-color-primary-400)}
+        .doc-table{width:100%;border-collapse:collapse;margin:1rem 0}
+        .doc-table th{background:var(--cv-color-neutral-50);font-weight:600;text-align:left;padding:0.75rem 1rem;border-bottom:2px solid var(--cv-color-border)}
+        .doc-table td{padding:0.75rem 1rem;border-bottom:1px solid var(--cv-color-border-light);vertical-align:top}
+        .doc-table tr:hover{background:var(--cv-color-primary-50)}
+        [data-theme="dark"] .doc-table th{background:var(--cv-color-raised)}
+        .doc-alert{display:flex;align-items:flex-start;gap:0.75rem;padding:1rem 1.25rem;border-radius:var(--cv-radius-lg);border-left:4px solid;margin:1rem 0}
+        .doc-alert-info{background:var(--cv-color-info-light);border-color:var(--cv-color-info);color:var(--cv-color-info-dark)}
+        .doc-alert-success{background:var(--cv-color-success-light);border-color:var(--cv-color-success);color:var(--cv-color-success-dark)}
+        .doc-alert-warning{background:var(--cv-color-warning-light);border-color:var(--cv-color-warning);color:var(--cv-color-warning-dark)}
+        .doc-badge{display:inline-flex;align-items:center;padding:0.2em 0.625em;font-size:var(--cv-text-caption);font-weight:600;border-radius:var(--cv-radius-full);white-space:nowrap}
+        .doc-badge-primary{background:var(--cv-color-primary-100);color:var(--cv-color-primary-700)}
+        .doc-badge-success{background:var(--cv-color-success-light);color:var(--cv-color-success-dark)}
+        .doc-badge-warning{background:var(--cv-color-warning-light);color:var(--cv-color-warning-dark)}
+        .doc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0}
+        .doc-feature{background:var(--cv-color-surface);border:1px solid var(--cv-color-border-light);border-radius:var(--cv-radius-lg);padding:1rem}
+        .doc-feature h4{font-family:var(--cv-font-display);font-size:1rem;font-weight:600;margin:0 0 0.25rem}
+        .doc-feature p{font-size:0.875rem;color:var(--cv-color-text-muted);margin:0}
+        .doc-theme-toggle{position:fixed;bottom:2rem;right:2rem;width:48px;height:48px;border-radius:var(--cv-radius-full);background:var(--cv-color-surface);border:1px solid var(--cv-color-border);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--cv-shadow-lg);z-index:1000;transition:all 100ms ease}
+        .doc-theme-toggle:hover{background:var(--cv-color-neutral-100)}
+        .doc-toc-link{font-size:0.8125rem}
+        @media(max-width:768px){.doc-sidebar{display:none}.doc-main{margin-left:0;padding:1.5rem}}
     </style>
 </head>
 <body>
@@ -75,202 +69,268 @@
     <div class="doc-section-title">Getting Started</div>
     <a href="#introduction" class="doc-link active">Introduction</a>
     <a href="#quickstart" class="doc-link">Quick Start</a>
-    <a href="#installation" class="doc-link">Installation</a>
-
-    <div class="doc-section-title">Core</div>
     <a href="#architecture" class="doc-link">Architecture</a>
-    <a href="#entities" class="doc-link">Entities</a>
+
+    <div class="doc-section-title">Core Concepts</div>
+    <a href="#entities" class="doc-link">Entities & Encryption</a>
+    <a href="#repositories" class="doc-link">Repositories</a>
     <a href="#services" class="doc-link">Services</a>
     <a href="#controllers" class="doc-link">Controllers</a>
-    <a href="#htmx" class="doc-link">HTMX</a>
-    <a href="#workflow" class="doc-link">Workflow</a>
+    <a href="#workflow" class="doc-link">Workflow Engine</a>
+
+    <div class="doc-section-title">UI</div>
+    <a href="#components" class="doc-link">Components (23)</a>
+    <a href="#templates" class="doc-link">Templates</a>
+    <a href="#htmx" class="doc-link">HTMX Integration</a>
 
     <div class="doc-section-title">Infrastructure</div>
-    <a href="#observability" class="doc-link">Observability</a>
-    <a href="#migration" class="doc-link">Migration</a>
-    <a href="#cache" class="doc-link">Cache</a>
-    <a href="#scheduler" class="doc-link">Scheduler</a>
-    <a href="#mail" class="doc-link">Email</a>
-    <a href="#websocket" class="doc-link">WebSocket</a>
-    <a href="#postgresql" class="doc-link">PostgreSQL</a>
-    <a href="#redis" class="doc-link">Redis</a>
-    <a href="#s3" class="doc-link">S3 Storage</a>
-    <a href="#elasticsearch" class="doc-link">Elasticsearch</a>
-
-    <div class="doc-section-title">Domain</div>
-    <a href="#compliance" class="doc-link">Compliance</a>
-    <a href="#appointments" class="doc-link">Appointments</a>
-    <a href="#documents" class="doc-link">Documents</a>
-    <a href="#tasks" class="doc-link">Tasks</a>
-    <a href="#ai" class="doc-link">AI</a>
-    <a href="#multitenancy" class="doc-link">Multi-Tenancy</a>
-    <a href="#notifications" class="doc-link">Notifications</a>
-
-    <div class="doc-section-title">Enterprise</div>
-    <a href="#security" class="doc-link">Security</a>
-    <a href="#rest-api" class="doc-link">REST API</a>
+    <a href="#security" class="doc-link">Security (JWT)</a>
+    <a href="#persistence" class="doc-link">Persistence</a>
+    <a href="#business" class="doc-link">Business</a>
 
     <div class="doc-section-title">Reference</div>
     <a href="#config" class="doc-link">Configuration</a>
+    <a href="#testing" class="doc-link">Testing</a>
     <a href="#modules" class="doc-link">Modules</a>
+    <a href="#contributing" class="doc-link">Contributing</a>
 </nav>
 
 <main class="doc-main">
 
 <header class="doc-header">
     <h1>Clinvio Nucleus</h1>
-    <p>Enterprise Java framework with 34 modules for secure, server-rendered web applications</p>
+    <p>Community edition — Java framework for secure, server-rendered web applications with AES-256-GCM encryption, HTMX, and 23 UI components</p>
     <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
-        <span class="doc-badge doc-badge-primary">v2.0.0</span>
-        <span class="doc-badge doc-badge-success">Java 21</span>
-        <span class="doc-badge doc-badge-warning">Spring Boot 3.3+</span>
-        <span class="doc-badge doc-badge-primary">34 Modules</span>
+        <span class="doc-badge doc-badge-primary">v2.3.0</span>
+        <span class="doc-badge doc-badge-success">MIT License</span>
+        <span class="doc-badge doc-badge-warning">Java 21+</span>
+        <span class="doc-badge doc-badge-primary">Spring Boot 3.3</span>
+        <span class="doc-badge doc-badge-primary">8 Modules</span>
+        <span class="doc-badge doc-badge-success">160+ Tests</span>
     </div>
 </header>
 
 <!-- INTRODUCTION -->
 <section id="introduction" class="doc-section">
     <h2>Introduction</h2>
-    <p>Clinvio Nucleus is a 34-module enterprise Java framework providing UI components, persistence, security, observability, and domain-specific features for medical, logistics, cloud, and project management applications.</p>
+    <p>Clinvio Nucleus Community is a free, open-source Java framework for building secure, server-rendered web applications. It combines Thymeleaf templates with HTMX for partial page updates, AES-256-GCM field-level encryption for sensitive data, and a modular architecture across 8 MIT-licensed modules.</p>
+
     <div class="doc-grid">
-        <div class="doc-feature"><h4>AES-256-GCM</h4><p>Field-level encryption with @SensitiveData</p></div>
-        <div class="doc-feature"><h4>HTMX</h4><p>Server-rendered HTML with partial updates</p></div>
-        <div class="doc-feature"><h4>Observability</h4><p>Metrics, health checks, request logging</p></div>
-        <div class="doc-feature"><h4>Workflow</h4><p>State machine for entity lifecycle</p></div>
-        <div class="doc-feature"><h4>Security</h4><p>JWT authentication with RBAC</p></div>
-        <div class="doc-feature"><h4>Caching</h4><p>Caffeine in-memory cache</p></div>
-        <div class="doc-feature"><h4>Compliance</h4><p>GDPR consent management</p></div>
-        <div class="doc-feature"><h4>AI</h4><p>OpenAI/Azure integration</p></div>
-        <div class="doc-feature"><h4>PostgreSQL</h4><p>Production database support</p></div>
-        <div class="doc-feature"><h4>Redis</h4><p>Distributed caching</p></div>
-        <div class="doc-feature"><h4>S3 Storage</h4><p>Object storage integration</p></div>
-        <div class="doc-feature"><h4>Elasticsearch</h4><p>Full-text search</p></div>
+        <div class="doc-feature"><h4>AES-256-GCM</h4><p>Field-level encryption with <code>@SensitiveData</code></p></div>
+        <div class="doc-feature"><h4>23 UI Components</h4><p>Buttons, forms, tables, cards, toasts, and more</p></div>
+        <div class="doc-feature"><h4>HTMX</h4><p>Server-rendered HTML with partial page updates</p></div>
+        <div class="doc-feature"><h4>JWT Security</h4><p>Authentication, RBAC, CORS, CSRF, token refresh</p></div>
+        <div class="doc-feature"><h4>Workflow Engine</h4><p>State machine for entity lifecycle management</p></div>
+        <div class="doc-feature"><h4>SQLite</h4><p>Zero-config production database</p></div>
+    </div>
+
+    <div class="doc-alert doc-alert-info">
+        <span>This is the <strong>Community edition (MIT)</strong>. Professional and Enterprise editions with additional modules (PostgreSQL, Redis, S3, AI, compliance) are available at <a href="https://clinvio.hu/nucleus">clinvio.hu/nucleus</a>.</span>
     </div>
 </section>
 
 <!-- QUICK START -->
 <section id="quickstart" class="doc-section">
     <h2>Quick Start</h2>
-    <div class="doc-code"><code>&lt;repositories&gt;
-    &lt;repository&gt;
-        &lt;id&gt;gitea&lt;/id&gt;
-        &lt;url&gt;https://dev.clinvio.hu/api/packages/jokerz/maven&lt;/url&gt;
-    &lt;/repository&gt;
-&lt;/repositories&gt;
 
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;hu.clinvio&lt;/groupId&gt;
-        &lt;artifactId&gt;clinvio-nucleus-spring-boot-starter&lt;/artifactId&gt;
-        &lt;version&gt;2.0.0-SNAPSHOT&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;hu.clinvio&lt;/groupId&gt;
-        &lt;artifactId&gt;clinvio-nucleus-persistence&lt;/artifactId&gt;
-        &lt;version&gt;2.0.0-SNAPSHOT&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;hu.clinvio&lt;/groupId&gt;
-        &lt;artifactId&gt;clinvio-nucleus-business&lt;/artifactId&gt;
-        &lt;version&gt;2.0.0-SNAPSHOT&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;</code></div>
+    <h3>1. Add Dependency</h3>
+    <div class="doc-code"><code>&lt;dependency&gt;
+    &lt;groupId&gt;hu.clinvio&lt;/groupId&gt;
+    &lt;artifactId&gt;clinvio-nucleus-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;2.3.0&lt;/version&gt;
+&lt;/dependency&gt;</code></div>
+
+    <h3>2. Configure</h3>
+    <div class="doc-code"><code># application.properties
+spring.datasource.url=jdbc:sqlite:./data/app.db
+spring.datasource.driver-class-name=org.sqlite.JDBC
+spring.jpa.hibernate.ddl-auto=update
+
+# Encryption key (use environment variable in production)
+clinvio.persistence.encryption-key=${CLINVIO_ENCRYPTION_KEY}</code></div>
+
+    <h3>3. Create Entity</h3>
+    <div class="doc-code"><code>@Entity
+public class Patient extends BaseEntity {
+
+    @SensitiveData
+    @Convert(converter = EncryptedStringConverter.class)
+    private String name;
+
+    @SensitiveData
+    @Convert(converter = EncryptedStringConverter.class)
+    private String ssn;
+
+    private String patientNumber; // Not encrypted
+}</code></div>
+
+    <h3>4. Run</h3>
+    <div class="doc-code"><code>@SpringBootApplication
+public class App {
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
+    }
+}</code></div>
+
+    <div class="doc-alert doc-alert-success">
+        <span>That's it. Your entity has AES-256-GCM encrypted fields, auto-generated CRUD endpoints, and HTMX-ready UI components.</span>
+    </div>
 </section>
 
 <!-- ARCHITECTURE -->
 <section id="architecture" class="doc-section">
     <h2>Architecture</h2>
+    <p>Clinvio Nucleus consists of 8 modules with a clean dependency hierarchy:</p>
     <div class="doc-code"><code>clinvio-nucleus (parent)
-├── clinvio-nucleus-core              # Component model, dialect
-├── clinvio-nucleus-components        # UI components
-├── clinvio-nucleus-themes            # CSS design system
-├── clinvio-nucleus-htmx              # HTMX integration
-├── clinvio-nucleus-persistence       # Entities, encryption, SQLite/PostgreSQL
-├── clinvio-nucleus-business          # Services, controllers, workflow
-├── clinvio-nucleus-security          # JWT authentication
-├── clinvio-nucleus-observability     # Metrics, health checks
-├── clinvio-nucleus-migration         # Flyway migrations
-├── clinvio-nucleus-cache             # Caffeine caching
-├── clinvio-nucleus-openapi           # Swagger UI
-├── clinvio-nucleus-websocket         # Real-time communication
-├── clinvio-nucleus-scheduler         # Cron tasks
-├── clinvio-nucleus-mail              # Email
-├── clinvio-nucleus-ratelimit         # Token bucket rate limiting
-├── clinvio-nucleus-pdf               # PDF generation
-├── clinvio-nucleus-docker            # Docker support
-├── clinvio-nucleus-postgresql        # PostgreSQL database
-├── clinvio-nucleus-redis             # Redis cache
-├── clinvio-nucleus-s3                # S3 object storage
-├── clinvio-nucleus-search            # Elasticsearch
-├── clinvio-nucleus-compliance        # GDPR consent
-├── clinvio-nucleus-appointment       # Scheduling
-├── clinvio-nucleus-documents         # File storage
-├── clinvio-nucleus-tasks             # Task management
-├── clinvio-nucleus-ai                # AI integration
-├── clinvio-nucleus-multitenancy      # Tenant isolation
-├── clinvio-nucleus-notifications     # Notifications
-├── clinvio-nucleus-test              # Test utilities
-├── clinvio-nucleus-devtools          # Developer tools
-├── clinvio-nucleus-spring-boot-starter
-├── clinvio-cli                       # CLI tool
-└── clinvio-maven-plugin              # Maven plugin</code></div>
+├── clinvio-nucleus-core          Component model, dialect, renderer
+├── clinvio-nucleus-components    23 UI components (button, card, form, table)
+├── clinvio-nucleus-themes        CSS design system (clinvio-theme.css)
+├── clinvio-nucleus-htmx          HTMX request/response handling
+├── clinvio-nucleus-persistence   Entities, AES encryption, SQLite dialect
+├── clinvio-nucleus-business      Services, controllers, workflow engine
+├── clinvio-nucleus-security      JWT auth, @Secured, CORS, CSRF
+└── clinvio-nucleus-spring-boot-starter  Auto-configuration</code></div>
+
+    <h3>Request Flow</h3>
+    <div class="doc-code"><code>Browser  ──►  HxRequestFilter
+                    │
+                    ▼
+            DispatcherServlet
+                    │
+                    ▼
+            Controller (CvBaseCrudController)
+                    │
+                    ▼
+            Service (CvBaseService)
+                    │
+                    ▼
+            Repository (CvBaseRepository)
+                    │
+                    ▼
+        EncryptedStringConverter  ──►  SQLite
+                    │
+                    ▼
+            Thymeleaf + ClinvioDialect
+                    │
+                    ▼
+                HTML Response</code></div>
 </section>
 
 <!-- ENTITIES -->
 <section id="entities" class="doc-section">
-    <h2>Entities</h2>
+    <h2>Entities & Encryption</h2>
+
+    <h3>BaseEntity</h3>
+    <p>All entities extend <code>BaseEntity</code>, which provides audit fields and soft delete:</p>
     <div class="doc-code"><code>@Entity
 public class Order extends BaseEntity {
-
-    @SensitiveData
-    @Convert(converter = EncryptedStringConverter.class)
-    private String customerName;
-
-    @SensitiveData
-    @Convert(converter = EncryptedStringConverter.class)
-    private String shippingAddress;
-
-    private String orderNumber; // Not encrypted
+    private String orderNumber;
+    // Inherits: id, createdAt, updatedAt, deletedAt
 }</code></div>
-    <p>BaseEntity provides: id, createdAt, updatedAt, deletedAt</p>
+
+    <table class="doc-table">
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>id</code></td><td>Long</td><td>Auto-generated primary key</td></tr>
+            <tr><td><code>createdAt</code></td><td>LocalDateTime</td><td>Set automatically on persist</td></tr>
+            <tr><td><code>updatedAt</code></td><td>LocalDateTime</td><td>Set automatically on update</td></tr>
+            <tr><td><code>deletedAt</code></td><td>LocalDateTime</td><td>Soft delete (null = active)</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Field Encryption</h3>
+    <p>Mark String fields with <code>@SensitiveData</code> + <code>@Convert</code> for AES-256-GCM encryption per NIST SP 800-38D:</p>
+    <div class="doc-code"><code>@SensitiveData
+@Convert(converter = EncryptedStringConverter.class)
+@Column(nullable = false)
+private String customerName;  // Encrypted in database
+
+private String orderNumber;   // NOT encrypted</code></div>
+
+    <div class="doc-alert doc-alert-warning">
+        <span><strong>Both annotations are required.</strong> JPA does not process <code>@Convert</code> on meta-annotations. Encrypted fields cannot be searched with SQL LIKE queries.</span>
+    </div>
+
+    <h3>Encryption Details</h3>
+    <table class="doc-table">
+        <thead><tr><th>Property</th><th>Value</th></tr></thead>
+        <tbody>
+            <tr><td>Algorithm</td><td>AES-256-GCM (NIST SP 800-38D)</td></tr>
+            <tr><td>Key Derivation</td><td>PBKDF2 with 600,000 iterations (OWASP 2023)</td></tr>
+            <tr><td>IV</td><td>12-byte random, generated per encryption</td></tr>
+            <tr><td>GCM Tag</td><td>128-bit authentication tag</td></tr>
+            <tr><td>Salt</td><td>Configurable via <code>clinvio.persistence.encryption-salt</code></td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- REPOSITORIES -->
+<section id="repositories" class="doc-section">
+    <h2>Repositories</h2>
+    <p>Extend <code>CvBaseRepository</code> for soft-delete-aware data access:</p>
+    <div class="doc-code"><code>@Repository
+public interface OrderRepository extends CvBaseRepository&lt;Order, Long&gt; {
+    // CvBaseRepository provides:
+    //   findAllActive(), findActiveById(), softDelete(), countActive()
+
+    @Query("SELECT o FROM Order o WHERE o.deletedAt IS NULL AND o.orderNumber LIKE %:q%")
+    Page&lt;Order&gt; search(@Param("q") String query, Pageable pageable);
+}</code></div>
 </section>
 
 <!-- SERVICES -->
 <section id="services" class="doc-section">
     <h2>Services</h2>
+    <p>Extend <code>CvSearchableService</code> for full CRUD with search support:</p>
     <div class="doc-code"><code>@Service
+@Transactional(readOnly = true)
 public class OrderService extends CvSearchableService&lt;Order, Long&gt; {
-    public OrderService(OrderRepository repo) { super(repo, repo); }
 
-    @Override
-    public Page&lt;Order&gt; search(String q, Pageable p) {
-        return q.isBlank() ? findAll(p) : ((OrderRepository) repository).search(q, p);
+    public OrderService(OrderRepository repo) {
+        super(repo, repo);
     }
 
-    @Override protected String getEntityName() { return "Order"; }
-}
+    @Override
+    public Page&lt;Order&gt; search(String query, Pageable pageable) {
+        if (query == null || query.isBlank()) return findAll(pageable);
+        return ((OrderRepository) repository).search(query, pageable);
+    }
 
-// Methods available:
-// findAll(Pageable), findById(ID), getById(ID)
-// create(E), createAll(List)
-// update(E), updateAll(List)
-// delete(ID), deleteAll(List)
-// findPage(page, size), findRecent(limit)
-// updateField(id, consumer), restore(id)</code></div>
+    @Override
+    protected String getEntityName() { return "Order"; }
+}</code></div>
+
+    <h3>Available Methods</h3>
+    <table class="doc-table">
+        <thead><tr><th>Method</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>findAll(Pageable)</code></td><td>Paginated list of active entities</td></tr>
+            <tr><td><code>findById(ID)</code></td><td>Optional of entity by ID</td></tr>
+            <tr><td><code>getById(ID)</code></td><td>Entity by ID or throw</td></tr>
+            <tr><td><code>create(E)</code></td><td>Save new entity</td></tr>
+            <tr><td><code>update(E)</code></td><td>Update existing entity</td></tr>
+            <tr><td><code>delete(ID)</code></td><td>Soft delete</td></tr>
+            <tr><td><code>restore(ID)</code></td><td>Restore soft-deleted entity</td></tr>
+            <tr><td><code>count()</code></td><td>Count active entities</td></tr>
+            <tr><td><code>search(query, pageable)</code></td><td>Full-text search (abstract)</td></tr>
+        </tbody>
+    </table>
 </section>
 
 <!-- CONTROLLERS -->
 <section id="controllers" class="doc-section">
     <h2>Controllers</h2>
+    <p>Extend <code>CvBaseCrudController</code> for auto-generated CRUD views:</p>
     <div class="doc-code"><code>@Controller
 @RequestMapping("/orders")
 public class OrderController extends CvBaseCrudController&lt;Order&gt; {
+
     public OrderController(OrderService service) { super(service); }
 
-    @Override protected String getListTemplate() { return "orders/list"; }
+    @Override protected String getListTemplate()  { return "orders/list"; }
     @Override protected String getDetailTemplate() { return "orders/detail"; }
-    @Override protected String getEntityName() { return "Order"; }
-    @Override protected String getEntityPath() { return "/orders"; }
+    @Override protected String getEntityName()     { return "Order"; }
+    @Override protected String getEntityPath()     { return "/orders"; }
 
     @Override
     protected CvDataTable&lt;Order&gt; buildDataTable(Page&lt;Order&gt; page) {
@@ -280,426 +340,19 @@ public class OrderController extends CvBaseCrudController&lt;Order&gt; {
             .data(page.getContent())
             .searchable(true).pageable(true).pageSize(page.getSize());
     }
-}
 
-// Auto-generates: GET /orders, GET /orders/{id}, POST, PUT, DELETE</code></div>
-</section>
-
-<!-- HTMX -->
-<section id="htmx" class="doc-section">
-    <h2>HTMX</h2>
-    <div class="doc-code"><code>// Toast + Redirect
-return HxResponse.builder()
-    .trigger("cv:toast", Map.of("message", "Created", "type", "success"))
-    .redirect("/orders/" + id)
-    .build();
-
-// Fragment swap
-return HxResponse.builder()
-    .swap(HxSwap.OUTER_HTML)
-    .fragment("orders/fragments :: status-badge")
-    .model(Map.of("status", newStatus))
-    .build();</code></div>
-</section>
-
-<!-- WORKFLOW -->
-<section id="workflow" class="doc-section">
-    <h2>Workflow Engine</h2>
-    <div class="doc-code"><code>WorkflowEngine&lt;OrderStatus&gt; workflow = WorkflowEngine.of(OrderStatus.class)
-    .transition(PENDING, PROCESSING, CANCELLED)
-    .transition(PROCESSING, SHIPPED, CANCELLED)
-    .transition(SHIPPED, DELIVERED)
-    .onTransition(PROCESSING, SHIPPED, (from, to) -> {
-        notificationService.send(userId, "Shipped", "Order shipped");
-    })
-    .build();
-
-// Validate
-workflow.validate(currentStatus, newStatus); // throws if invalid
-
-// Execute with callbacks
-workflow.transition(order, newStatus, order::setStatus);</code></div>
-</section>
-
-<!-- OBSERVABILITY -->
-<section id="observability" class="doc-section">
-    <h2>Observability</h2>
-    <p>Metrics, health checks, and request logging.</p>
-
-    <h3>CvMetricsService</h3>
-    <div class="doc-code"><code>@Autowired CvMetricsService metricsService;
-
-metricsService.recordEncryption(durationMs);
-metricsService.recordDecryption(durationMs);
-metricsService.recordEntityCreated("Order");
-metricsService.recordEntityDeleted("Order");
-metricsService.recordServiceMethod("OrderService", "create", durationMs);
-metricsService.recordRepositoryQuery("Order", "findAll", durationMs);
-metricsService.recordHttpError(500);</code></div>
-
-    <h3>Health Checks</h3>
-    <div class="doc-code"><code>GET /health            - Aggregate health
-GET /health/db         - Database connection
-GET /health/encryption - Encrypt/decrypt round-trip
-GET /health/disk       - Disk space
-GET /actuator/prometheus - Prometheus metrics</code></div>
-
-    <h3>Configuration</h3>
-    <div class="doc-code"><code>clinvio.nucleus.observability.enabled=true
-clinvio.nucleus.observability.request-logging.enabled=true
-clinvio.nucleus.observability.request-logging.slow-threshold=1000ms</code></div>
-</section>
-
-<!-- MIGRATION -->
-<section id="migration" class="doc-section">
-    <h2>Database Migration</h2>
-    <p>Flyway integration for schema versioning.</p>
-    <div class="doc-code"><code># Place scripts in: src/main/resources/db/migration/
-# V1__create_tables.sql, V2__add_columns.sql
-
-clinvio.nucleus.migration.enabled=true
-clinvio.nucleus.migration.locations=classpath:db/migration
-clinvio.nucleus.migration.baseline-on-migrate=true
-clinvio.nucleus.migration.validate-on-migrate=true
-clinvio.nucleus.migration.out-of-order=false</code></div>
-</section>
-
-<!-- CACHE -->
-<section id="cache" class="doc-section">
-    <h2>Caching</h2>
-    <p>Caffeine in-memory cache with TTL.</p>
-    <div class="doc-code"><code>// Configuration
-clinvio.nucleus.cache.enabled=true
-clinvio.nucleus.cache.caffeine.maximum-size=1000
-clinvio.nucleus.cache.caffeine.expire-after-write=10m
-
-// Usage
-@Cacheable("orders")
-public Order getById(Long id) { ... }
-
-@CacheEvict("orders")
-public Order update(Order order) { ... }
-
-@CacheEvict(value = "orders", allEntries = true)
-public void clearCache() { ... }</code></div>
-</section>
-
-<!-- SCHEDULER -->
-<section id="scheduler" class="doc-section">
-    <h2>Scheduler</h2>
-    <p>Cron task execution.</p>
-    <div class="doc-code"><code>@Autowired CvTaskExecutor taskExecutor;
-
-// Execute once
-taskExecutor.executeOnce(() -> doWork());
-
-// Fixed rate
-taskExecutor.scheduleAtFixedRate(() -> checkOrders(), 0, 60, TimeUnit.SECONDS);
-
-// Async with result
-CompletableFuture&lt;String&gt; result = taskExecutor.submitAsync(() -> {
-    return expensiveCalculation();
-});</code></div>
-</section>
-
-<!-- MAIL -->
-<section id="mail" class="doc-section">
-    <h2>Email</h2>
-    <p>SMTP email with HTML support.</p>
-    <div class="doc-code"><code>@Autowired CvMailService mailService;
-
-// Send HTML email
-mailService.send(CvMail.builder()
-    .to("customer@example.com")
-    .subject("Order Confirmation")
-    .htmlBody("&lt;h1&gt;Thank you!&lt;/h1&gt;&lt;p&gt;Order confirmed&lt;/p&gt;")
-    .build());
-
-// Simple email
-mailService.sendSimple("user@test.com", "Welcome", "&lt;h1&gt;Hello!&lt;/h1&gt;");
-
-// Async
-mailService.sendAsync(mail);</code></div>
-</section>
-
-<!-- WEBSOCKET -->
-<section id="websocket" class="doc-section">
-    <h2>WebSocket</h2>
-    <p>Real-time bidirectional communication.</p>
-    <div class="doc-code"><code>@Autowired CvWebSocketHandler webSocketHandler;
-
-// Broadcast to all
-webSocketHandler.broadcast("{\"type\":\"update\",\"data\":\"new\"}");
-
-// Send to specific user
-webSocketHandler.sendToUser(userId, "{\"type\":\"notification\"}");
-
-// Active sessions
-int count = webSocketHandler.getActiveSessionCount();</code></div>
-</section>
-
-<!-- COMPLIANCE -->
-<section id="compliance" class="doc-section">
-    <h2>Compliance (GDPR)</h2>
-    <p>Consent management for GDPR compliance.</p>
-    <div class="doc-code"><code>@Autowired CvConsentService consentService;
-
-// Grant consent
-consentService.grant(userId, ConsentType.DATA_PROCESSING, ipAddress);
-consentService.grant(userId, ConsentType.MARKETING, ipAddress);
-
-// Verify consent
-boolean hasConsent = consentService.verify(userId, ConsentType.DATA_PROCESSING);
-
-// Get all consents
-Map&lt;String, Boolean&gt; all = consentService.getAllConsents(userId);
-
-// Revoke
-consentService.revoke(userId, ConsentType.MARKETING);
-consentService.revokeAll(userId);
-
-// History
-List&lt;CvConsent&gt; history = consentService.getHistory(userId);</code></div>
-</section>
-
-<!-- APPOINTMENTS -->
-<section id="appointments" class="doc-section">
-    <h2>Appointments</h2>
-    <p>Scheduling with calendar support.</p>
-    <div class="doc-code"><code>@Autowired CvAppointmentService appointmentService;
-
-// Create
-CvAppointment apt = new CvAppointment();
-apt.setTitle("Doctor Visit");
-apt.setStartTime(LocalDateTime.now().plusDays(1));
-apt.setEndTime(LocalDateTime.now().plusDays(1).plusHours(1));
-appointmentService.create(apt);
-
-// Reschedule
-appointmentService.reschedule(id, newStart, newEnd);
-
-// Status management
-appointmentService.confirm(id);
-appointmentService.complete(id);
-appointmentService.cancel(id);
-
-// Find
-List&lt;CvAppointment&gt; upcoming = appointmentService.findUpcoming(10);
-List&lt;CvAppointment&gt; range = appointmentService.findByDateRange(start, end);
-long count = appointmentService.countByStatus(AppointmentStatus.CONFIRMED);</code></div>
-</section>
-
-<!-- DOCUMENTS -->
-<section id="documents" class="doc-section">
-    <h2>Documents</h2>
-    <p>File storage and management.</p>
-    <div class="doc-code"><code>@Autowired CvDocumentService documentService;
-
-// Store file
-String path = documentService.store(multipartFile, "orders/" + orderId);
-
-// Retrieve
-InputStream stream = documentService.retrieve(path);
-
-// Check exists
-boolean exists = documentService.exists(path);
-
-// Get size
-long size = documentService.getFileSize(path);
-
-// Delete
-documentService.delete(path);
-
-// Storage usage
-long totalUsed = documentService.getStorageUsed();</code></div>
-</section>
-
-<!-- TASKS -->
-<section id="tasks" class="doc-section">
-    <h2>Tasks</h2>
-    <p>Task and project management.</p>
-    <div class="doc-code"><code>@Autowired CvTaskService taskService;
-
-// Create task
-CvTask task = new CvTask();
-task.setTitle("Implement feature");
-task.setPriority(TaskPriority.HIGH);
-task.setAssigneeId(userId);
-task.setProjectId(projectId);
-taskService.create(task);
-
-// Update status
-taskService.updateStatus(id, TaskStatus.IN_PROGRESS);
-
-// Assign
-taskService.assign(id, newUserId);
-
-// Find
-List&lt;CvTask&gt; todo = taskService.findByStatus(TaskStatus.TODO);
-List&lt;CvTask&gt; myTasks = taskService.findByAssignee(userId);
-List&lt;CvTask&gt; projectTasks = taskService.findByProject(projectId);
-List&lt;CvTask&gt; overdue = taskService.findOverdue();
-
-// Statistics
-Map&lt;TaskStatus, Long&gt; byStatus = taskService.countByStatus();
-Map&lt;String, Long&gt; byAssignee = taskService.countByAssignee();</code></div>
-</section>
-
-<!-- AI -->
-<section id="ai" class="doc-section">
-    <h2>AI Integration</h2>
-    <p>OpenAI/Azure AI service abstraction.</p>
-    <div class="doc-code"><code>@Autowired CvAiService aiService;
-
-// Generate text
-String response = aiService.generateText("Explain quantum computing");
-
-// Summarize
-String summary = aiService.summarize(longText, 100);
-
-// Translate
-String translated = aiService.translate(text, "Hungarian");</code></div>
-
-    <h3>Configuration</h3>
-    <div class="doc-code"><code>clinvio.nucleus.ai.enabled=true
-clinvio.nucleus.ai.provider=openai
-clinvio.nucleus.ai.api-key=${AI_API_KEY}
-clinvio.nucleus.ai.model=gpt-4</code></div>
-</section>
-
-<!-- MULTI-TENANCY -->
-<section id="multitenancy" class="doc-section">
-    <h2>Multi-Tenancy</h2>
-    <p>Tenant isolation via header-based resolution.</p>
-    <div class="doc-code"><code>// Automatic tenant resolution from header
-// X-Tenant-ID: tenant-abc
-
-// Access tenant in code
-String tenantId = TenantContext.getTenantId();
-
-// Configuration
-clinvio.nucleus.multitenancy.enabled=true
-clinvio.nucleus.multitenancy.strategy=ROW_LEVEL
-clinvio.nucleus.multitenancy.tenant-header=X-Tenant-ID
-clinvio.nucleus.multitenancy.default-tenant=default</code></div>
-</section>
-
-<!-- POSTGRESQL -->
-<section id="postgresql" class="doc-section">
-    <h2>PostgreSQL</h2>
-    <p>Production-grade database support.</p>
-    <div class="doc-code"><code>// Configuration
-spring.datasource.url=jdbc:postgresql://localhost:5432/clinvi
-spring.datasource.driver-class-name=org.postgresql.Driver
-spring.jpa.hibernate.ddl-auto=update
-clinvio.nucleus.postgresql.enabled=true</code></div>
-</section>
-
-<!-- REDIS -->
-<section id="redis" class="doc-section">
-    <h2>Redis</h2>
-    <p>Distributed caching with Redis.</p>
-    <div class="doc-code"><code>// Configuration
-clinvio.nucleus.redis.enabled=true
-clinvio.nucleus.redis.host=localhost
-clinvio.nucleus.redis.port=6379
-clinvio.nucleus.redis.password=${REDIS_PASSWORD}</code></div>
-</section>
-
-<!-- S3 STORAGE -->
-<section id="s3" class="doc-section">
-    <h2>S3 Storage</h2>
-    <p>S3-compatible object storage integration.</p>
-    <div class="doc-code"><code>@Autowired CvS3StorageService s3Service;
-
-// Upload
-String key = s3Service.upload("orders/123/invoice.pdf", inputStream, "application/pdf");
-
-// Download
-InputStream stream = s3Service.download(key);
-
-// Delete
-s3Service.delete(key);
-
-// Presigned URL
-String url = s3Service.getPresignedUrl(key, 60); // 60 minute expiry
-
-// Configuration
-clinvio.nucleus.s3.enabled=true
-clinvio.nucleus.s3.endpoint=https://s3.amazonaws.com
-clinvio.nucleus.s3.access-key=${AWS_ACCESS_KEY}
-clinvio.nucleus.s3.secret-key=${AWS_SECRET_KEY}
-clinvio.nucleus.s3.bucket=clinvio-documents
-clinvio.nucleus.s3.region=us-east-1</code></div>
-</section>
-
-<!-- ELASTICSEARCH -->
-<section id="elasticsearch" class="doc-section">
-    <h2>Elasticsearch</h2>
-    <p>Full-text search integration.</p>
-    <div class="doc-code"><code>@Autowired CvSearchService searchService;
-
-// Search
-List&lt;Order&gt; results = searchService.search(query, Order.class);
-
-// Index
-searchService.index(order);
-
-// Delete
-searchService.delete(order);
-
-// Configuration
-clinvio.nucleus.search.enabled=true
-spring.elasticsearch.uris=http://localhost:9200</code></div>
-</section>
-
-<!-- NOTIFICATIONS -->
-<section id="notifications" class="doc-section">
-    <h2>Notifications</h2>
-    <p>Multi-channel notification system.</p>
-    <div class="doc-code"><code>@Autowired CvNotificationService notificationService;
-
-// Send to all channels
-notificationService.send(userId, "Order Shipped", "Your order is on the way");
-
-// Send to specific channel
-notificationService.sendToChannel("email", userId, "Welcome", "Hello!");
-notificationService.sendToChannel("in-app", userId, "Alert", "Check this");
-
-// Convenience methods
-notificationService.sendSuccess(userId, "Success", "Operation completed");
-notificationService.sendWarning(userId, "Warning", "Low stock");
-notificationService.sendError(userId, "Error", "Payment failed");
-
-// Available channels
-List&lt;String&gt; channels = notificationService.getAvailableChannels();</code></div>
-</section>
-
-<!-- SECURITY -->
-<section id="security" class="doc-section">
-    <h2>Security (JWT)</h2>
-    <div class="doc-code"><code>@Autowired CvJwtService jwtService;
-
-// Generate token
-String token = jwtService.generateToken(userId, username, roles);
-
-// Validate
-boolean valid = jwtService.validateToken(token);
-
-// Get claims
-String userId = jwtService.getUserId(token);
-String username = jwtService.getUsername(token);
-String[] roles = jwtService.getRoles(token);
-
-// Protect endpoints
-@Secured(roles = {"ADMIN"})
-@GetMapping("/admin/users")
-public ResponseEntity&lt;List&lt;User&gt;&gt; listUsers() { ... }</code></div>
-</section>
-
-<!-- REST API -->
-<section id="rest-api" class="doc-section">
-    <h2>REST API</h2>
+    @GetMapping
+    public String listView(Model model, Pageable pageable) {
+        return super.listView(model, pageable);
+    }
+
+    @GetMapping("/{id}")
+    public String detailView(@PathVariable Long id, Model model) {
+        return super.detailView(id, model);
+    }
+}</code></div>
+
+    <h3>REST API Controller</h3>
     <div class="doc-code"><code>@RestController
 @RequestMapping("/api/orders")
 public class OrderApiController extends CvBaseApiController&lt;Order&gt; {
@@ -709,99 +362,496 @@ public class OrderApiController extends CvBaseApiController&lt;Order&gt; {
 }
 
 // Auto-generates:
-// GET    /api/orders         - List with pagination
-// GET    /api/orders/{id}    - Get by ID
-// POST   /api/orders         - Create
-// PUT    /api/orders/{id}    - Update
-// DELETE /api/orders/{id}    - Soft delete
-// GET    /api/orders/all     - Get all
-// GET    /api/orders/count   - Count</code></div>
+// GET    /api/orders         — List with pagination
+// GET    /api/orders/{id}    — Get by ID
+// POST   /api/orders         — Create
+// PUT    /api/orders/{id}    — Update
+// DELETE /api/orders/{id}    — Soft delete
+// GET    /api/orders/count   — Count</code></div>
 </section>
 
-<!-- CONFIGURATION -->
-<section id="config" class="doc-section">
-    <h2>Configuration</h2>
-    <div class="doc-code"><code># Database
-spring.datasource.url=jdbc:sqlite:./data/app.db
-spring.datasource.driver-class-name=org.sqlite.JDBC
-spring.jpa.hibernate.ddl-auto=update
+<!-- WORKFLOW -->
+<section id="workflow" class="doc-section">
+    <h2>Workflow Engine</h2>
+    <p>Define state machines for entity lifecycle management:</p>
+    <div class="doc-code"><code>WorkflowEngine&lt;OrderStatus&gt; workflow = WorkflowEngine.of(OrderStatus.class)
+    .transition(PENDING, PROCESSING, CANCELLED)
+    .transition(PROCESSING, SHIPPED, CANCELLED)
+    .transition(SHIPPED, DELIVERED)
+    .onTransition(PROCESSING, SHIPPED, (from, to) -&gt; {
+        notificationService.send(userId, "Shipped", "Order shipped");
+    })
+    .build();
 
-# Encryption
-clinvio.persistence.encryption-key=${CLINVIO_ENCRYPTION_KEY}
+// Validate transition
+workflow.validate(currentStatus, newStatus); // throws CvBusinessException if invalid
 
-# Observability
-clinvio.nucleus.observability.enabled=true
-clinvio.nucleus.observability.request-logging.enabled=true
+// Execute with callbacks
+workflow.transition(order, newStatus, order::setStatus);</code></div>
 
-# Cache
-clinvio.nucleus.cache.enabled=true
-clinvio.nucleus.cache.caffeine.maximum-size=1000
-
-# Scheduler
-clinvio.nucleus.scheduler.enabled=true
-
-# Email
-clinvio.nucleus.mail.enabled=true
-clinvio.nucleus.mail.host=smtp.example.com
-clinvio.nucleus.mail.from=noreply@example.com
-
-# Security
-clinvio.nucleus.security.jwt.secret=${JWT_SECRET}
-
-# Compliance
-clinvio.nucleus.compliance.enabled=true
-
-# Multi-tenancy
-clinvio.nucleus.multitenancy.enabled=true
-clinvio.nucleus.multitenancy.tenant-header=X-Tenant-ID</code></div>
+    <h3>StatusAware Interface</h3>
+    <p>Entities must implement <code>WorkflowEngine.StatusAware</code>:</p>
+    <div class="doc-code"><code>@Entity
+public class Order extends BaseEntity implements WorkflowEngine.StatusAware&lt;OrderStatus&gt; {
+    private OrderStatus status;
+    @Override public OrderStatus getStatus() { return status; }
+    public void setStatus(OrderStatus status) { this.status = status; }
+}</code></div>
 </section>
 
-<!-- MODULES -->
-<section id="modules" class="doc-section">
-    <h2>Modules (34)</h2>
+<!-- UI COMPONENTS -->
+<section id="components" class="doc-section">
+    <h2>UI Components (23)</h2>
+    <p>Clinvio provides 23 server-side UI components that render HTML with Bootstrap 5 and Clinvio theme styling. All extend <code>AbstractCvComponent</code> and use fluent builder APIs.</p>
+
+    <h3>Basic Components</h3>
     <table class="doc-table">
-        <thead><tr><th>Module</th><th>Key Classes</th></tr></thead>
+        <thead><tr><th>Component</th><th>Class</th><th>Key Features</th></tr></thead>
         <tbody>
-            <tr><td>clinvio-nucleus-core</td><td>CvComponent, CvRenderer, ClinvioDialect</td></tr>
-            <tr><td>clinvio-nucleus-components</td><td>CvButton, CvCard, CvStatCard, CvDataTable</td></tr>
-            <tr><td>clinvio-nucleus-themes</td><td>clinvio-theme.css</td></tr>
-            <tr><td>clinvio-nucleus-htmx</td><td>HxResponse, HxSwap, HxRequestFilter</td></tr>
-            <tr><td>clinvio-nucleus-persistence</td><td>BaseEntity, @SensitiveData, AesCryptoService</td></tr>
-            <tr><td>clinvio-nucleus-business</td><td>CvBaseService, CvBaseCrudController, WorkflowEngine</td></tr>
-            <tr><td>clinvio-nucleus-security</td><td>CvJwtService, @Secured</td></tr>
-            <tr><td>clinvio-nucleus-observability</td><td>CvMetricsService, HealthIndicators</td></tr>
-            <tr><td>clinvio-nucleus-migration</td><td>Flyway integration</td></tr>
-            <tr><td>clinvio-nucleus-cache</td><td>Caffeine cache</td></tr>
-            <tr><td>clinvio-nucleus-openapi</td><td>Swagger UI</td></tr>
-            <tr><td>clinvio-nucleus-websocket</td><td>CvWebSocketHandler</td></tr>
-            <tr><td>clinvio-nucleus-scheduler</td><td>CvTaskExecutor</td></tr>
-            <tr><td>clinvio-nucleus-mail</td><td>CvMailService</td></tr>
-            <tr><td>clinvio-nucleus-ratelimit</td><td>RateLimitFilter, @RateLimiter</td></tr>
-            <tr><td>clinvio-nucleus-pdf</td><td>CvPdfService</td></tr>
-            <tr><td>clinvio-nucleus-docker</td><td>CvDockerService</td></tr>
-            <tr><td>clinvio-nucleus-postgresql</td><td>PostgreSQL support</td></tr>
-            <tr><td>clinvio-nucleus-redis</td><td>Redis cache</td></tr>
-            <tr><td>clinvio-nucleus-s3</td><td>CvS3StorageService</td></tr>
-            <tr><td>clinvio-nucleus-search</td><td>CvSearchService</td></tr>
-            <tr><td>clinvio-nucleus-compliance</td><td>CvConsentService</td></tr>
-            <tr><td>clinvio-nucleus-appointment</td><td>CvAppointmentService</td></tr>
-            <tr><td>clinvio-nucleus-documents</td><td>CvDocumentService</td></tr>
-            <tr><td>clinvio-nucleus-tasks</td><td>CvTaskService</td></tr>
-            <tr><td>clinvio-nucleus-ai</td><td>CvAiService</td></tr>
-            <tr><td>clinvio-nucleus-multitenancy</td><td>TenantFilter, TenantContext</td></tr>
-            <tr><td>clinvio-nucleus-notifications</td><td>CvNotificationService, InAppChannel</td></tr>
-            <tr><td>clinvio-nucleus-test</td><td>TestDataFactory, CvBaseServiceTest</td></tr>
-            <tr><td>clinvio-nucleus-devtools</td><td>Hot reload, debug endpoints</td></tr>
-            <tr><td>clinvio-nucleus-spring-boot-starter</td><td>Auto-configuration</td></tr>
-            <tr><td>clinvio-cli</td><td>CLI tool</td></tr>
-            <tr><td>clinvio-maven-plugin</td><td>Maven plugin</td></tr>
+            <tr><td>Button</td><td><code>CvButton</code></td><td>Primary/secondary/success/danger/outline/ghost variants, sizes, icons, loading state, HTMX attributes</td></tr>
+            <tr><td>Card</td><td><code>CvCard</code></td><td>Header, body, footer sections, actions</td></tr>
+            <tr><td>Stat Card</td><td><code>CvStatCard</code></td><td>Value/label/trend display</td></tr>
+            <tr><td>Alert</td><td><code>CvAlert</code></td><td>Info/success/warning/danger, dismissible, icons</td></tr>
+            <tr><td>Badge</td><td><code>CvBadge</code></td><td>Primary/success/warning/danger/info/neutral variants, static helpers + component builder</td></tr>
+            <tr><td>Avatar</td><td><code>CvAvatar</code></td><td>Initials extraction, sizes</td></tr>
+            <tr><td>Breadcrumb</td><td><code>CvBreadcrumb</code></td><td>Items with active state</td></tr>
+            <tr><td>Dropdown</td><td><code>CvDropdown</code></td><td>Items with selection</td></tr>
+            <tr><td>Progress</td><td><code>CvProgress</code></td><td>Value/max, label, variants</td></tr>
+            <tr><td>Stepper</td><td><code>CvStepper</code></td><td>Steps with active/completed states</td></tr>
+            <tr><td>Tabs</td><td><code>CvTabs</code></td><td>Tab navigation with active tab</td></tr>
+            <tr><td>Timeline</td><td><code>CvTimeline</code></td><td>Items with alignment options</td></tr>
+            <tr><td>Navbar</td><td><code>CvNavbar</code></td><td>Brand, nav links, responsive, user menu slot</td></tr>
+            <tr><td>Sidebar</td><td><code>CvSidebar</code></td><td>Nav items with icons, collapsible, nested sub-menus</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Form Components</h3>
+    <table class="doc-table">
+        <thead><tr><th>Component</th><th>Class</th><th>Key Features</th></tr></thead>
+        <tbody>
+            <tr><td>Text Field</td><td><code>CvTextField</code></td><td>Text/email/password/number/date types, label, placeholder, error state, help text, HTMX</td></tr>
+            <tr><td>Select</td><td><code>CvSelect</code></td><td>Options list, placeholder, error state, HTMX</td></tr>
+            <tr><td>Searchable Select</td><td><code>CvSearchableSelect</code></td><td>Search/filter options, keyboard navigation, HTMX</td></tr>
+            <tr><td>Checkbox</td><td><code>CvCheckbox</code></td><td>Checked/unchecked, indeterminate state, error state, disabled, HTMX</td></tr>
+            <tr><td>Toggle</td><td><code>CvToggle</code></td><td>On/off switch, label position, colored variants (primary/success/danger), HTMX</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Data & Overlay Components</h3>
+    <table class="doc-table">
+        <thead><tr><th>Component</th><th>Class</th><th>Key Features</th></tr></thead>
+        <tbody>
+            <tr><td>Data Table</td><td><code>CvDataTable</code></td><td>Columns, rows, sorting, searchable, pageable</td></tr>
+            <tr><td>Modal</td><td><code>CvModal</code></td><td>Title, content, size, closable, confirm/cancel buttons</td></tr>
+            <tr><td>Toast</td><td><code>CvToast</code></td><td>Severity levels, positions, auto-dismiss, dismissible, stackable</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Component Usage</h3>
+    <div class="doc-code"><code>// Fluent builder API
+CvButton button = CvButton.primary("Submit")
+    .icon("bi-check")
+    .hxPost("/orders")
+    .hxTarget("#result");
+
+CvTextField field = CvTextField.email("Email")
+    .placeholder("user@example.com")
+    .required(true);
+
+CvAlert alert = CvAlert.of("Order created", CvAlert.AlertType.SUCCESS)
+    .dismissible(true);
+
+// Render via CvRenderer
+@Autowired CvRenderer renderer;
+String html = renderer.render(button);</code></div>
+
+    <h3>Toast (via HxResponse)</h3>
+    <div class="doc-code"><code>// Trigger toast from controller
+return HxResponse.builder()
+    .trigger("cv:toast", Map.of(
+        "message", "Order created successfully",
+        "type", "success",
+        "duration", "3000"
+    ))
+    .redirect("/orders/" + id)
+    .build();</code></div>
+</section>
+
+<!-- TEMPLATES -->
+<section id="templates" class="doc-section">
+    <h2>Templates</h2>
+    <p>Clinvio provides 16 Thymeleaf fragment templates for rendering components. All templates are in <code>core/src/main/resources/templates/components/</code>.</p>
+
+    <table class="doc-table">
+        <thead><tr><th>Template</th><th>Renders</th></tr></thead>
+        <tbody>
+            <tr><td><code>components/button</code></td><td>CvButton</td></tr>
+            <tr><td><code>components/text-field</code></td><td>CvTextField</td></tr>
+            <tr><td><code>components/select</code></td><td>CvSelect</td></tr>
+            <tr><td><code>components/checkbox</code></td><td>CvCheckbox</td></tr>
+            <tr><td><code>components/toggle</code></td><td>CvToggle</td></tr>
+            <tr><td><code>components/searchable-select</code></td><td>CvSearchableSelect</td></tr>
+            <tr><td><code>components/card</code></td><td>CvCard</td></tr>
+            <tr><td><code>components/stat-card</code></td><td>CvStatCard</td></tr>
+            <tr><td><code>components/alert</code></td><td>CvAlert</td></tr>
+            <tr><td><code>components/badge</code></td><td>CvBadge</td></tr>
+            <tr><td><code>components/avatar</code></td><td>CvAvatar</td></tr>
+            <tr><td><code>components/data-table</code></td><td>CvDataTable</td></tr>
+            <tr><td><code>components/modal</code></td><td>CvModal</td></tr>
+            <tr><td><code>components/toast</code></td><td>CvToast</td></tr>
+            <tr><td><code>components/dropdown</code></td><td>CvDropdown</td></tr>
+            <tr><td><code>components/tabs</code></td><td>CvTabs</td></tr>
+            <tr><td><code>components/breadcrumb</code></td><td>CvBreadcrumb</td></tr>
+            <tr><td><code>components/stepper</code></td><td>CvStepper</td></tr>
+            <tr><td><code>components/timeline</code></td><td>CvTimeline</td></tr>
+            <tr><td><code>components/progress-bar</code></td><td>CvProgress</td></tr>
+            <tr><td><code>components/navbar</code></td><td>CvNavbar</td></tr>
+            <tr><td><code>components/sidebar</code></td><td>CvSidebar</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Custom Templates</h3>
+    <p>Override any component template by placing a file with the same name in your application's <code>templates/components/</code> directory. The <code>CvRenderer</code> resolves templates using the configured prefix.</p>
+</section>
+
+<!-- HTMX -->
+<section id="htmx" class="doc-section">
+    <h2>HTMX Integration</h2>
+    <p>Clinvio provides <code>HxResponse</code> for HTMX-aware responses and <code>HxRequestFilter</code> for request detection.</p>
+
+    <h3>HxResponse</h3>
+    <div class="doc-code"><code>// Toast notification + redirect
+return HxResponse.builder()
+    .trigger("cv:toast", Map.of("message", "Created", "type", "success"))
+    .redirect("/orders/" + id)
+    .build();
+
+// Fragment swap (partial page update)
+return HxResponse.builder()
+    .swap(HxSwap.OUTER_HTML)
+    .fragment("orders/fragments :: status-badge")
+    .model(Map.of("status", newStatus))
+    .build();
+
+// Push URL without reload
+return HxResponse.builder()
+    .pushUrl("/orders/" + id)
+    .fragment("orders/fragments :: detail")
+    .model(Map.of("order", order))
+    .build();</code></div>
+
+    <h3>HxSwap Options</h3>
+    <table class="doc-table">
+        <thead><tr><th>Value</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>INNER_HTML</code></td><td>Replace inner HTML (default)</td></tr>
+            <tr><td><code>OUTER_HTML</code></td><td>Replace entire element</td></tr>
+            <tr><td><code>BEFORE_BEGIN</code></td><td>Insert before element</td></tr>
+            <tr><td><code>AFTER_BEGIN</code></td><td>Prepend inside element</td></tr>
+            <tr><td><code>BEFORE_END</code></td><td>Append inside element</td></tr>
+            <tr><td><code>AFTER_END</code></td><td>Insert after element</td></tr>
         </tbody>
     </table>
 </section>
 
+<!-- SECURITY -->
+<section id="security" class="doc-section">
+    <h2>Security (JWT)</h2>
+    <p>Full JWT authentication with Spring Security integration, RBAC, CORS, CSRF, and token lifecycle management.</p>
+
+    <h3>Authentication Flow</h3>
+    <div class="doc-code"><code>1. Client sends credentials to your login endpoint
+2. Your endpoint validates credentials and calls CvJwtService.generateToken()
+3. Client stores JWT and sends it in Authorization: Bearer &lt;token&gt; header
+4. CvJwtAuthenticationFilter validates token and sets SecurityContext
+5. @Secured annotation checks roles on protected endpoints</code></div>
+
+    <h3>Generate Token</h3>
+    <div class="doc-code"><code>@Autowired CvJwtService jwtService;
+
+// Generate access token
+String token = jwtService.generateToken(userId, username, "ADMIN", "USER");
+
+// Generate refresh token (7-day expiry)
+String refreshToken = jwtService.generateRefreshToken(userId, username);
+
+// Validate
+boolean valid = jwtService.validateToken(token);
+
+// Extract claims
+String userId = jwtService.getUserId(token);
+String username = jwtService.getUsername(token);
+String[] roles = jwtService.getRoles(token);</code></div>
+
+    <h3>Role-Based Access</h3>
+    <div class="doc-code"><code>@Secured(roles = {"ADMIN"})
+@GetMapping("/admin/users")
+public String adminUsers(Model model) { ... }
+
+@Secured  // Just requires authentication
+@GetMapping("/profile")
+public String profile(Model model) { ... }</code></div>
+
+    <h3>Auth Endpoints</h3>
+    <table class="doc-table">
+        <thead><tr><th>Endpoint</th><th>Method</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>/api/auth/refresh</code></td><td>POST</td><td>Exchange refresh token for new access token</td></tr>
+            <tr><td><code>/api/auth/logout</code></td><td>POST</td><td>Blacklist current token</td></tr>
+            <tr><td><code>/api/auth/csrf</code></td><td>GET</td><td>Get CSRF token for HTMX requests</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Refresh Token</h3>
+    <div class="doc-code"><code>// Client sends refresh token
+POST /api/auth/refresh
+{ "refreshToken": "&lt;refresh-token&gt;" }
+
+// Response
+{ "accessToken": "&lt;new-access-token&gt;", "tokenType": "Bearer" }</code></div>
+
+    <h3>Logout</h3>
+    <div class="doc-code"><code>// Client sends current token
+POST /api/auth/logout
+Authorization: Bearer &lt;token&gt;
+
+// Response
+{ "message": "Logged out successfully" }
+// Token is blacklisted and will be rejected on subsequent requests</code></div>
+
+    <h3>CvUserDetails</h3>
+    <div class="doc-code"><code>CvUserDetails user = CvUserDetails.builder()
+    .id(1L)
+    .username("admin")
+    .password(hashedPassword)
+    .roles(Set.of("ADMIN", "USER"))
+    .active(true)
+    .build();</code></div>
+</section>
+
+<!-- PERSISTENCE -->
+<section id="persistence" class="doc-section">
+    <h2>Persistence</h2>
+
+    <h3>AesCryptoService</h3>
+    <p>The encryption service used by <code>EncryptedStringConverter</code>. Configured automatically from properties:</p>
+    <div class="doc-code"><code>// Automatic configuration via:
+clinvio.persistence.encryption-key=${CLINVIO_ENCRYPTION_KEY}
+clinvio.persistence.encryption-salt=${CLINVIO_ENCRYPTION_SALT}  // Optional</code></div>
+
+    <h3>SQLite Dialect</h3>
+    <p>Custom Hibernate dialect for SQLite with full JPA support. Auto-configured by the starter module.</p>
+
+    <h3>Connection Pool</h3>
+    <div class="doc-code"><code>clinvio.connection-pool.maximum-pool-size=10
+clinvio.connection-pool.minimum-idle=5
+clinvio.connection-pool.idle-timeout=300000
+clinvio.connection-pool.max-lifetime=1800000
+clinvio.connection-pool.connection-timeout=30000
+clinvio.connection-pool.pool-name=ClinvioPool</code></div>
+
+    <h3>Database Path</h3>
+    <div class="doc-code"><code>// Auto-creates data directory
+clinvio.persistence.database-path=./data/app.db
+// Use environment variable for production
+clinvio.persistence.database-path=${DB_PATH:./data/app.db}</code></div>
+</section>
+
+<!-- BUSINESS -->
+<section id="business" class="doc-section">
+    <h2>Business</h2>
+
+    <h3>DTOs</h3>
+    <div class="doc-code"><code>// Form result (success/error with field errors)
+CvFormResult&lt;Order&gt; result = CvFormResult.ok("Order created", order);
+CvFormResult&lt;Order&gt; result = CvFormResult.error("Validation failed", fieldErrors);
+
+// Paginated result
+CvPageResult&lt;Order&gt; page = CvPageResult.of(orderPage);
+
+// Search request
+CvSearchRequest request = CvSearchRequest.of("query", pageable);</code></div>
+
+    <h3>CsvExport</h3>
+    <div class="doc-code"><code>@GetMapping("/export")
+public void exportOrders(HttpServletResponse response) {
+    List&lt;Order&gt; orders = orderService.findAll();
+    CsvExport.builder(response, "orders")
+        .addHeader("Order #", Order::getOrderNumber)
+        .addHeader("Customer", Order::getCustomerName)
+        .addHeader("Total", o -&gt; o.getTotalAmount().toString())
+        .write(orders);
+}</code></div>
+
+    <h3>Pagination</h3>
+    <div class="doc-code"><code>// Default pagination (page 0, 10 items)
+Pageable pageable = Pagination.of();
+
+// Custom page and size
+Pageable pageable = Pagination.of(2, 25);
+
+// With sorting
+Pageable pageable = Pagination.of(0, 10, "createdAt", Sort.Direction.DESC);</code></div>
+
+    <h3>Notifications</h3>
+    <div class="doc-code"><code>@Autowired CvSimpleNotificationService notificationService;
+
+notificationService.send(userId, "Order Shipped", "Your order is on the way");
+notificationService.sendSuccess(userId, "Success", "Operation completed");
+notificationService.sendWarning(userId, "Warning", "Low stock");
+notificationService.sendError(userId, "Error", "Payment failed");</code></div>
+
+    <h3>Document Storage</h3>
+    <div class="doc-code"><code>@Autowired CvDocumentStorageService documentService;
+
+String path = documentService.store(multipartFile, "orders/" + orderId);
+InputStream stream = documentService.retrieve(path);
+boolean exists = documentService.exists(path);
+documentService.delete(path);</code></div>
+</section>
+
+<!-- CONFIGURATION -->
+<section id="config" class="doc-section">
+    <h2>Configuration Reference</h2>
+
+    <h3>clinvio.ui.*</h3>
+    <table class="doc-table">
+        <thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>clinvio.ui.enabled</code></td><td>Boolean</td><td>true</td><td>Enable Clinvio UI auto-configuration</td></tr>
+            <tr><td><code>clinvio.ui.theme.default-theme</code></td><td>String</td><td>light</td><td>Default theme (light/dark)</td></tr>
+            <tr><td><code>clinvio.ui.theme.switchable</code></td><td>Boolean</td><td>true</td><td>Allow theme switching</td></tr>
+            <tr><td><code>clinvio.ui.htmx.enabled</code></td><td>Boolean</td><td>true</td><td>Enable HTMX filter</td></tr>
+            <tr><td><code>clinvio.ui.htmx.version</code></td><td>String</td><td>2.0.4</td><td>HTMX version</td></tr>
+            <tr><td><code>clinvio.ui.components.id-prefix</code></td><td>String</td><td>cv</td><td>Component ID prefix</td></tr>
+            <tr><td><code>clinvio.ui.components.template-prefix</code></td><td>String</td><td></td><td>Template path prefix</td></tr>
+            <tr><td><code>clinvio.ui.components.pagination.default-page-size</code></td><td>Integer</td><td>10</td><td>Default page size</td></tr>
+            <tr><td><code>clinvio.ui.components.pagination.max-page-size</code></td><td>Integer</td><td>100</td><td>Maximum page size</td></tr>
+        </tbody>
+    </table>
+
+    <h3>clinvio.persistence.*</h3>
+    <table class="doc-table">
+        <thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>clinvio.persistence.encryption-key</code></td><td>String</td><td>—</td><td>AES-256-GCM encryption key (required)</td></tr>
+            <tr><td><code>clinvio.persistence.encryption-salt</code></td><td>String</td><td>null</td><td>PBKDF2 salt</td></tr>
+            <tr><td><code>clinvio.persistence.database-path</code></td><td>String</td><td>./data/app.db</td><td>SQLite database file path</td></tr>
+            <tr><td><code>clinvio.persistence.ddl-auto</code></td><td>Boolean</td><td>true</td><td>Enable Hibernate DDL auto-update</td></tr>
+        </tbody>
+    </table>
+
+    <h3>clinvio.security.*</h3>
+    <table class="doc-table">
+        <thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>clinvio.security.enabled</code></td><td>Boolean</td><td>true</td><td>Enable security auto-configuration</td></tr>
+            <tr><td><code>clinvio.security.jwt.secret</code></td><td>String</td><td>—</td><td>HMAC-SHA signing key (min 32 chars)</td></tr>
+            <tr><td><code>clinvio.security.jwt.expiration</code></td><td>Long</td><td>86400000</td><td>Access token TTL (24h)</td></tr>
+            <tr><td><code>clinvio.security.jwt.refresh-expiration</code></td><td>Long</td><td>604800000</td><td>Refresh token TTL (7d)</td></tr>
+            <tr><td><code>clinvio.security.jwt.header</code></td><td>String</td><td>Authorization</td><td>JWT header name</td></tr>
+            <tr><td><code>clinvio.security.jwt.prefix</code></td><td>String</td><td>Bearer </td><td>JWT header prefix</td></tr>
+            <tr><td><code>clinvio.security.permit-paths</code></td><td>String[]</td><td>/login, /register, /css/**, /js/**, /images/**, /api/auth/**</td><td>Paths that bypass auth</td></tr>
+            <tr><td><code>clinvio.security.cors.allowed-origins</code></td><td>String[]</td><td>*</td><td>CORS allowed origins</td></tr>
+            <tr><td><code>clinvio.security.cors.allowed-methods</code></td><td>String[]</td><td>GET,POST,PUT,DELETE,PATCH,OPTIONS</td><td>CORS allowed methods</td></tr>
+            <tr><td><code>clinvio.security.cors.allow-credentials</code></td><td>Boolean</td><td>false</td><td>CORS credentials</td></tr>
+            <tr><td><code>clinvio.security.cors.max-age</code></td><td>Long</td><td>3600</td><td>CORS preflight cache (seconds)</td></tr>
+            <tr><td><code>clinvio.security.csrf.enabled</code></td><td>Boolean</td><td>true</td><td>Enable CSRF protection</td></tr>
+            <tr><td><code>clinvio.security.csrf.header-name</code></td><td>String</td><td>X-CSRF-Token</td><td>CSRF header name</td></tr>
+        </tbody>
+    </table>
+
+    <h3>clinvio.connection-pool.*</h3>
+    <table class="doc-table">
+        <thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><code>clinvio.connection-pool.maximum-pool-size</code></td><td>Integer</td><td>10</td><td>Max pool connections</td></tr>
+            <tr><td><code>clinvio.connection-pool.minimum-idle</code></td><td>Integer</td><td>5</td><td>Min idle connections</td></tr>
+            <tr><td><code>clinvio.connection-pool.idle-timeout</code></td><td>Long</td><td>300000</td><td>Idle timeout (5min)</td></tr>
+            <tr><td><code>clinvio.connection-pool.max-lifetime</code></td><td>Long</td><td>1800000</td><td>Max connection lifetime (30min)</td></tr>
+            <tr><td><code>clinvio.connection-pool.connection-timeout</code></td><td>Long</td><td>30000</td><td>Connection timeout (30s)</td></tr>
+            <tr><td><code>clinvio.connection-pool.pool-name</code></td><td>String</td><td>ClinvioPool</td><td>Pool name</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- TESTING -->
+<section id="testing" class="doc-section">
+    <h2>Testing</h2>
+    <p>Clinvio Nucleus ships with 160+ tests across all 8 modules. All modules include <code>spring-boot-starter-test</code> as a test dependency.</p>
+
+    <h3>Run Tests</h3>
+    <div class="doc-code"><code># All modules
+./mvnw test
+
+# Specific module
+./mvnw test -pl clinvio-nucleus-core
+./mvnw test -pl clinvio-nucleus-security</code></div>
+
+    <h3>Test Coverage</h3>
+    <table class="doc-table">
+        <thead><tr><th>Module</th><th>Test Classes</th><th>Covers</th></tr></thead>
+        <tbody>
+            <tr><td>core</td><td>5</td><td>Dialect, components, event bus, registry, renderer</td></tr>
+            <tr><td>components</td><td>16</td><td>All 16 original components (builder, model, type)</td></tr>
+            <tr><td>persistence</td><td>4</td><td>AES crypto, encrypted converter, BaseEntity, SQLite dialect</td></tr>
+            <tr><td>business</td><td>8</td><td>DTOs, CSV export, pagination, services, notifications, documents</td></tr>
+            <tr><td>security</td><td>3</td><td>JWT service, password encoder, secured interceptor</td></tr>
+            <tr><td>htmx</td><td>3</td><td>HxResponse, interceptor, filter</td></tr>
+            <tr><td>starter</td><td>2</td><td>Properties, auto-configuration</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- MODULES -->
+<section id="modules" class="doc-section">
+    <h2>Modules</h2>
+    <table class="doc-table">
+        <thead><tr><th>Module</th><th>Key Classes</th><th>Purpose</th></tr></thead>
+        <tbody>
+            <tr><td><code>clinvio-nucleus-core</code></td><td>CvComponent, CvRenderer, ClinvioDialect, CvComponentType</td><td>Component model, Thymeleaf dialect, renderer</td></tr>
+            <tr><td><code>clinvio-nucleus-components</code></td><td>CvButton, CvCard, CvDataTable, CvModal, CvTextField, CvSelect</td><td>23 UI components with fluent builder API</td></tr>
+            <tr><td><code>clinvio-nucleus-themes</code></td><td>clinvio-theme.css</td><td>CSS design system (Bootstrap 5 + Clinvio)</td></tr>
+            <tr><td><code>clinvio-nucleus-htmx</code></td><td>HxResponse, HxSwap, HxRequestFilter, CvHxRequestInterceptor</td><td>HTMX request/response handling</td></tr>
+            <tr><td><code>clinvio-nucleus-persistence</code></td><td>BaseEntity, AesCryptoService, EncryptedStringConverter, SQLiteDialect</td><td>Entities, AES-256-GCM encryption, SQLite</td></tr>
+            <tr><td><code>clinvio-nucleus-business</code></td><td>CvBaseService, CvBaseCrudController, WorkflowEngine, CsvExport, Pagination</td><td>Services, controllers, workflow, utilities</td></tr>
+            <tr><td><code>clinvio-nucleus-security</code></td><td>CvJwtService, CvJwtAuthenticationFilter, @Secured, CvUserDetails</td><td>JWT auth, RBAC, CORS, CSRF, token lifecycle</td></tr>
+            <tr><td><code>clinvio-nucleus-spring-boot-starter</code></td><td>ClinvioAutoConfiguration, ClinvioProperties</td><td>Auto-configuration for all modules</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- CONTRIBUTING -->
+<section id="contributing" class="doc-section">
+    <h2>Contributing</h2>
+    <p>Clinvio Nucleus Community is open source under the MIT license. Contributions are welcome.</p>
+
+    <h3>Prerequisites</h3>
+    <ul>
+        <li>Java 21+</li>
+        <li>Maven 3.9+ (use <code>./mvnw</code>)</li>
+    </ul>
+
+    <h3>Build</h3>
+    <div class="doc-code"><code>git clone https://github.com/jokerz5575/nucleus.git
+cd nucleus
+./mvnw install -N -DskipTests
+./mvnw install -DskipTests
+./mvnw test</code></div>
+
+    <h3>Code Style</h3>
+    <ul>
+        <li>No comments (match surrounding patterns)</li>
+        <li>Commit style: <code>type(scope): description</code> — types: feat, fix, docs, test, refactor, chore</li>
+        <li>Add tests for new functionality</li>
+    </ul>
+
+    <p>See <a href="https://github.com/jokerz5575/nucleus/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for full details.</p>
+</section>
+
 <footer style="margin-top:4rem;padding-top:2rem;border-top:1px solid var(--cv-color-border-light);text-align:center;">
-    <p class="cv-body-sm text-muted">Clinvio Nucleus v2.0.0 — 34 Modules</p>
-    <p class="cv-body-sm text-muted">&copy; 2026 Clinvio</p>
+    <p style="font-size:0.875rem;color:var(--cv-color-text-muted);">Clinvio Nucleus v2.3.0 — Community Edition (MIT)</p>
+    <p style="font-size:0.875rem;color:var(--cv-color-text-muted);">&copy; 2026 Clinvio &mdash; <a href="https://github.com/jokerz5575/nucleus">GitHub</a></p>
 </footer>
 
 </main>
@@ -814,8 +864,14 @@ clinvio.nucleus.multitenancy.tenant-header=X-Tenant-ID</code></div>
 <script>
 function toggleTheme() {
     const html = document.documentElement;
-    html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('cv-theme', newTheme);
 }
+(function() {
+    const saved = localStorage.getItem('cv-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+})();
 </script>
 </body>
 </html>
