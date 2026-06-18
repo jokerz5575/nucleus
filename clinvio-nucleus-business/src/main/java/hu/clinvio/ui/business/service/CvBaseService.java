@@ -297,8 +297,6 @@ public abstract class CvBaseService<E extends BaseEntity, ID> {
      * Count entities created after a specific date.
      */
     public long countCreatedAfter(LocalDateTime date) {
-        return repository.findAll().stream()
-                .filter(e -> e.getCreatedAt() != null && e.getCreatedAt().isAfter(date))
-                .count();
+        return repository.countCreatedSince(date);
     }
 }

@@ -60,11 +60,47 @@ public class ClinvioProperties {
     public static class Components {
         private String idPrefix = "cv";
         private boolean stateful = true;
+        private String templatePrefix = "";
+        private Pagination pagination = new Pagination();
+        private Processors processors = new Processors();
 
         public String getIdPrefix() { return idPrefix; }
         public void setIdPrefix(String idPrefix) { this.idPrefix = idPrefix; }
 
         public boolean isStateful() { return stateful; }
         public void setStateful(boolean stateful) { this.stateful = stateful; }
+
+        public String getTemplatePrefix() { return templatePrefix; }
+        public void setTemplatePrefix(String templatePrefix) { this.templatePrefix = templatePrefix; }
+
+        public Pagination getPagination() { return pagination; }
+        public void setPagination(Pagination pagination) { this.pagination = pagination; }
+
+        public Processors getProcessors() { return processors; }
+        public void setProcessors(Processors processors) { this.processors = processors; }
+
+        public static class Pagination {
+            private int defaultPageSize = 10;
+            private int maxPageSize = 100;
+
+            public int getDefaultPageSize() { return defaultPageSize; }
+            public void setDefaultPageSize(int defaultPageSize) { this.defaultPageSize = defaultPageSize; }
+
+            public int getMaxPageSize() { return maxPageSize; }
+            public void setMaxPageSize(int maxPageSize) { this.maxPageSize = maxPageSize; }
+        }
+
+        public static class Processors {
+            private int button = 1000;
+            private int component = 1000;
+            private int render = 900;
+
+            public int getButton() { return button; }
+            public void setButton(int button) { this.button = button; }
+            public int getComponent() { return component; }
+            public void setComponent(int component) { this.component = component; }
+            public int getRender() { return render; }
+            public void setRender(int render) { this.render = render; }
+        }
     }
 }

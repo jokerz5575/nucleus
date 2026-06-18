@@ -15,9 +15,12 @@ import org.thymeleaf.templatemode.TemplateMode;
 public class CvButtonAttrProcessor extends AbstractAttributeTagProcessor {
 
     private static final String ATTRIBUTE_NAME = "button";
-    private static final int PRECEDENCE = 1000;
 
     public CvButtonAttrProcessor(String dialectPrefix) {
+        this(dialectPrefix, 1000);
+    }
+
+    public CvButtonAttrProcessor(String dialectPrefix, int precedence) {
         super(
                 TemplateMode.HTML,
                 dialectPrefix,
@@ -25,7 +28,7 @@ public class CvButtonAttrProcessor extends AbstractAttributeTagProcessor {
                 false,
                 ATTRIBUTE_NAME,
                 true,
-                PRECEDENCE,
+                precedence,
                 true
         );
     }

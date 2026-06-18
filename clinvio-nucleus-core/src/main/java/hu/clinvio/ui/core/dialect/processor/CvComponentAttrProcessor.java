@@ -18,9 +18,12 @@ import org.thymeleaf.templatemode.TemplateMode;
 public class CvComponentAttrProcessor extends AbstractAttributeTagProcessor {
 
     private static final String ATTRIBUTE_NAME = "component";
-    private static final int PRECEDENCE = 1000;
 
     public CvComponentAttrProcessor(String dialectPrefix) {
+        this(dialectPrefix, 1000);
+    }
+
+    public CvComponentAttrProcessor(String dialectPrefix, int precedence) {
         super(
                 TemplateMode.HTML,
                 dialectPrefix,
@@ -28,7 +31,7 @@ public class CvComponentAttrProcessor extends AbstractAttributeTagProcessor {
                 false,
                 ATTRIBUTE_NAME,
                 true,
-                PRECEDENCE,
+                precedence,
                 true
         );
     }

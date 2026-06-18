@@ -1,1 +1,4 @@
 hu.clinvio.ui.autoconfigure.ClinvioAutoConfiguration
+hu.clinvio.ui.persistence.autoconfigure.PersistenceAutoConfiguration
+hu.clinvio.ui.business.autoconfigure.BusinessAutoConfiguration
+hu.clinvio.ui.security.config.CvSecurityAutoConfiguration

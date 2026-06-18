@@ -20,9 +20,12 @@ import java.util.Map;
 public class CvRenderAttrProcessor extends AbstractAttributeTagProcessor {
 
     private static final String ATTRIBUTE_NAME = "render";
-    private static final int PRECEDENCE = 900;
 
     public CvRenderAttrProcessor(String dialectPrefix) {
+        this(dialectPrefix, 900);
+    }
+
+    public CvRenderAttrProcessor(String dialectPrefix, int precedence) {
         super(
                 TemplateMode.HTML,
                 dialectPrefix,
@@ -30,7 +33,7 @@ public class CvRenderAttrProcessor extends AbstractAttributeTagProcessor {
                 false,
                 ATTRIBUTE_NAME,
                 true,
-                PRECEDENCE,
+                precedence,
                 true
         );
     }

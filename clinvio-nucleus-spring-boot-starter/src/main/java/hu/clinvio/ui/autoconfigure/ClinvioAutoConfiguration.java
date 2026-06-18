@@ -4,6 +4,7 @@ import hu.clinvio.ui.core.dialect.ClinvioDialect;
 import hu.clinvio.ui.core.event.CvEventBus;
 import hu.clinvio.ui.core.registry.CvComponentRegistry;
 import hu.clinvio.ui.core.renderer.CvRenderer;
+import hu.clinvio.ui.htmx.filter.CvHxRequestInterceptor;
 import hu.clinvio.ui.htmx.filter.HxRequestFilter;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -15,6 +16,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.thymeleaf.TemplateEngine;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -37,8 +39,13 @@ public class ClinvioAutoConfiguration implements WebMvcConfigurer {
 
     @Bean
     @ConditionalOnMissingBean
-    public ClinvioDialect clinvioDialect() {
-        return new ClinvioDialect();
+    public ClinvioDialect clinvioDialect(ClinvioProperties props) {
+        var procProps = props.getComponents().getProcessors();
+        return new ClinvioDialect(
+                procProps.getButton(),
+                procProps.getComponent(),
+                procProps.getRender()
+        );
     }
 
     @Bean
@@ -55,8 +62,16 @@ public class ClinvioAutoConfiguration implements WebMvcConfigurer {
 
     @Bean
     @ConditionalOnMissingBean
-    public CvRenderer cvRenderer(TemplateEngine templateEngine, CvComponentRegistry componentRegistry) {
-        return new CvRenderer(templateEngine, componentRegistry);
+    public CvRenderer cvRenderer(TemplateEngine templateEngine, CvComponentRegistry componentRegistry, ClinvioProperties props) {
+        return new CvRenderer(templateEngine, componentRegistry, props.getComponents().getTemplatePrefix());
+    }
+
+    @Bean
+    public void configurePagination(ClinvioProperties props) {
+        var paginationProps = props.getComponents().getPagination();
+        hu.clinvio.ui.business.util.Pagination.configure(
+                paginationProps.getDefaultPageSize(),
+                paginationProps.getMaxPageSize());
     }
 
     @Bean
@@ -72,12 +87,16 @@ public class ClinvioAutoConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Serve Clinvio UI static resources
         registry.addResourceHandler("/cv/css/**")
                 .addResourceLocations("classpath:/static/cv/css/");
         registry.addResourceHandler("/cv/js/**")
                 .addResourceLocations("classpath:/static/cv/js/");
         registry.addResourceHandler("/cv/fonts/**")
                 .addResourceLocations("classpath:/static/cv/fonts/");
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new CvHxRequestInterceptor());
     }
 }

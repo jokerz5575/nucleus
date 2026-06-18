@@ -1,2 +1,4 @@
+# LEGACY — kept for Spring Boot < 3.0 compatibility
+# Auto-configuration registration migrated to META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   hu.clinvio.ui.autoconfigure.ClinvioAutoConfiguration

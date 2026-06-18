@@ -26,30 +26,46 @@ import org.springframework.data.domain.Sort;
  */
 public class Pagination {
 
-    public static final int DEFAULT_PAGE_SIZE = 10;
-    public static final int MAX_PAGE_SIZE = 100;
+    private static int defaultPageSize = 10;
+    private static int maxPageSize = 100;
+
+    public static int DEFAULT_PAGE_SIZE() { return defaultPageSize; }
+    public static int MAX_PAGE_SIZE() { return maxPageSize; }
 
     private Pagination() {}
 
     /**
-     * Create a default Pageable (page 0, size 10).
+     * Override default pagination constants at runtime.
+     * Called by Spring auto-configuration when clinvio.ui.components.pagination.* properties are set.
+     */
+    public static void configure(int newDefaultPageSize, int newMaxPageSize) {
+        if (newDefaultPageSize > 0) {
+            defaultPageSize = newDefaultPageSize;
+        }
+        if (newMaxPageSize > 0) {
+            maxPageSize = newMaxPageSize;
+        }
+    }
+
+    /**
+     * Create a default Pageable (page 0, size {@link #DEFAULT_PAGE_SIZE()}).
      */
     public static Pageable of() {
-        return PageRequest.of(0, DEFAULT_PAGE_SIZE);
+        return PageRequest.of(0, DEFAULT_PAGE_SIZE());
     }
 
     /**
      * Create a Pageable with specified page and size.
      */
     public static Pageable of(int page, int size) {
-        return PageRequest.of(Math.max(0, page), Math.min(size, MAX_PAGE_SIZE));
+        return PageRequest.of(Math.max(0, page), Math.min(size, MAX_PAGE_SIZE()));
     }
 
     /**
      * Create a Pageable with sorting.
      */
     public static Pageable of(int page, int size, String sortField, Sort.Direction direction) {
-        return PageRequest.of(Math.max(0, page), Math.min(size, MAX_PAGE_SIZE),
+        return PageRequest.of(Math.max(0, page), Math.min(size, MAX_PAGE_SIZE()),
                 Sort.by(direction, sortField));
     }
 
@@ -57,7 +73,7 @@ public class Pagination {
      * Create a Pageable with multiple sort fields.
      */
     public static Pageable of(int page, int size, Sort sort) {
-        return PageRequest.of(Math.max(0, page), Math.min(size, MAX_PAGE_SIZE), sort);
+        return PageRequest.of(Math.max(0, page), Math.min(size, MAX_PAGE_SIZE()), sort);
     }
 
     /**
@@ -84,7 +100,7 @@ public class Pagination {
      * Create a Pageable for the first page with a specific size.
      */
     public static Pageable firstPage(int size) {
-        return PageRequest.of(0, Math.min(size, MAX_PAGE_SIZE));
+        return PageRequest.of(0, Math.min(size, MAX_PAGE_SIZE()));
     }
 
     /**
@@ -92,7 +108,7 @@ public class Pagination {
      */
     public static Pageable lastPage(long totalElements, int size) {
         int lastPage = (int) Math.ceil((double) totalElements / size) - 1;
-        return PageRequest.of(Math.max(0, lastPage), Math.min(size, MAX_PAGE_SIZE));
+        return PageRequest.of(Math.max(0, lastPage), Math.min(size, MAX_PAGE_SIZE()));
     }
 
     /**
@@ -107,7 +123,7 @@ public class Pagination {
      */
     public static Pageable normalize(int page, int size, String sortField, Sort.Direction direction) {
         int normalizedPage = Math.max(0, page);
-        int normalizedSize = Math.max(1, Math.min(size, MAX_PAGE_SIZE));
+        int normalizedSize = Math.max(1, Math.min(size, MAX_PAGE_SIZE()));
 
         if (sortField != null && !sortField.isBlank()) {
             return PageRequest.of(normalizedPage, normalizedSize,
