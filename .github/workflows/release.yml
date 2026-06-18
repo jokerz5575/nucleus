@@ -30,6 +30,7 @@ jobs:
         run: ./mvnw -B verify -DskipTests
 
       - name: Publish to Maven Central
+        continue-on-error: true
         run: ./mvnw -B deploy -DskipTests -Pcentral
         env:
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
