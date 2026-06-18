@@ -94,11 +94,11 @@ public class Patient {
 
 ## Documentation
 
+- **[Documentation Site](https://jokerz5575.github.io/nucleus/)** — Full documentation
 - [Changelog](CHANGELOG.md)
 - [Roadmap](ROADMAP.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)
-- [Action Plan](ACTION-PLAN.md)
 
 ## License
 
