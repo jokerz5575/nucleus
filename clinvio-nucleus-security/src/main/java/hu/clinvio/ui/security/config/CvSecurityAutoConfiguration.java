@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(SecurityProperties.class)
-@ConditionalOnProperty(prefix = "clinvio.nucleus.security", name = "enabled", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "clinvio.security", name = "enabled", matchIfMissing = true)
 public class CvSecurityAutoConfiguration {
 
     @Bean

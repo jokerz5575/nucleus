@@ -4,15 +4,20 @@ import hu.clinvio.ui.persistence.crypto.AesCryptoService;
 import hu.clinvio.ui.persistence.crypto.EncryptedStringConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.jpa.persistenceunit.PersistenceUnitManager;
+
+import javax.sql.DataSource;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,10 +29,10 @@ import java.util.Arrays;
  * Sets up AES encryption service and configures SQLite dialect for Hibernate.
  */
 @AutoConfiguration
-@EnableConfigurationProperties(PersistenceProperties.class)
-@EnableJpaRepositories(basePackages = {"hu.clinvio.ui", "hu.clinvio.nucleus"})
-@ComponentScan(basePackages = {"hu.clinvio.ui", "hu.clinvio.nucleus"})
-@org.springframework.boot.autoconfigure.domain.EntityScan(basePackages = {"hu.clinvio.ui", "hu.clinvio.nucleus"})
+@EnableConfigurationProperties({PersistenceProperties.class, ConnectionPoolProperties.class})
+@EnableJpaRepositories(basePackages = {"hu.clinvio.ui"})
+@ComponentScan(basePackages = {"hu.clinvio.ui"})
+@org.springframework.boot.autoconfigure.domain.EntityScan(basePackages = {"hu.clinvio.ui"})
 public class PersistenceAutoConfiguration {
 
     private static final Logger log = LoggerFactory.getLogger(PersistenceAutoConfiguration.class);
@@ -70,7 +75,12 @@ public class PersistenceAutoConfiguration {
         }
 
         log.info("Initializing AES-256-GCM crypto service");
-        return new AesCryptoService(key);
+
+        String saltStr = properties.getEncryptionSalt();
+        byte[] salt = saltStr != null && !saltStr.isBlank()
+                ? saltStr.getBytes(java.nio.charset.StandardCharsets.UTF_8)
+                : null;
+        return new AesCryptoService(key, salt);
     }
 
     @Bean
@@ -82,9 +92,28 @@ public class PersistenceAutoConfiguration {
     }
 
     @Bean
-    public HibernatePropertiesCustomizer sqliteHibernateCustomizer() {
+    @ConditionalOnMissingBean
+    @ConditionalOnClass(HikariConfig.class)
+    public DataSource dataSource(ConnectionPoolProperties poolProps, PersistenceProperties props) {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:sqlite:" + props.getDatabasePath());
+        config.setMaximumPoolSize(poolProps.getMaximumPoolSize());
+        config.setMinimumIdle(poolProps.getMinimumIdle());
+        config.setIdleTimeout(poolProps.getIdleTimeout());
+        config.setMaxLifetime(poolProps.getMaxLifetime());
+        config.setConnectionTimeout(poolProps.getConnectionTimeout());
+        config.setPoolName(poolProps.getPoolName());
+        config.setDriverClassName("org.sqlite.JDBC");
+        return new HikariDataSource(config);
+    }
+
+    @Bean
+    public HibernatePropertiesCustomizer sqliteHibernateCustomizer(PersistenceProperties props) {
         return hibernateProperties -> {
             hibernateProperties.put("hibernate.dialect", "org.hibernate.community.dialect.SQLiteDialect");
+            if (props.isDdlAuto()) {
+                hibernateProperties.put("hibernate.hbm2ddl.auto", "update");
+            }
         };
     }
 }

@@ -71,7 +71,9 @@ public class CvDocumentStorageService {
         Files.createDirectories(targetDir);
 
         Path targetFile = targetDir.resolve(uniqueFilename);
-        Files.copy(inputStream, targetFile, StandardCopyOption.REPLACE_EXISTING);
+        try (inputStream) {
+            Files.copy(inputStream, targetFile, StandardCopyOption.REPLACE_EXISTING);
+        }
 
         log.debug("Stored file: {} -> {}", filename, targetFile);
         return directory + "/" + uniqueFilename;

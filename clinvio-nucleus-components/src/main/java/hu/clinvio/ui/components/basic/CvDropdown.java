@@ -44,10 +44,10 @@ public class CvDropdown extends AbstractCvComponent {
     }
 
     @Override
-    public String getComponentType() { return "DROPDOWN"; }
+    public String getComponentType() { return CvComponentType.DROPDOWN.getType(); }
 
     @Override
-    public String getTemplate() { return "cv/components/dropdown"; }
+    public String getTemplate() { return CvComponentType.DROPDOWN.getDefaultTemplate(); }
 
     @Override
     public Map<String, Object> getTemplateModel() {

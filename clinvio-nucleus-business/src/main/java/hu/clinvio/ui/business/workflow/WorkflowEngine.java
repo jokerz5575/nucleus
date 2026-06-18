@@ -165,16 +165,20 @@ public class WorkflowEngine<E extends Enum<E>> {
     }
 
     /**
-     * Get the current status of an entity using reflection.
+     * Get the current status of an entity.
      */
-    @SuppressWarnings("unchecked")
     private <T> E getCurrentStatus(T entity) {
-        try {
-            var method = entity.getClass().getMethod("getStatus");
-            return (E) method.invoke(entity);
-        } catch (Exception e) {
-            throw new CvBusinessException("Cannot read status from entity: " + e.getMessage());
+        if (entity instanceof StatusAware) {
+            return ((StatusAware<E>) entity).getStatus();
         }
+        throw new CvBusinessException("Entity must implement StatusAware<" + enumClass.getSimpleName() + "> to use WorkflowEngine");
+    }
+
+    /**
+     * Interface for entities that can be used with WorkflowEngine.
+     */
+    public interface StatusAware<S extends Enum<S>> {
+        S getStatus();
     }
 
     private void executeCallbacks(List<TransitionAction<E>> actions, E from, E to) {

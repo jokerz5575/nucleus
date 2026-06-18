@@ -8,6 +8,7 @@ import hu.clinvio.ui.htmx.response.HxResponse;
 import hu.clinvio.ui.htmx.response.HxSwap;
 import hu.clinvio.ui.persistence.entity.BaseEntity;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
@@ -78,7 +79,7 @@ public abstract class CvBaseCrudController<E extends BaseEntity> {
 
     @PostMapping
     @ResponseBody
-    public HxResponse createHx(@RequestBody E entity, HttpServletRequest request) {
+    public HxResponse createHx(@Valid @RequestBody E entity, HttpServletRequest request) {
         E created = service.create(entity);
         return HxResponse.builder()
                 .swap(HxSwap.NONE)
@@ -92,7 +93,7 @@ public abstract class CvBaseCrudController<E extends BaseEntity> {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public HxResponse updateHx(@PathVariable Long id, @RequestBody E entity, HttpServletRequest request) {
+    public HxResponse updateHx(@PathVariable Long id, @Valid @RequestBody E entity, HttpServletRequest request) {
         entity.setId(id);
         service.update(entity);
         return HxResponse.builder()

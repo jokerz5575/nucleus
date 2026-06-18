@@ -43,7 +43,7 @@ public class AesCryptoService {
     private static final String KEY_DERIVATION_ALGORITHM = "PBKDF2WithHmacSHA256";
     private static final int PBKDF2_ITERATIONS = 600_000;
     private static final int PBKDF2_KEY_LENGTH = 256;
-    private static final byte[] SALT = "clinvio-ui-persistence-salt-v1".getBytes(StandardCharsets.UTF_8);
+    private static final byte[] DEFAULT_SALT = "clinvio-ui-persistence-salt-v1".getBytes(StandardCharsets.UTF_8);
 
     private final SecretKey secretKey;
     private final SecureRandom secureRandom;
@@ -56,10 +56,18 @@ public class AesCryptoService {
      * @throws IllegalArgumentException if passphrase is null or empty
      */
     public AesCryptoService(String passphrase) {
+        this(passphrase, DEFAULT_SALT);
+    }
+
+    /**
+     * Creates a new crypto service with a custom salt.
+     */
+    public AesCryptoService(String passphrase, byte[] salt) {
         if (passphrase == null || passphrase.isBlank()) {
             throw new IllegalArgumentException("Encryption passphrase must not be null or empty");
         }
-        this.secretKey = deriveKey(passphrase);
+        byte[] effectiveSalt = (salt != null && salt.length > 0) ? salt : DEFAULT_SALT;
+        this.secretKey = deriveKey(passphrase, effectiveSalt);
         this.secureRandom = new SecureRandom();
     }
 
@@ -150,11 +158,11 @@ public class AesCryptoService {
         }
     }
 
-    private SecretKey deriveKey(String passphrase) {
+    private SecretKey deriveKey(String passphrase, byte[] salt) {
         try {
             PBEKeySpec spec = new PBEKeySpec(
                     passphrase.toCharArray(),
-                    SALT,
+                    salt,
                     PBKDF2_ITERATIONS,
                     PBKDF2_KEY_LENGTH
             );

@@ -5,6 +5,7 @@ import hu.clinvio.ui.business.dto.CvPageResult;
 import hu.clinvio.ui.business.exception.CvNotFoundException;
 import hu.clinvio.ui.business.service.CvBaseService;
 import hu.clinvio.ui.persistence.entity.BaseEntity;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -58,7 +59,7 @@ public abstract class CvBaseApiController<E extends BaseEntity> {
      * POST /api/entities - Create a new entity.
      */
     @PostMapping
-    public ResponseEntity<CvFormResult> create(@RequestBody E entity) {
+    public ResponseEntity<CvFormResult> create(@Valid @RequestBody E entity) {
         E created = service.create(entity);
         CvFormResult result = CvFormResult.ok(getEntityName() + " created");
         result.setRedirectUrl(getEntityPath() + "/" + created.getId());
@@ -69,7 +70,7 @@ public abstract class CvBaseApiController<E extends BaseEntity> {
      * PUT /api/entities/{id} - Update an existing entity.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<CvFormResult> update(@PathVariable Long id, @RequestBody E entity) {
+    public ResponseEntity<CvFormResult> update(@PathVariable Long id, @Valid @RequestBody E entity) {
         entity.setId(id);
         E updated = service.update(entity);
         return ResponseEntity.ok(CvFormResult.ok(getEntityName() + " updated"));

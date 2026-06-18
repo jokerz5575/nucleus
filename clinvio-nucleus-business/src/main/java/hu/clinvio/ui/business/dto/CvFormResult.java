@@ -13,6 +13,7 @@ public class CvFormResult {
     private String message;
     private String errorCode;
     private String redirectUrl;
+    private Object data;
     private Map<String, String> errors = new HashMap<>();
     private long timestamp;
 
@@ -47,6 +48,7 @@ public class CvFormResult {
      */
     public static <T> CvFormResult ok(String message, T data) {
         CvFormResult result = new CvFormResult(true, message);
+        result.data = data;
         return result;
     }
 
@@ -103,6 +105,9 @@ public class CvFormResult {
 
     public String getRedirectUrl() { return redirectUrl; }
     public void setRedirectUrl(String redirectUrl) { this.redirectUrl = redirectUrl; }
+
+    public Object getData() { return data; }
+    public void setData(Object data) { this.data = data; }
 
     public Map<String, String> getErrors() { return errors; }
     public void setErrors(Map<String, String> errors) { this.errors = errors; }

@@ -12,11 +12,26 @@ import java.util.stream.Collectors;
 public class CvSimpleNotificationService {
 
     private static final Logger log = LoggerFactory.getLogger(CvSimpleNotificationService.class);
+    private static final int MAX_NOTIFICATIONS_PER_USER = 1000;
     private final Map<String, CvNotification> notifications = new ConcurrentHashMap<>();
 
     public void send(CvNotification notification) {
         notifications.put(notification.getId(), notification);
+        evictIfNeeded(notification.getRecipientId());
         log.debug("Notification sent: {} to {}", notification.getTitle(), notification.getRecipientId());
+    }
+
+    private void evictIfNeeded(String recipientId) {
+        long count = notifications.values().stream()
+                .filter(n -> recipientId.equals(n.getRecipientId()))
+                .count();
+        if (count > MAX_NOTIFICATIONS_PER_USER) {
+            notifications.values().stream()
+                    .filter(n -> recipientId.equals(n.getRecipientId()))
+                    .sorted(Comparator.comparing(CvNotification::getCreatedAt))
+                    .limit(count - MAX_NOTIFICATIONS_PER_USER)
+                    .forEach(n -> notifications.remove(n.getId()));
+        }
     }
 
     public void send(String recipientId, String title, String message, CvNotification.NotificationType type) {

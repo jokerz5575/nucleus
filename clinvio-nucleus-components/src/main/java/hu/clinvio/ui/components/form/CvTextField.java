@@ -134,7 +134,10 @@ public class CvTextField extends AbstractCvComponent {
     public void setState(FieldState state) { this.state = state; }
 
     public String getErrorMessage() { return errorMessage; }
-    public void setErrorMessage(String errorMessage) { this.errorMessage = errorMessage; }
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+        if (errorMessage != null) this.state = FieldState.ERROR;
+    }
 
     public String getHxPost() { return hxPost; }
     public void setHxPost(String hxPost) { this.hxPost = hxPost; }

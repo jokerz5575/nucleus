@@ -8,6 +8,7 @@ import hu.clinvio.ui.htmx.filter.HxRequestFilter;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @AutoConfiguration(after = ThymeleafAutoConfiguration.class)
 @ConditionalOnWebApplication
 @ConditionalOnClass(ClinvioDialect.class)
+@ConditionalOnProperty(prefix = ClinvioProperties.PREFIX, name = "enabled", matchIfMissing = true)
 @EnableConfigurationProperties(ClinvioProperties.class)
 public class ClinvioAutoConfiguration implements WebMvcConfigurer {
 
@@ -58,6 +60,7 @@ public class ClinvioAutoConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
+    @ConditionalOnProperty(prefix = ClinvioProperties.PREFIX + ".htmx", name = "enabled", matchIfMissing = true)
     public FilterRegistrationBean<HxRequestFilter> hxRequestFilterRegistration() {
         FilterRegistrationBean<HxRequestFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new HxRequestFilter());

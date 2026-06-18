@@ -118,6 +118,10 @@ public class HxResponse {
         }
 
         public HxResponse build() {
+            if (trigger != null && triggerDetail != null && !triggerDetail.isEmpty()
+                    && !trigger.contains(":")) {
+                this.triggerDetail = triggerDetail;
+            }
             return new HxResponse(this);
         }
     }

@@ -32,6 +32,12 @@ public class PersistenceProperties {
     private String databasePath = "./data/clinvio.db";
 
     /**
+     * PBKDF2 salt for AES key derivation. Override to rotate keys.
+     * All existing encrypted data must be re-encrypted when changing salt.
+     */
+    private String encryptionSalt;
+
+    /**
      * Whether to enable automatic DDL generation (create-drop).
      * Set to false for production use.
      */
@@ -51,6 +57,14 @@ public class PersistenceProperties {
 
     public void setDatabasePath(String databasePath) {
         this.databasePath = databasePath;
+    }
+
+    public String getEncryptionSalt() {
+        return encryptionSalt;
+    }
+
+    public void setEncryptionSalt(String encryptionSalt) {
+        this.encryptionSalt = encryptionSalt;
     }
 
     public boolean isDdlAuto() {

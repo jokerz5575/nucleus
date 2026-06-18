@@ -21,8 +21,10 @@ public class HxRequestFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        if (!(request instanceof HttpServletRequest httpRequest) || !(response instanceof HttpServletResponse httpResponse)) {
+            chain.doFilter(request, response);
+            return;
+        }
 
         boolean isHxRequest = "true".equals(httpRequest.getHeader(HX_REQUEST_HEADER));
 

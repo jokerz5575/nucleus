@@ -223,7 +223,7 @@ public abstract class CvBaseService<E extends BaseEntity, ID> {
      */
     public List<E> findRecent(int limit) {
         return repository.findAll(
-                PageRequest.of(limit, 1, Sort.by(Sort.Direction.DESC, "createdAt"))
+                PageRequest.of(0, limit, Sort.by(Sort.Direction.DESC, "createdAt"))
         ).getContent();
     }
 

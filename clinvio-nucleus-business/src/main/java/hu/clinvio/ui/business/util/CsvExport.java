@@ -47,8 +47,7 @@ public class CsvExport {
         private final HttpServletResponse response;
         private final String filename;
         private final StringBuilder header = new StringBuilder();
-        private final StringBuilder rows = new StringBuilder();
-        private boolean firstColumn = true;
+        private final List<Function<T, String>> extractors = new java.util.ArrayList<>();
 
         public Builder(HttpServletResponse response, String filename) {
             this.response = response;
@@ -59,11 +58,11 @@ public class CsvExport {
          * Add a column header.
          */
         public Builder<T> addHeader(String name, Function<T, String> valueExtractor) {
-            if (!firstColumn) {
+            if (!header.isEmpty()) {
                 header.append(",");
             }
             header.append(escapeCsv(name));
-            firstColumn = false;
+            extractors.add(valueExtractor);
             return this;
         }
 
@@ -80,10 +79,16 @@ public class CsvExport {
             PrintWriter writer = response.getWriter();
             writer.println(header.toString());
 
-            // This is a simplified version - in real usage,
-            // you'd need to store the extractors and use them
             for (T item : data) {
-                writer.println(item.toString());
+                StringBuilder row = new StringBuilder();
+                boolean first = true;
+                for (Function<T, String> extractor : extractors) {
+                    if (!first) row.append(",");
+                    String value = extractor != null ? extractor.apply(item) : "";
+                    row.append(escapeCsv(value != null ? value : ""));
+                    first = false;
+                }
+                writer.println(row.toString());
             }
 
             writer.flush();

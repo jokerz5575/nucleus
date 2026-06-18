@@ -23,6 +23,7 @@ public enum CvComponentType {
     BREADCRUMB("breadcrumb", "components/breadcrumb"),
     STEPPER("stepper", "components/stepper"),
     TIMELINE("timeline", "components/timeline"),
+    DROPDOWN("dropdown", "components/dropdown"),
     PROGRESS_BAR("progressBar", "components/progress-bar"),
     NAVBAR("navbar", "components/navbar"),
     SIDEBAR("sidebar", "components/sidebar"),
