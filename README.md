@@ -2,8 +2,8 @@
 
 [![Build](https://github.com/jokerz5575/nucleus/actions/workflows/build.yml/badge.svg)](https://github.com/jokerz5575/nucleus/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Java](https://img.shields.io/badge/Java-21%2B-blue)](https://adoptium.net)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.5-brightgreen)](https://spring.io/projects/spring-boot)
+[![Java](https://img.shields.io/badge/Java-25%2B-blue)](https://adoptium.net)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.0-brightgreen)](https://spring.io/projects/spring-boot)
 [![HTMX](https://img.shields.io/badge/HTMX-2.0.4-blueviolet)](https://htmx.org)
 [![Tests](https://img.shields.io/badge/tests-270%2B-passing-green)](https://github.com/jokerz5575/nucleus/actions)
 
@@ -21,7 +21,7 @@ Add the dependency:
 <dependency>
     <groupId>hu.clinvio</groupId>
     <artifactId>clinvio-nucleus-spring-boot-starter</artifactId>
-    <version>2.3.0</version>
+    <version>2.4.0</version>
 </dependency>
 ```
 

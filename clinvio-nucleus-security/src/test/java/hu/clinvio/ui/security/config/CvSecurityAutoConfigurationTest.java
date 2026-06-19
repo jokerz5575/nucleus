@@ -18,7 +18,7 @@ class CvSecurityAutoConfigurationTest {
     @Test
     void cvJwtServiceRejectsDefaultSecretInProductionProfile() {
         SecurityProperties properties = new SecurityProperties();
-        MockEnvironment environment = new MockEnvironment().withProperty("spring.profiles.active", "production");
+        MockEnvironment environment = new MockEnvironment();
         environment.setActiveProfiles("production");
 
         IllegalStateException ex = assertThrows(IllegalStateException.class,
