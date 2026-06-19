@@ -19,9 +19,8 @@ jobs:
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         with:
-          java-version: 25
-          distribution: temurin
-          check-latest: true
+          java-version: '25'
+          distribution: oracle
           cache: maven
           server-id: central
           server-username: CENTRAL_USERNAME
