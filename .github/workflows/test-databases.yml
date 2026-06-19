@@ -1,0 +1,241 @@
+name: Multi-Database Testing
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-sqlite:
+    runs-on: ubuntu-latest
+    name: Test with SQLite
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: maven
+
+      - name: Run tests with SQLite
+        run: ./mvnw -B clean test -Psqlite
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-sqlite
+          path: '**/target/surefire-reports/'
+
+  test-postgresql:
+    runs-on: ubuntu-latest
+    name: Test with PostgreSQL
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: clinvio_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: maven
+
+      - name: Run tests with PostgreSQL
+        run: ./mvnw -B clean test -Ppostgres
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/clinvio_test
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: postgres
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-postgresql
+          path: '**/target/surefire-reports/'
+
+  test-mysql:
+    runs-on: ubuntu-latest
+    name: Test with MySQL
+    services:
+      mysql:
+        image: mysql:8.3
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: clinvio_test
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        ports:
+          - 3306:3306
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: maven
+
+      - name: Run tests with MySQL
+        run: ./mvnw -B clean test -Pmysql
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/clinvio_test
+          SPRING_DATASOURCE_USERNAME: root
+          SPRING_DATASOURCE_PASSWORD: root
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-mysql
+          path: '**/target/surefire-reports/'
+
+  test-sqlserver:
+    runs-on: ubuntu-latest
+    name: Test with SQL Server
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: Password123!
+          MSSQL_TCP_PORT: 1433
+        options: >-
+          --health-cmd="/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Password123! -Q 'SELECT 1' || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 1433:1433
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: maven
+
+      - name: Wait for SQL Server
+        run: |
+          for i in {1..30}; do
+            if ./mvnw exec:java -Dexec.mainClass="org.example.TestConnection" 2>/dev/null; then
+              echo "SQL Server is ready"
+              exit 0
+            fi
+            echo "Waiting for SQL Server... ($i/30)"
+            sleep 2
+          done
+          echo "SQL Server connection test"
+
+      - name: Run tests with SQL Server
+        run: ./mvnw -B clean test -Psqlserver
+        env:
+          SPRING_DATASOURCE_URL: jdbc:sqlserver://localhost:1433;database=clinvio_test
+          SPRING_DATASOURCE_USERNAME: sa
+          SPRING_DATASOURCE_PASSWORD: Password123!
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-sqlserver
+          path: '**/target/surefire-reports/'
+
+  test-oracle:
+    runs-on: ubuntu-latest
+    name: Test with Oracle
+    services:
+      oracle:
+        image: gvenzl/oracle-xe:21-alpine
+        env:
+          ORACLE_PASSWORD: oracle
+        options: >-
+          --health-cmd "sqlplus -L / as sysdba <<< 'exit'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 1521:1521
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: maven
+
+      - name: Wait for Oracle
+        run: |
+          for i in {1..60}; do
+            if timeout 5 bash -c "echo > /dev/tcp/localhost/1521" 2>/dev/null; then
+              echo "Oracle is ready"
+              exit 0
+            fi
+            echo "Waiting for Oracle... ($i/60)"
+            sleep 1
+          done
+          exit 1
+
+      - name: Run tests with Oracle
+        run: ./mvnw -B clean test -Poracle
+        env:
+          SPRING_DATASOURCE_URL: jdbc:oracle:thin:@localhost:1521:XE
+          SPRING_DATASOURCE_USERNAME: system
+          SPRING_DATASOURCE_PASSWORD: oracle
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-oracle
+          path: '**/target/surefire-reports/'
+
+  summary:
+    runs-on: ubuntu-latest
+    name: Test Summary
+    needs: [test-sqlite, test-postgresql, test-mysql, test-sqlserver, test-oracle]
+    if: always()
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Report test results
+        run: |
+          echo "## Multi-Database Test Results"
+          echo ""
+          echo "| Database | Status |"
+          echo "|----------|--------|"
+          echo "| SQLite | ${{ needs.test-sqlite.result }} |"
+          echo "| PostgreSQL | ${{ needs.test-postgresql.result }} |"
+          echo "| MySQL | ${{ needs.test-mysql.result }} |"
+          echo "| SQL Server | ${{ needs.test-sqlserver.result }} |"
+          echo "| Oracle | ${{ needs.test-oracle.result }} |"

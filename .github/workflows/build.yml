@@ -23,8 +23,8 @@ jobs:
           distribution: temurin
           cache: maven
 
-      - name: Build and test
-        run: ./mvnw -B install
+      - name: Build and test (SQLite)
+        run: ./mvnw -B install -Psqlite
         
   build-java25:
     runs-on: ubuntu-latest
@@ -41,8 +41,8 @@ jobs:
       - name: Verify Java version
         run: java -version
       
-      - name: Build with Java 25
-        run: ./mvnw -B install
+      - name: Build with Java 25 (SQLite)
+        run: ./mvnw -B install -Psqlite
 
       - name: Upload test results
         if: always()
