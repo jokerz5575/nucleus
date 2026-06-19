@@ -119,6 +119,7 @@ public class Patient {
 
 - **[Documentation Site](https://jokerz5575.github.io/nucleus/)** — Full documentation
 - **[Database Configuration](DATABASE_CONFIGURATION.md)** — Multi-database setup and examples
+- **[Testing Databases](TESTING_DATABASES.md)** — Maven profiles and CI/CD for multi-database testing
 - [Changelog](CHANGELOG.md)
 - [Roadmap](ROADMAP.md)
 - [Contributing](CONTRIBUTING.md)
