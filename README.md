@@ -5,9 +5,10 @@
 [![Java](https://img.shields.io/badge/Java-25%2B-blue)](https://adoptium.net)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.0-brightgreen)](https://spring.io/projects/spring-boot)
 [![HTMX](https://img.shields.io/badge/HTMX-2.0.4-blueviolet)](https://htmx.org)
-[![Tests](https://img.shields.io/badge/tests-270%2B-passing-green)](https://github.com/jokerz5575/nucleus/actions)
+[![Tests](https://img.shields.io/badge/tests-278-passing-green)](https://github.com/jokerz5575/nucleus/actions)
+[![Databases](https://img.shields.io/badge/databases-5-blue)](https://github.com/jokerz5575/nucleus/blob/main/DATABASE_CONFIGURATION.md)
 
-Enterprise Java framework for building secure, server-rendered web applications with field-level AES-256-GCM encryption, HTMX partial updates, and modular architecture.
+Enterprise Java framework for building secure, server-rendered web applications with field-level AES-256-GCM encryption, HTMX partial updates, multi-database support, and modular architecture.
 
 **This is the Community edition (MIT).** Full Professional and Enterprise editions with additional modules are available at [clinvio.hu/nucleus](https://clinvio.hu/nucleus).
 
@@ -31,16 +32,22 @@ public class App { public static void main(String[] args) { SpringApplication.ru
 ```
 
 ```properties
-spring.datasource.url=jdbc:sqlite:./data/app.db
+# SQLite (default, zero-config)
 clinvio.persistence.encryption-key=${CLINVIO_ENCRYPTION_KEY}
+
+# Or PostgreSQL, MySQL, Oracle, SQL Server
+clinvio.persistence.type=postgresql
+clinvio.persistence.postgresql.host=localhost
+clinvio.persistence.postgresql.database=clinvio
 ```
 
 ## Features
 
+- **Multi-database support** — SQLite, PostgreSQL, MySQL, Oracle, SQL Server with zero code changes
 - **Field-level encryption** — `@SensitiveData` + `@Convert` on any JPA field, AES-256-GCM
 - **HTMX-native UI** — ~14KB client, no JavaScript build step
 - **8 modular jars** (Community) — core, components, themes, HTMX, persistence, business, security, starter
-- **SQLite production-ready** — zero-config, switch to PostgreSQL with Professional tier
+- **SQLite to PostgreSQL** — development with SQLite, production with PostgreSQL
 - **JWT auth** — Spring Security integration with refresh, logout, and CORS
 - **22 UI components** — buttons, forms, data tables, cards, toasts, and more
 - **MIT licensed** — free to use, modify, and distribute
@@ -53,7 +60,7 @@ clinvio.persistence.encryption-key=${CLINVIO_ENCRYPTION_KEY}
 | `clinvio-nucleus-components` | UI components (data table, cards, forms) |
 | `clinvio-nucleus-themes` | CSS design system |
 | `clinvio-nucleus-htmx` | HTMX request/response handling |
-| `clinvio-nucleus-persistence` | Entities, AES-256-GCM encryption, SQLite dialect |
+| `clinvio-nucleus-persistence` | Entities, AES-256-GCM encryption, multi-database support (SQLite, PostgreSQL, MySQL, Oracle, SQL Server) |
 | `clinvio-nucleus-business` | Services, controllers, workflow engine |
 | `clinvio-nucleus-security` | JWT authentication, role-based access control |
 | `clinvio-nucleus-spring-boot-starter` | Auto-configuration |
@@ -68,6 +75,22 @@ Additional modules available with paid tiers at [clinvio.hu/nucleus](https://cli
 | **DevTools** | Docker support, PDF generation, migration, CLI, Maven plugin, test utilities |
 | **Domain** | AI/LLM integration, compliance/GDPR, appointments, documents, tasks, notifications, multi-tenancy |
 | **Real-time** | WebSocket, scheduler, mail, OpenAPI |
+
+## Databases
+
+**Community edition includes full multi-database support at no cost:**
+
+| Database | Version | Status | Best For |
+|----------|---------|--------|----------|
+| **SQLite** | 3.53.2+ | ✅ Included | Development, embedded, single-file |
+| **PostgreSQL** | 16+ | ✅ Included | Production, cloud, enterprise |
+| **MySQL** | 8.3+ | ✅ Included | Web apps, shared hosting, multi-user |
+| **Oracle** | 21+ | ✅ Included | Enterprise, legacy systems |
+| **SQL Server** | 2022+ | ✅ Included | Microsoft ecosystem, Azure |
+
+**Configuration:** Set `clinvio.persistence.type` to switch databases. See [DATABASE_CONFIGURATION.md](DATABASE_CONFIGURATION.md) for examples.
+
+**Zero breaking changes:** Default remains SQLite. All encryption, entities, and features work identically across all databases.
 
 ## Encryption
 
@@ -95,6 +118,7 @@ public class Patient {
 ## Documentation
 
 - **[Documentation Site](https://jokerz5575.github.io/nucleus/)** — Full documentation
+- **[Database Configuration](DATABASE_CONFIGURATION.md)** — Multi-database setup and examples
 - [Changelog](CHANGELOG.md)
 - [Roadmap](ROADMAP.md)
 - [Contributing](CONTRIBUTING.md)
