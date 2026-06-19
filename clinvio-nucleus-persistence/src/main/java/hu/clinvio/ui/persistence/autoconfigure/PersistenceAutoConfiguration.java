@@ -61,16 +61,16 @@ public class PersistenceAutoConfiguration {
         }
 
         // Auto-create data directory for SQLite
-        String dbPath = properties.getDatabasePath();
+        String dbPath = properties.getSqlite().getDatabasePath();
         if (dbPath != null && !dbPath.isBlank()) {
             try {
                 Path parent = Paths.get(dbPath).getParent();
                 if (parent != null && !Files.exists(parent)) {
                     Files.createDirectories(parent);
-                    log.info("Created data directory: {}", parent);
+                    log.info("Created data directory for SQLite: {}", parent);
                 }
             } catch (Exception e) {
-                log.warn("Could not create data directory: {}", e.getMessage());
+                log.warn("Could not create data directory for SQLite: {}", e.getMessage());
             }
         }
 
@@ -95,25 +95,21 @@ public class PersistenceAutoConfiguration {
     @ConditionalOnMissingBean
     @ConditionalOnClass(HikariConfig.class)
     public DataSource dataSource(ConnectionPoolProperties poolProps, PersistenceProperties props) {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:sqlite:" + props.getDatabasePath());
-        config.setMaximumPoolSize(poolProps.getMaximumPoolSize());
-        config.setMinimumIdle(poolProps.getMinimumIdle());
-        config.setIdleTimeout(poolProps.getIdleTimeout());
-        config.setMaxLifetime(poolProps.getMaxLifetime());
-        config.setConnectionTimeout(poolProps.getConnectionTimeout());
-        config.setPoolName(poolProps.getPoolName());
-        config.setDriverClassName("org.sqlite.JDBC");
+        HikariConfig config = DatabaseSourceFactory.createConfig(props, poolProps);
         return new HikariDataSource(config);
     }
 
     @Bean
-    public HibernatePropertiesCustomizer sqliteHibernateCustomizer(PersistenceProperties props) {
+    public HibernatePropertiesCustomizer hibernatePropertiesCustomizer(PersistenceProperties props) {
         return hibernateProperties -> {
-            hibernateProperties.put("hibernate.dialect", "org.hibernate.community.dialect.SQLiteDialect");
+            String dialect = DatabaseSourceFactory.getHibernateDialect(props);
+            hibernateProperties.put("hibernate.dialect", dialect);
+            
             if (props.isDdlAuto()) {
                 hibernateProperties.put("hibernate.hbm2ddl.auto", "update");
             }
+            
+            log.info("Using Hibernate dialect: {}", dialect);
         };
     }
 }
