@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
+import org.springframework.boot.hibernate.autoconfigure.HibernatePropertiesCustomizer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -32,7 +32,7 @@ import java.util.Arrays;
 @EnableConfigurationProperties({PersistenceProperties.class, ConnectionPoolProperties.class})
 @EnableJpaRepositories(basePackages = {"hu.clinvio.ui"})
 @ComponentScan(basePackages = {"hu.clinvio.ui"})
-@org.springframework.boot.autoconfigure.domain.EntityScan(basePackages = {"hu.clinvio.ui"})
+@org.springframework.boot.persistence.autoconfigure.EntityScan(basePackages = {"hu.clinvio.ui"})
 public class PersistenceAutoConfiguration {
 
     private static final Logger log = LoggerFactory.getLogger(PersistenceAutoConfiguration.class);
