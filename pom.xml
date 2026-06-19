@@ -13,11 +13,11 @@
 
     <groupId>hu.clinvio</groupId>
     <artifactId>clinvio-nucleus</artifactId>
-    <version>2.4.0</version>
+    <version>2.5.0</version>
     <packaging>pom</packaging>
 
     <name>Clinvio Nucleus</name>
-    <description>Community edition — open-source Java framework with AES-256-GCM encryption, HTMX, and modular architecture</description>
+    <description>Community edition — open-source Java framework with multi-database support, AES-256-GCM encryption, HTMX, and modular architecture</description>
     <url>https://clinvio.hu</url>
 
     <licenses>
