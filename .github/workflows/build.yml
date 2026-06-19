@@ -20,7 +20,8 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
-          distribution: oracle
+          distribution: temurin
+          check-latest: true
           cache: maven
 
       - name: Build and test

@@ -20,7 +20,8 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         with:
           java-version: 25
-          distribution: oracle
+          distribution: temurin
+          check-latest: true
           cache: maven
           server-id: central
           server-username: CENTRAL_USERNAME
